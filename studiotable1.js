@@ -21,22 +21,17 @@ function fetchDataAndUpdateDisplay() {
 }
 
 function processData(data) {
-    console.log("Fetched Data:", data); // Debugging: Log the fetched data
-
     const headers = data[0];
     const rows = data.slice(1);
     let isMatchFound = false;
 
     rows.forEach(row => {
         const rowData = headers.reduce((obj, header, index) => {
-            obj[header] = row[index] ? row[index].trim() : ''; // Check for undefined before trim
+            obj[header] = row[index];
             return obj;
         }, {});
 
-        console.log("Row Data:", rowData); // Debugging: Log each row's data
-
-        // Check the conditions with null-safe checks
-        if ((rowData['G'] || '').trim() === 'On' && (rowData['H'] || '').trim() === 'T1' && (rowData['I'] || '').trim() === '') {
+        if (rowData['BP'] === 'Active') {
             displayMatchDetails(rowData);
             isMatchFound = true;
             return; // Exit the loop after finding the active match
@@ -52,7 +47,8 @@ function displayMatchDetails(rowData) {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
         matchInfoElement.innerHTML = `
-            <div>Match is On</div>
+            <div>Match is Active</div>
+            <div>Start Time: ${rowData['K']}</div>
             <div>Player 1: ${rowData['M']}</div>
             <div>Player 2: ${rowData['N']}</div>
         `;
@@ -62,6 +58,7 @@ function displayMatchDetails(rowData) {
 function displayNotActive() {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
-        matchInfoElement.innerText = 'Not ctive';
+        matchInfoElement.innerText = 'Not Active';
     }
 }
+

@@ -21,6 +21,8 @@ function fetchDataAndUpdateDisplay() {
 }
 
 function processData(data) {
+    console.log("Fetched Data:", data); // Debugging: Log the fetched data
+
     const headers = data[0];
     const rows = data.slice(1);
     let isMatchFound = false;
@@ -30,6 +32,8 @@ function processData(data) {
             obj[header] = row[index];
             return obj;
         }, {});
+
+        console.log("Row Data:", rowData); // Debugging: Log each row's data
 
         if (rowData['G'] === 'On' && rowData['H'] === 'T1' && rowData['I'] === '') {
             displayMatchDetails(rowData);
@@ -60,4 +64,3 @@ function displayNotActive() {
         matchInfoElement.innerText = 'Not Active';
     }
 }
-

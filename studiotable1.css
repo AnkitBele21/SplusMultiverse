@@ -1,6 +1,17 @@
-#table-display {
-    border: 1px solid #000;
-    margin: 10px;
-    padding: 10px;
-    /* Additional styling as needed */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
 }
+
+#match-status, #start-time, #format {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#player1-info, #player2-info {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+/* Further styling as required */

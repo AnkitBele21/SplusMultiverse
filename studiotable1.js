@@ -5,4 +5,5 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchDataAndUpdateDisplay() {
     // Fetch data specific to Table 1
     // Process and update the display
+    // Make sure to handle the cases where the frame is 'Off'
 }

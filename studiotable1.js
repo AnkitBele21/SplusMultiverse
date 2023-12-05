@@ -16,7 +16,7 @@ function fetchDataAndUpdateDisplay() {
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            displayNotActive(); // Display "Not Active" in case of an error
+            displayNotActive();
         });
 }
 

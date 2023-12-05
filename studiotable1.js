@@ -1,6 +1,6 @@
 const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc'; // Caution: Exposing API key
 const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
-const SHEET_NAME = 'Frames';
+const SHEET_NAME = 'af'; // Updated to the new sheet name
 
 document.addEventListener('DOMContentLoaded', function() {
     fetchDataAndUpdateDisplay();
@@ -21,24 +21,12 @@ function fetchDataAndUpdateDisplay() {
 }
 
 function processData(data) {
-    const headers = data[0];
-    const rows = data.slice(1);
-    let isMatchFound = false;
+    // Assuming that the relevant data starts from the second row
+    const rowData = data[1]; // Get the second row (index 1) directly
 
-    rows.forEach(row => {
-        const rowData = headers.reduce((obj, header, index) => {
-            obj[header] = row[index];
-            return obj;
-        }, {});
-
-        if (rowData['BP'] === 'Active') {
-            displayMatchDetails(rowData);
-            isMatchFound = true;
-            return; // Exit the loop after finding the active match
-        }
-    });
-
-    if (!isMatchFound) {
+    if (rowData && rowData.length >= 4) {
+        displayMatchDetails(rowData);
+    } else {
         displayNotActive();
     }
 }
@@ -47,10 +35,10 @@ function displayMatchDetails(rowData) {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
         matchInfoElement.innerHTML = `
-            <div>Match is Active</div>
-            <div>Start Time: ${rowData['K']}</div>
-            <div>Player 1: ${rowData['M']}</div>
-            <div>Player 2: ${rowData['N']}</div>
+            <div>${rowData[0]}</div> <!-- Table 1 -->
+            <div>Start Time: ${rowData[1]}</div> <!-- Start Time -->
+            <div>Player 1: ${rowData[2]}</div> <!-- Player 1 -->
+            <div>Player 2: ${rowData[3]}</div> <!-- Player 2 -->
         `;
     }
 }
@@ -61,4 +49,3 @@ function displayNotActive() {
         matchInfoElement.innerText = 'Not Active';
     }
 }
-

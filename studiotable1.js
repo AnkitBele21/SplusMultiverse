@@ -16,7 +16,7 @@ function fetchDataAndUpdateDisplay() {
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            alert('Error fetching data. Check the console for details.');
+            displayNotActive(); // Display "Not Active" in case of an error
         });
 }
 
@@ -38,7 +38,7 @@ function processData(data) {
     });
 
     if (!isMatchFound) {
-        displayLogo();
+        displayNotActive();
     }
 }
 
@@ -53,10 +53,10 @@ function displayMatchDetails(rowData) {
     }
 }
 
-function displayLogo() {
+function displayNotActive() {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
-        matchInfoElement.innerHTML = '<img src="snookerplus_logo.png" alt="Snooker Plus Logo" style="max-width: 100%; height: auto;">';
+        matchInfoElement.innerText = 'Not Active';
     }
 }
 

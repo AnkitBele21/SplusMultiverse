@@ -18,7 +18,6 @@ function fetchDataAndUpdateDisplay() {
 }
 
 function processData(data) {
-    // Assuming the first row is the header
     const headers = data[0];
     const rows = data.slice(1);
 
@@ -28,27 +27,26 @@ function processData(data) {
             return obj;
         }, {});
 
-        if (rowData['Table'] === 'T1') {
-            // This row is for Table 1
+        if (rowData['G'] === 'On' && rowData['H'] === 'T1' && rowData['I'] === '') {
+            // Display match details
             displayMatchDetails(rowData);
-            displayPlayerInfo(rowData);
+        } else {
+            // Display Snooker Plus logo
+            displayLogo();
         }
     });
 }
 
 function displayMatchDetails(rowData) {
-    // Extract and display start time from 'Start Time' column
-    document.getElementById('start-time').innerText = `Start Time: ${rowData['Start Time'] || 'Not available'}`;
-    // Update other match details if needed
+    const matchInfo = rowData['O'] ? 'Rummy' : `${rowData['M']} Vs ${rowData['N']}`;
+    document.getElementById('match-info').innerText = matchInfo;
+    // Additional details and formatting can be added here
 }
 
-function displayPlayerInfo(rowData) {
-    // Extract player info
-    document.getElementById('player1-info').innerText = `Player 1: ${rowData['Player 1'] || 'Waiting'}`;
-    document.getElementById('player2-info').innerText = `Player 2: ${rowData['Player 2'] || 'Waiting'}`;
-
-    // Fetch player stats from the leaderboard and update the display
-    // Handle the case where one or both players are missing
+function displayLogo() {
+    document.getElementById('match-info').innerHTML = '<img src="snookerplus_logo.png" alt="Snooker Plus Logo">';
+    // Adjust the path to the logo image as necessary
 }
 
-// Additional functions for fetching player stats, etc.
+// Additional functions and logic as needed
+

@@ -14,12 +14,16 @@ function fetchDataAndUpdateDisplay() {
         .then(data => {
             processData(data.values);
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            alert('Error fetching data. Check the console for details.');
+        });
 }
 
 function processData(data) {
     const headers = data[0];
     const rows = data.slice(1);
+    let isMatchFound = false;
 
     rows.forEach(row => {
         const rowData = headers.reduce((obj, header, index) => {
@@ -28,25 +32,31 @@ function processData(data) {
         }, {});
 
         if (rowData['G'] === 'On' && rowData['H'] === 'T1' && rowData['I'] === '') {
-            // Display match details
             displayMatchDetails(rowData);
-        } else {
-            // Display Snooker Plus logo
-            displayLogo();
+            isMatchFound = true;
         }
     });
+
+    if (!isMatchFound) {
+        displayLogo();
+    }
 }
 
 function displayMatchDetails(rowData) {
-    const matchInfo = rowData['O'] ? 'Rummy' : `${rowData['M']} Vs ${rowData['N']}`;
-    document.getElementById('match-info').innerText = matchInfo;
-    // Additional details and formatting can be added here
+    const matchInfoElement = document.getElementById('match-info');
+    if (matchInfoElement) {
+        matchInfoElement.innerHTML = `
+            <div>Match is On</div>
+            <div>Player 1: ${rowData['M']}</div>
+            <div>Player 2: ${rowData['N']}</div>
+        `;
+    }
 }
 
 function displayLogo() {
-    document.getElementById('match-info').innerHTML = '<img src="snookerplus_logo.png" alt="Snooker Plus Logo">';
-    // Adjust the path to the logo image as necessary
+    const matchInfoElement = document.getElementById('match-info');
+    if (matchInfoElement) {
+        matchInfoElement.innerHTML = '<img src="snookerplus_logo.png" alt="Snooker Plus Logo" style="max-width: 100%; height: auto;">';
+    }
 }
-
-// Additional functions and logic as needed
 

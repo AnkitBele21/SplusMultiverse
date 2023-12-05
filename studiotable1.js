@@ -34,6 +34,7 @@ function processData(data) {
         if (rowData['G'] === 'On' && rowData['H'] === 'T1' && rowData['I'] === '') {
             displayMatchDetails(rowData);
             isMatchFound = true;
+            return; // Exit the loop after finding the active match
         }
     });
 
@@ -56,7 +57,7 @@ function displayMatchDetails(rowData) {
 function displayNotActive() {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
-        matchInfoElement.innerText = 'Available';
+        matchInfoElement.innerText = 'Not Active';
     }
 }
 

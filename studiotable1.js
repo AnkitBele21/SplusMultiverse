@@ -29,13 +29,14 @@ function processData(data) {
 
     rows.forEach(row => {
         const rowData = headers.reduce((obj, header, index) => {
-            obj[header] = row[index];
+            obj[header] = row[index] ? row[index].trim() : ''; // Trim values
             return obj;
         }, {});
 
         console.log("Row Data:", rowData); // Debugging: Log each row's data
 
-        if (rowData['G'] === 'On' && rowData['H'] === 'T1' && rowData['I'] === '') {
+        // Check the conditions with trimmed values
+        if (rowData['G'].trim() === 'On' && rowData['H'].trim() === 'T1' && rowData['I'].trim() === '') {
             displayMatchDetails(rowData);
             isMatchFound = true;
             return; // Exit the loop after finding the active match

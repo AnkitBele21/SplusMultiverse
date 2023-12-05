@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function fetchDataAndUpdateDisplay() {
-    // Fetch data specific to Table 1
-    // Process and update the display
-    // Make sure to handle the cases where the frame is 'Off'
+    // Fetch data from the leaderboard and other sources
+    // Extract and display match status, start time, format, player info, and stats
+    // Update the HTML elements with the fetched data
+    // Handle the case where one or both players are missing
 }
+
+// Add functions to fetch and process data from the sheets

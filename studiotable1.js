@@ -56,7 +56,7 @@ function displayMatchDetails(rowData) {
 function displayNotActive() {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
-        matchInfoElement.innerText = 'Not Active';
+        matchInfoElement.innerText = 'Available';
     }
 }
 

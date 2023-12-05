@@ -1,17 +1,70 @@
-.header {
-    text-align: center;
-    margin-bottom: 20px;
+body {
+    background-color: #22252B;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #33363B;
+    padding: 20px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+header img {
+    width: 180px;
+}
+
+h1 {
+    color: #01AB7A;
+    margin: 10px 0 0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+main {
+    padding: 20px;
+}
+
+.table-display {
+    background-color: #33363B;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.table-display:hover {
+    transform: scale(1.02);
+}
+
+.match-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.match-detail {
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
 }
 
 #match-status, #start-time, #format {
-    font-size: 1.2em;
-    margin-bottom: 10px;
+    color: #FFEB3B; /* Highlighted text color */
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 
-#player1-info, #player2-info {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #000;
+.player-info {
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 
-/* Further styling as required */
+/* Additional styling as needed */
+

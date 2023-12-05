@@ -29,14 +29,14 @@ function processData(data) {
 
     rows.forEach(row => {
         const rowData = headers.reduce((obj, header, index) => {
-            obj[header] = row[index] ? row[index].trim() : ''; // Trim values
+            obj[header] = row[index] ? row[index].trim() : ''; // Check for undefined before trim
             return obj;
         }, {});
 
         console.log("Row Data:", rowData); // Debugging: Log each row's data
 
-        // Check the conditions with trimmed values
-        if (rowData['G'].trim() === 'On' && rowData['H'].trim() === 'T1' && rowData['I'].trim() === '') {
+        // Check the conditions with null-safe checks
+        if ((rowData['G'] || '').trim() === 'On' && (rowData['H'] || '').trim() === 'T1' && (rowData['I'] || '').trim() === '') {
             displayMatchDetails(rowData);
             isMatchFound = true;
             return; // Exit the loop after finding the active match
@@ -62,6 +62,6 @@ function displayMatchDetails(rowData) {
 function displayNotActive() {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
-        matchInfoElement.innerText = 'Not Active';
+        matchInfoElement.innerText = 'Not ctive';
     }
 }

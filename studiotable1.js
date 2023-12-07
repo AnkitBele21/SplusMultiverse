@@ -56,5 +56,5 @@ function displayNotActive() {
     logoContainer.className = 'logo-inactive'; // Larger logo for inactive state
 
     const matchInfoElement = document.getElementById('match-info');
-    matchInfoElement.innerHTML = '';
+    matchInfoElement.innerHTML = '<img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="Snooker Plus Logo" style="max-width: 100%; height: auto;">';
 }

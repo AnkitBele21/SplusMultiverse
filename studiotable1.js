@@ -31,13 +31,20 @@ function processData(data) {
 }
 
 function displayMatchDetails(rowData) {
+    const logoContainer = document.getElementById('logo-container');
+    logoContainer.className = 'logo-active'; // Smaller logo for active match
+
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
         matchInfoElement.innerHTML = `
-            <div class="player-matchup">
-                <span class="player">${rowData[2]} (Rank: ${rowData[4]}, Level: ${rowData[5]})</span>
-                <span class="vs">VS</span>
-                <span class="player">${rowData[3]} (Rank: ${rowData[6]}, Level: ${rowData[7]})</span>
+            <div class="player-card">
+                <div class="player-name">${rowData[2]}</div>
+                <div class="player-details">Rank: ${rowData[4]}, Level: ${rowData[5]}</div>
+            </div>
+            <div class="vs-text">VS</div>
+            <div class="player-card">
+                <div class="player-name">${rowData[3]}</div>
+                <div class="player-details">Rank: ${rowData[6]}, Level: ${rowData[7]}</div>
             </div>
             <div class="start-time">Start Time: ${rowData[1]}</div>
         `;
@@ -45,6 +52,9 @@ function displayMatchDetails(rowData) {
 }
 
 function displayNotActive() {
+    const logoContainer = document.getElementById('logo-container');
+    logoContainer.className = 'logo-inactive'; // Larger logo for inactive state
+
     const matchInfoElement = document.getElementById('match-info');
-    matchInfoElement.innerHTML = '<img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="Snooker Plus Logo" style="max-width: 100%; height: auto;">';
+    matchInfoElement.innerHTML = '';
 }

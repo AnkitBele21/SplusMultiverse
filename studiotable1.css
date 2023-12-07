@@ -5,9 +5,22 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
+}
+
+#logo-container {
+    margin-bottom: 20px;
+}
+
+.logo-inactive img {
+    width: 50%; /* Larger logo when inactive */
+}
+
+.logo-active img {
+    width: 180px; /* Smaller logo when active */
 }
 
 #match-info {
@@ -15,21 +28,31 @@ body {
     animation: fadeIn 1s;
 }
 
-.player-matchup {
+.player-card {
+    background-color: #33363B;
+    color: #FFEB3B;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-name {
     font-size: 20px;
-    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-.player {
-    font-weight: bold;
-    color: #01AB7A; /* Player name highlight color */
+.player-details {
+    font-size: 16px;
 }
 
-.vs {
-    margin: 0 15px;
-    color: #FFEB3B; /* 'VS' text color */
-    font-weight: bold;
+.vs-text {
+    color: #01AB7A;
     font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
 }
 
 .start-time {
@@ -41,5 +64,3 @@ body {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
-/* Additional styling as needed */

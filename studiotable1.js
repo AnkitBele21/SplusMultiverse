@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function fetchDataAndUpdateDisplay() {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
-
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -21,10 +20,8 @@ function fetchDataAndUpdateDisplay() {
 }
 
 function processData(data) {
-    // Assuming that the relevant data starts from the second row
     const rowData = data[1]; // Get the second row (index 1) directly
-
-    if (rowData && rowData.length >= 4) {
+    if (rowData && rowData.length >= 8) {
         displayMatchDetails(rowData);
     } else {
         displayNotActive();
@@ -35,17 +32,17 @@ function displayMatchDetails(rowData) {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
         matchInfoElement.innerHTML = `
-            <div>${rowData[0]}</div> <!-- Table 1 -->
-            <div>Start Time: ${rowData[1]}</div> <!-- Start Time -->
-            <div>Player 1: ${rowData[2]}</div> <!-- Player 1 -->
-            <div>Player 2: ${rowData[3]}</div> <!-- Player 2 -->
+            <div class="player-matchup">
+                <span class="player">${rowData[2]} (Rank: ${rowData[4]}, Level: ${rowData[5]})</span>
+                <span class="vs">VS</span>
+                <span class="player">${rowData[3]} (Rank: ${rowData[6]}, Level: ${rowData[7]})</span>
+            </div>
+            <div class="start-time">Start Time: ${rowData[1]}</div>
         `;
     }
 }
 
 function displayNotActive() {
     const matchInfoElement = document.getElementById('match-info');
-    if (matchInfoElement) {
-        matchInfoElement.innerText = 'Not Active';
-    }
+    matchInfoElement.innerHTML = '<img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="Snooker Plus Logo" style="max-width: 100%; height: auto;">';
 }

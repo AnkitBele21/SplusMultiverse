@@ -1,5 +1,5 @@
 body {
-    background-color: #22252B;
+    background-color: #0D1117;
     color: #FFFFFF;
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -11,53 +11,53 @@ body {
     height: 100vh;
 }
 
-#logo-container {
-    margin-bottom: 20px;
+.logo-inactive img, .logo-active img {
+    transition: width 1s, transform 1s;
 }
 
 .logo-inactive img {
-    width: 50%; /* Larger logo when inactive */
+    width: 50%;
+    transform: translateY(0);
 }
 
 .logo-active img {
-    width: 180px; /* Smaller logo when active */
+    width: 150px;
+    transform: translateY(-200px);
 }
 
 #match-info {
-    text-align: center;
     animation: fadeIn 1s;
-}
-
-.player-card {
-    background-color: #33363B;
-    color: #FFEB3B;
-    margin: 10px;
-    padding: 15px;
-    border-radius: 10px;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.player-name {
-    font-size: 20px;
+.player-card {
+    background-color: #1B2838;
+    color: #66C0F4;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
+    font-size: 18px;
     font-weight: bold;
-}
-
-.player-details {
-    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .vs-text {
-    color: #01AB7A;
-    font-size: 24px;
+    color: #C0C0C0;
+    font-size: 28px;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 15px;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
 }
 
 .start-time {
-    color: #FFEB3B;
+    color: #66C0F4;
     margin-top: 10px;
+    font-size: 16px;
+    font-style: italic;
 }
 
 @keyframes fadeIn {

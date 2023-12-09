@@ -37,16 +37,24 @@ function displayMatchDetails(rowData) {
     const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
         matchInfoElement.innerHTML = `
-            <div class="player-card">
-                <div class="player-name">${rowData[2]}</div>
-                <div class="player-details">Rank: ${rowData[4]}, Level: ${rowData[5]}</div>
+            <div class="row justify-content-center">
+                <div class="col-md-4 player-card">
+                    <div class="player-name">${rowData[2]}</div>
+                    <div class="player-details">Rank: ${rowData[4]}, Level: ${rowData[5]}</div>
+                </div>
+                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                    <div class="vs-text">VS</div>
+                </div>
+                <div class="col-md-4 player-card">
+                    <div class="player-name">${rowData[3]}</div>
+                    <div class="player-details">Rank: ${rowData[6]}, Level: ${rowData[7]}</div>
+                </div>
             </div>
-            <div class="vs-text">VS</div>
-            <div class="player-card">
-                <div class="player-name">${rowData[3]}</div>
-                <div class="player-details">Rank: ${rowData[6]}, Level: ${rowData[7]}</div>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="start-time">Start Time: ${rowData[1]}</div>
+                </div>
             </div>
-            <div class="start-time">Start Time: ${rowData[1]}</div>
         `;
     }
 }

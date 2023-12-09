@@ -1,6 +1,6 @@
 body {
-    background-color: #0D1117;
-    color: #FFFFFF;
+    background-color: #22242A; /* Background color as per brand guideline */
+    color: #FFFFFF; /* White text color */
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
@@ -11,7 +11,11 @@ body {
     justify-content: center;
 }
 
-.logo-inactive img, .logo-active img {
+#logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     transition: transform 1s, width 1s;
 }
 
@@ -21,8 +25,9 @@ body {
 }
 
 .logo-active img {
-    width: 150px; /* Smaller logo when active */
-    transform: translateY(-20px);
+    width: 200px; /* Slightly larger logo when active */
+    transform: translateY(-20px); /* Adjust this value as needed */
+    transition: transform 1s, width 1s;
 }
 
 #match-info {
@@ -30,12 +35,12 @@ body {
 }
 
 .player-card {
-    background-color: #1B2838;
-    color: #66C0F4;
+    background-color: #1B2838; /* Dark background for player cards */
+    color: #01AB7A; /* Primary brand color for text */
     margin: 10px;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Adjust shadow color if needed */
 }
 
 .player-name {
@@ -48,14 +53,14 @@ body {
 }
 
 .vs-text {
-    color: #C0C0C0;
+    color: #C0C0C0; /* Light grey color for VS text */
     font-size: 30px;
     font-weight: bold;
     margin: 20px;
 }
 
 .start-time {
-    color: #66C0F4;
+    color: #01AB7A; /* Primary brand color for start time */
     margin-top: 10px;
     font-size: 20px;
 }

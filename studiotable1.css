@@ -1,5 +1,7 @@
 body {
-    background-color: #22242A; /* Background color as per brand guideline */
+    background: url('https://raw.githubusercontent.com/AnkitBele21/centurydewas/main/club.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
     color: #FFFFFF; /* White text color */
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -11,12 +13,25 @@ body {
     justify-content: center;
 }
 
+/* Overlay to adjust darkness */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(34, 36, 42, 0.8); /* Dark overlay with opacity */
+    z-index: -1;
+}
+
 #logo-container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     transition: transform 1s, width 1s;
+    z-index: 1; /* Ensure logo is above the overlay */
 }
 
 .logo-inactive img {
@@ -25,13 +40,14 @@ body {
 }
 
 .logo-active img {
-    width: 250px; // Increase the logo size for active match
-    transform: translateY(-20px); // Adjust if necessary
+    width: 250px; /* Increase the logo size for active match */
+    transform: translateY(-20px); /* Adjust if necessary */
     transition: transform 1s, width 1s;
 }
 
 #match-info {
     text-align: center;
+    z-index: 1; /* Ensure match info is above the overlay */
 }
 
 .player-card {

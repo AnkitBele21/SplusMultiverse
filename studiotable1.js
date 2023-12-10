@@ -12,7 +12,7 @@ function fetchDataAndUpdateDisplay() {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            processTableOne(data.values);
+            processData(data.values);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -20,10 +20,10 @@ function fetchDataAndUpdateDisplay() {
         });
 }
 
-function processTableOne(data) {
-    const rowData = data[1]; // Get the second row (index 1) directly for Table 1
+function processData(data) {
+    const rowData = data[1]; // Get the second row (index 1) directly
 
-    if (rowData && rowData.length >= 10 && rowData[0] === 'T1') { // Check if it's Table 1
+    if (rowData && rowData.length >= 8) {
         displayMatchDetails(rowData);
     } else {
         displayNotActive();
@@ -31,29 +31,38 @@ function processTableOne(data) {
 }
 
 function displayMatchDetails(rowData) {
-    const matchInfoElement = document.getElementById('match-info');
+    const logoContainer = document.getElementById('logo-container');
+    logoContainer.className = 'logo-active'; // Smaller logo for active match
 
+    const matchInfoElement = document.getElementById('match-info');
     if (matchInfoElement) {
-        const tableDiv = document.createElement('div');
-        tableDiv.className = 'table-details';
-        tableDiv.innerHTML = `
-            <h3>Table 1</h3>
-            <div class="player-card">
-                <div class="player-name">${rowData[2]}</div>
-                <div class="player-details">Rank: ${rowData[4]}, Level: ${rowData[5]}, Win Rate: ${rowData[8]}%</div>
+        matchInfoElement.innerHTML = `
+            <div class="row justify-content-center">
+                <div class="col-md-4 player-card">
+                    <div class="player-name">${rowData[2]}</div>
+                    <div class="player-details">Rank: ${rowData[4]}, Level: ${rowData[5]}</div>
+                </div>
+                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                    <div class="vs-text">VS</div>
+                </div>
+                <div class="col-md-4 player-card">
+                    <div class="player-name">${rowData[3]}</div>
+                    <div class="player-details">Rank: ${rowData[6]}, Level: ${rowData[7]}</div>
+                </div>
             </div>
-            <div class="vs-text">VS</div>
-            <div class="player-card">
-                <div class="player-name">${rowData[3]}</div>
-                <div class="player-details">Rank: ${rowData[6]}, Level: ${rowData[7]}, Win Rate: ${rowData[9]}%</div>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="start-time">Start Time: ${rowData[1]}</div>
+                </div>
             </div>
-            <div class="start-time">Start Time: ${rowData[1]}</div>
         `;
-        matchInfoElement.appendChild(tableDiv);
     }
 }
 
 function displayNotActive() {
+    const logoContainer = document.getElementById('logo-container');
+    logoContainer.className = 'logo-inactive'; // Larger logo for inactive state
+
     const matchInfoElement = document.getElementById('match-info');
-    matchInfoElement.innerHTML = '<h2>No Active Matches on Table 1</h2>';
+    matchInfoElement.innerHTML = '';
 }

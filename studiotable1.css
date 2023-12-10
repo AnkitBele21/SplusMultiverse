@@ -4,38 +4,36 @@ body, html {
     font-family: 'Roboto', sans-serif;
     background: url('https://raw.githubusercontent.com/AnkitBele21/centurydewas/main/photo/stock-photo-opening-frame-of-the-snooker-77557717-ZSbCgl2Ur-transformed.png') no-repeat center center fixed;
     background-size: cover;
+    position: relative;
+    padding-top: 100px; /* Added space for the logo */
 }
 
 #logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    position: absolute;
+    top: 20px; /* Positioning logo at the top */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; /* Ensuring it's above other elements */
 }
 
-.logo-inactive img, .logo-active img {
-    transition: width 1s, transform 1s;
-}
-
-.logo-inactive img {
-    width: 50%;
-}
-
-.logo-active img {
-    width: 250px;
-    transform: translateY(-20px);
+.logo-active img, .logo-inactive img {
+    width: 300px; /* Increasing the size of the logo */
+    transition: transform 1s, width 1s;
 }
 
 #match-info {
     text-align: center;
     position: relative;
     z-index: 1;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for content */
     padding: 20px;
+    margin-top: 60px; /* Space between logo and match info */
+    border-radius: 15px;
 }
 
 .player-card {
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background */
-    color: #01AB7A; /* Brand color for text */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #01AB7A;
     margin: 1rem;
     padding: 20px;
     border-radius: 15px;

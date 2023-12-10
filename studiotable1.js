@@ -23,7 +23,7 @@ function fetchDataAndUpdateDisplay() {
 function processData(data) {
     const rowData = data[1]; // Get the second row (index 1) directly
 
-    if (rowData && rowData.length >= 8) {
+    if (rowData && rowData.length >= 10) { // Check if rowData has enough elements
         displayMatchDetails(rowData);
     } else {
         displayNotActive();
@@ -40,14 +40,14 @@ function displayMatchDetails(rowData) {
             <div class="row justify-content-center">
                 <div class="col-md-4 player-card">
                     <div class="player-name">${rowData[2]}</div>
-                    <div class="player-details">Rank: ${rowData[4]}, Level: ${rowData[5]}</div>
+                    <div class="player-details">Rank: ${rowData[4]}, Level: ${rowData[5]}, Win Rate: ${rowData[8]}%</div>
                 </div>
                 <div class="col-md-2 d-flex align-items-center justify-content-center">
                     <div class="vs-text">VS</div>
                 </div>
                 <div class="col-md-4 player-card">
                     <div class="player-name">${rowData[3]}</div>
-                    <div class="player-details">Rank: ${rowData[6]}, Level: ${rowData[7]}</div>
+                    <div class="player-details">Rank: ${rowData[6]}, Level: ${rowData[7]}, Win Rate: ${rowData[9]}%</div>
                 </div>
             </div>
             <div class="row justify-content-center">

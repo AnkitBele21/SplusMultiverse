@@ -12,7 +12,7 @@ function fetchDataAndUpdateDisplay() {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            processMultipleRows(data.values);
+            processTableOne(data.values);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -20,11 +20,11 @@ function fetchDataAndUpdateDisplay() {
         });
 }
 
-function processMultipleRows(data) {
-    const activeTables = data.slice(1, 5).filter(row => row.length >= 8); // Processing rows 2 to 5
+function processTableOne(data) {
+    const rowData = data[1]; // Get the second row (index 1) directly for Table 1
 
-    if (activeTables.length > 0) {
-        activeTables.forEach(rowData => displayMatchDetails(rowData));
+    if (rowData && rowData.length >= 10 && rowData[0] === 'T1') { // Check if it's Table 1
+        displayMatchDetails(rowData);
     } else {
         displayNotActive();
     }
@@ -32,13 +32,12 @@ function processMultipleRows(data) {
 
 function displayMatchDetails(rowData) {
     const matchInfoElement = document.getElementById('match-info');
-    const tableNumber = rowData[0]; // Table number
 
     if (matchInfoElement) {
         const tableDiv = document.createElement('div');
         tableDiv.className = 'table-details';
         tableDiv.innerHTML = `
-            <h3>Table ${tableNumber}</h3>
+            <h3>Table 1</h3>
             <div class="player-card">
                 <div class="player-name">${rowData[2]}</div>
                 <div class="player-details">Rank: ${rowData[4]}, Level: ${rowData[5]}, Win Rate: ${rowData[8]}%</div>
@@ -56,5 +55,5 @@ function displayMatchDetails(rowData) {
 
 function displayNotActive() {
     const matchInfoElement = document.getElementById('match-info');
-    matchInfoElement.innerHTML = '<h2>No Active Matches</h2>';
+    matchInfoElement.innerHTML = '<h2>No Active Matches on Table 1</h2>';
 }

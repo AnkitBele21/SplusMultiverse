@@ -13,7 +13,7 @@ body, html {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6); /* Adjust the opacity as needed */
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
     z-index: 1;
 }
 
@@ -21,11 +21,11 @@ body, html {
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: 20px 0;
+    padding-top: 30px; /* Space for the logo */
 }
 
 .logo-active img, .logo-inactive img {
-    width: 300px; /* Adjust the logo size as needed */
+    width: 300px; /* Adjust the logo size */
     transition: transform 1s, width 1s;
 }
 
@@ -34,12 +34,12 @@ body, html {
     z-index: 2;
     text-align: center;
     padding: 20px;
-    margin-top: 40px; /* Adjust the margin as needed */
+    margin-top: 60px; /* Space between logo and match info */
 }
 
 .player-card {
-    background-color: transparent; /* Transparent background for player cards */
-    color: #01AB7A; /* Brand color for text */
+    background-color: transparent; /* Transparent background for cards */
+    color: #01AB7A; /* Text color */
     margin: 1rem;
     padding: 20px;
     border-radius: 15px;

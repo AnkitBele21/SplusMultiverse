@@ -25,8 +25,8 @@ body {
 }
 
 .logo-active img {
-    width: 200px; /* Slightly larger logo when active */
-    transform: translateY(-20px); /* Adjust this value as needed */
+    width: 250px; // Increase the logo size for active match
+    transform: translateY(-20px); // Adjust if necessary
     transition: transform 1s, width 1s;
 }
 

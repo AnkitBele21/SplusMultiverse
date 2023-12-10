@@ -5,54 +5,52 @@ body, html {
     background: url('https://raw.githubusercontent.com/AnkitBele21/centurydewas/main/photo/stock-photo-opening-frame-of-the-snooker-77557717-ZSbCgl2Ur-transformed.png') no-repeat center center fixed;
     background-size: cover;
     position: relative;
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
-    z-index: 1;
+    padding-top: 100px; /* Added space for the logo */
 }
 
 #logo-container {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding-top: 30px; /* Space for the logo */
+    position: absolute;
+    top: 20px; /* Positioning logo at the top */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; /* Ensuring it's above other elements */
 }
 
 .logo-active img, .logo-inactive img {
-    width: 300px; /* Adjust the logo size */
+    width: 300px; /* Increasing the size of the logo */
     transition: transform 1s, width 1s;
 }
 
 #match-info {
-    position: relative;
-    z-index: 2;
     text-align: center;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for content */
     padding: 20px;
     margin-top: 60px; /* Space between logo and match info */
+    border-radius: 15px;
 }
 
 .player-card {
-    background-color: transparent; /* Transparent background for cards */
-    color: #01AB7A; /* Text color */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #01AB7A;
     margin: 1rem;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.player-name {
+.player-card .player-name {
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-.player-details {
+.player-card .player-details {
     font-size: 18px;
     line-height: 1.5;
 }

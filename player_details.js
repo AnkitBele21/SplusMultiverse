@@ -60,7 +60,7 @@ function fetchRankInfo(playerName) {
         range: `${RANK_SHEET_NAME}`,
     }).then((response) => {
         const values = response.result.values;
-        const rankInfo = values.find(row => row[1] === playerName);
+        const rankInfo = values.find(row => row[1] === playerName); // Matching player name in column B
         if (rankInfo) {
             displayRankInfo(rankInfo);
         } else {
@@ -70,21 +70,6 @@ function fetchRankInfo(playerName) {
         console.error('Error fetching rank data:', response.result.error.message);
     });
 }
-
-function displayRankInfo(rankInfo) {
-    document.getElementById('playerRank').innerText = `Rank: ${rankInfo[0]}`;
-    document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`;
-    document.getElementById('playerCard').style.backgroundColor = rankInfo[3];
-
-    // Display premium offer details
-    const days = rankInfo[6]; // Column G for days
-    const time = rankInfo[7]; // Column H for time
-    let premiumOfferText = 'Premium Offer: ';
-    premiumOfferText += time ? `${time}/` : '';
-    premiumOfferText += days ? `${days} Days` : '';
-    document.getElementById('premiumOffer').innerText = premiumOfferText;
-}
-Echo {$rankinfo[6]}
 function displayPlayerInfo(playerInfo) {
     document.getElementById('playerName').innerText = playerInfo[2]; // Assuming name is in column C
     const totalMoneyElement = document.getElementById('totalMoney');

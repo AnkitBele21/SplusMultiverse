@@ -82,9 +82,9 @@ function displayRankInfo(rankInfo) {
     let premiumOfferText = 'Premium Offer: ';
     premiumOfferText += time ? `${time}/` : '';
     premiumOfferText += days ? `${days} Days` : '';
-Echo {$rankinfo[6]}
     document.getElementById('premiumOffer').innerText = premiumOfferText;
 }
+Echo {$rankinfo[6]}
 function displayPlayerInfo(playerInfo) {
     document.getElementById('playerName').innerText = playerInfo[2]; // Assuming name is in column C
     const totalMoneyElement = document.getElementById('totalMoney');

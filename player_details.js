@@ -79,11 +79,10 @@ function displayRankInfo(rankInfo) {
     // Display premium offer details
     const days = rankInfo[6]; // Column G for days
     const time = rankInfo[7]; // Column H for time
-
     let premiumOfferText = 'Premium Offer: ';
     premiumOfferText += time ? `${time}/` : '';
     premiumOfferText += days ? `${days} Days` : '';
-
+Echo {$rankinfo[6]}
     document.getElementById('premiumOffer').innerText = premiumOfferText;
 }
 function displayPlayerInfo(playerInfo) {

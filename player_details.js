@@ -1,9 +1,10 @@
+// player_details.js
+// Your API Key and Sheet ID
 const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
 const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
 const PLAYER_SHEET_NAME = 'snookerplus';
 const FRAMES_SHEET_NAME = 'Frames';
 const RANK_SHEET_NAME = 'Rank';
-
 function initClient() {
     gapi.client.init({
         apiKey: API_KEY,
@@ -75,6 +76,7 @@ function displayRankInfo(rankInfo) {
     document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`;
     document.getElementById('playerCard').style.backgroundColor = rankInfo[3];
 
+    // Display premium offer details
     const days = rankInfo[6]; // Column G for days
     const time = rankInfo[7]; // Column H for time
 

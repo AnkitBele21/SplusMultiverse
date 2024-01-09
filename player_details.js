@@ -70,6 +70,36 @@ function fetchRankInfo(playerName) {
         console.error('Error fetching rank data:', response.result.error.message);
     });
 }
+function displayRankInfo(rankInfo) {
+    document.getElementById('playerRank').innerText = `Rank: ${rankInfo[0]}`; 
+    document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`; 
+    document.getElementById('playerCard').style.backgroundColor = rankInfo[3]; 
+
+    // New code to handle columns G and H
+    const days = rankInfo[6]; // Assuming column G is at index 6
+    const playingTime = rankInfo[7]; // Assuming column H is at index 7
+
+    if (days && playingTime) {
+        // Create elements or update existing elements to display days and playing time
+        const daysElement = document.getElementById('days');
+        const playingTimeElement = document.getElementById('playingTime');
+
+        if (!daysElement) {
+            const newDaysElement = document.createElement('div');
+            newDaysElement.id = 'days';
+            document.getElementById('playerCard').appendChild(newDaysElement);
+        }
+        document.getElementById('days').innerText = `Days: ${days}`;
+
+        if (!playingTimeElement) {
+            const newPlayingTimeElement = document.createElement('div');
+            newPlayingTimeElement.id = 'playingTime';
+            document.getElementById('playerCard').appendChild(newPlayingTimeElement);
+        }
+        document.getElementById('playingTime').innerText = `Playing Time: ${playingTime}`;
+    }
+}
+
 function displayPlayerInfo(playerInfo) {
     document.getElementById('playerName').innerText = playerInfo[2]; // Assuming name is in column C
     const totalMoneyElement = document.getElementById('totalMoney');

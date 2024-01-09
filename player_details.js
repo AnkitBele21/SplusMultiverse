@@ -1,10 +1,9 @@
-// player_details.js
-// Your API Key and Sheet ID
 const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
 const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
 const PLAYER_SHEET_NAME = 'snookerplus';
 const FRAMES_SHEET_NAME = 'Frames';
 const RANK_SHEET_NAME = 'Rank';
+
 function initClient() {
     gapi.client.init({
         apiKey: API_KEY,
@@ -60,7 +59,7 @@ function fetchRankInfo(playerName) {
         range: `${RANK_SHEET_NAME}`,
     }).then((response) => {
         const values = response.result.values;
-        const rankInfo = values.find(row => row[1] === playerName); // Matching player name in column B
+        const rankInfo = values.find(row => row[1] === playerName);
         if (rankInfo) {
             displayRankInfo(rankInfo);
         } else {
@@ -70,37 +69,20 @@ function fetchRankInfo(playerName) {
         console.error('Error fetching rank data:', response.result.error.message);
     });
 }
-function displayRankInfo(rankInfo) {
-    // Display rank and win rate
-    document.getElementById('playerRank').innerText = `Rank: ${rankInfo[0]}`; 
-    document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`; // Column E for win rate
-    document.getElementById('playerCard').style.backgroundColor = rankInfo[3]; 
 
-    // Display premium offer details
+function displayRankInfo(rankInfo) {
+    document.getElementById('playerRank').innerText = `Rank: ${rankInfo[0]}`;
+    document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`;
+    document.getElementById('playerCard').style.backgroundColor = rankInfo[3];
+
     const days = rankInfo[6]; // Column G for days
     const time = rankInfo[7]; // Column H for time
 
-    // Check if the premium offer days information is available and display it
-    if (days) {
-        let daysElement = document.getElementById('premiumOfferDays');
-        if (!daysElement) {
-            daysElement = document.createElement('div');
-            daysElement.id = 'premiumOfferDays';
-            document.getElementById('playerCard').appendChild(daysElement);
-        }
-        daysElement.innerText = `Premium Offer: ${days} Days`;
-    }
+    let premiumOfferText = 'Premium Offer: ';
+    premiumOfferText += time ? `${time}/` : '';
+    premiumOfferText += days ? `${days} Days` : '';
 
-    // Check if the premium offer time information is available and display it
-    if (time) {
-        let timeElement = document.getElementById('premiumOfferTime');
-        if (!timeElement) {
-            timeElement = document.createElement('div');
-            timeElement.id = 'premiumOfferTime';
-            document.getElementById('playerCard').appendChild(timeElement);
-        }
-        timeElement.innerText = `Time: ${time}`;
-    }
+    document.getElementById('premiumOffer').innerText = premiumOfferText;
 }
 function displayPlayerInfo(playerInfo) {
     document.getElementById('playerName').innerText = playerInfo[2]; // Assuming name is in column C

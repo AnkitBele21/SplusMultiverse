@@ -71,15 +71,13 @@ function fetchRankInfo(playerName) {
     });
 }
 function displayRankInfo(rankInfo) {
+    // Display rank and win rate
     document.getElementById('playerRank').innerText = `Rank: ${rankInfo[0]}`; 
-    document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`; 
+    document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`; // Column E for win rate
     document.getElementById('playerCard').style.backgroundColor = rankInfo[3]; 
 
-    // Handle columns G and H
+    // Display days from column G if available
     const days = rankInfo[6]; // Column G
-    const playingTime = rankInfo[7]; // Column H
-
-    // Check if the days information is available and display it
     if (days) {
         let daysElement = document.getElementById('days');
         if (!daysElement) {
@@ -90,7 +88,8 @@ function displayRankInfo(rankInfo) {
         daysElement.innerText = `Days: ${days}`;
     }
 
-    // Check if the playing time information is available and display it
+    // Display playing time from column H if available
+    const playingTime = rankInfo[7]; // Column H
     if (playingTime) {
         let playingTimeElement = document.getElementById('playingTime');
         if (!playingTimeElement) {

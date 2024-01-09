@@ -75,28 +75,30 @@ function displayRankInfo(rankInfo) {
     document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`; 
     document.getElementById('playerCard').style.backgroundColor = rankInfo[3]; 
 
-    // New code to handle columns G and H
-    const days = rankInfo[6]; // Assuming column G is at index 6
-    const playingTime = rankInfo[7]; // Assuming column H is at index 7
+    // Handle columns G and H
+    const days = rankInfo[6]; // Column G
+    const playingTime = rankInfo[7]; // Column H
 
-    if (days && playingTime) {
-        // Create elements or update existing elements to display days and playing time
-        const daysElement = document.getElementById('days');
-        const playingTimeElement = document.getElementById('playingTime');
-
+    // Check if the days information is available and display it
+    if (days) {
+        let daysElement = document.getElementById('days');
         if (!daysElement) {
-            const newDaysElement = document.createElement('div');
-            newDaysElement.id = 'days';
-            document.getElementById('playerCard').appendChild(newDaysElement);
+            daysElement = document.createElement('div');
+            daysElement.id = 'days';
+            document.getElementById('playerCard').appendChild(daysElement);
         }
-        document.getElementById('days').innerText = `Days: ${days}`;
+        daysElement.innerText = `Days: ${days}`;
+    }
 
+    // Check if the playing time information is available and display it
+    if (playingTime) {
+        let playingTimeElement = document.getElementById('playingTime');
         if (!playingTimeElement) {
-            const newPlayingTimeElement = document.createElement('div');
-            newPlayingTimeElement.id = 'playingTime';
-            document.getElementById('playerCard').appendChild(newPlayingTimeElement);
+            playingTimeElement = document.createElement('div');
+            playingTimeElement.id = 'playingTime';
+            document.getElementById('playerCard').appendChild(playingTimeElement);
         }
-        document.getElementById('playingTime').innerText = `Playing Time: ${playingTime}`;
+        playingTimeElement.innerText = `Playing Time: ${playingTime}`;
     }
 }
 

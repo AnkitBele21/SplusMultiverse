@@ -76,31 +76,32 @@ function displayRankInfo(rankInfo) {
     document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`; // Column E for win rate
     document.getElementById('playerCard').style.backgroundColor = rankInfo[3]; 
 
-    // Display days from column G if available
-    const days = rankInfo[6]; // Column G
+    // Display premium offer details
+    const days = rankInfo[6]; // Column G for days
+    const time = rankInfo[7]; // Column H for time
+
+    // Check if the premium offer days information is available and display it
     if (days) {
-        let daysElement = document.getElementById('days');
+        let daysElement = document.getElementById('premiumOfferDays');
         if (!daysElement) {
             daysElement = document.createElement('div');
-            daysElement.id = 'days';
+            daysElement.id = 'premiumOfferDays';
             document.getElementById('playerCard').appendChild(daysElement);
         }
-        daysElement.innerText = `Days: ${days}`;
+        daysElement.innerText = `Premium Offer: ${days} Days`;
     }
 
-    // Display playing time from column H if available
-    const playingTime = rankInfo[7]; // Column H
-    if (playingTime) {
-        let playingTimeElement = document.getElementById('playingTime');
-        if (!playingTimeElement) {
-            playingTimeElement = document.createElement('div');
-            playingTimeElement.id = 'playingTime';
-            document.getElementById('playerCard').appendChild(playingTimeElement);
+    // Check if the premium offer time information is available and display it
+    if (time) {
+        let timeElement = document.getElementById('premiumOfferTime');
+        if (!timeElement) {
+            timeElement = document.createElement('div');
+            timeElement.id = 'premiumOfferTime';
+            document.getElementById('playerCard').appendChild(timeElement);
         }
-        playingTimeElement.innerText = `Playing Time: ${playingTime}`;
+        timeElement.innerText = `Time: ${time}`;
     }
 }
-
 function displayPlayerInfo(playerInfo) {
     document.getElementById('playerName').innerText = playerInfo[2]; // Assuming name is in column C
     const totalMoneyElement = document.getElementById('totalMoney');

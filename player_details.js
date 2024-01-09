@@ -5,6 +5,7 @@ const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
 const PLAYER_SHEET_NAME = 'snookerplus';
 const FRAMES_SHEET_NAME = 'Frames';
 const RANK_SHEET_NAME = 'Rank';
+
 function initClient() {
     gapi.client.init({
         apiKey: API_KEY,
@@ -22,6 +23,7 @@ function initClient() {
         }
     });
 }
+
 function fetchPlayerInfo(playerName) {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: SHEET_ID,
@@ -38,6 +40,7 @@ function fetchPlayerInfo(playerName) {
         console.error('Error fetching player data:', response.result.error.message);
     });
 }
+
 function fetchFramesInfo(playerName) {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: SHEET_ID,
@@ -54,6 +57,7 @@ function fetchFramesInfo(playerName) {
         console.error('Error fetching frames data:', response.result.error.message);
     });
 }
+
 function fetchRankInfo(playerName) {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: SHEET_ID,
@@ -70,6 +74,7 @@ function fetchRankInfo(playerName) {
         console.error('Error fetching rank data:', response.result.error.message);
     });
 }
+
 function displayPlayerInfo(playerInfo) {
     document.getElementById('playerName').innerText = playerInfo[2]; // Assuming name is in column C
     const totalMoneyElement = document.getElementById('totalMoney');
@@ -89,9 +94,6 @@ function displayPlayerInfo(playerInfo) {
         document.getElementById('warning').style.display = 'none';
     }
 }
-
-
-// ... [Previous code remains the same]
 
 function displayFramesInfo(framesData, playerName) {
     const framesContainer = document.getElementById('framesInfo');
@@ -159,11 +161,4 @@ function displayFramesInfo(framesData, playerName) {
     });
 }
 
-function displayRankInfo(rankInfo) {
-    document.getElementById('playerRank').innerText = `Rank: ${rankInfo[0]}`; 
-    document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`; 
-    document.getElementById('playerCard').style.backgroundColor = rankInfo[3]; 
-}
-
-// Load the Google API client and call initClient
-gapi.load('client', initClient);
+function displayRankInfo(rankInfo)

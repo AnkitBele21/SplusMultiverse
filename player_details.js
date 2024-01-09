@@ -161,4 +161,15 @@ function displayFramesInfo(framesData, playerName) {
     });
 }
 
-function displayRankInfo(rankInfo)
+function displayRankInfo(rankInfo) {
+    document.getElementById('playerRank').innerText = `Rank: ${rankInfo[0]}`; // Rank in column A
+    document.getElementById('winRate').innerText = `Win Rate: ${rankInfo[4]}%`; // Win rate in column E
+    document.getElementById('playerCard').style.backgroundColor = rankInfo[3]; // Color in column D
+
+    // New code to display the Offer
+    const offer = rankInfo[8]; // Assuming Offer is in column I
+    document.getElementById('playerOffer').innerText = `Offer: ${offer}`;
+}
+
+// Load the Google API client and call initClient
+gapi.load('client', initClient);

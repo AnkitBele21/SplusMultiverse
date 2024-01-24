@@ -22,13 +22,51 @@
             <img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="Snooker Plus Logo">
             <h1>Leaderboard</h1>
         </div>
-        <div id="loginButton" onclick="location.href='https://leaderboard.snookerplus.in/playerinfo';">
+        <div id="loginButton" onclick="location.href='https://ankitbele21.github.io/centurydewas/playerinfo'">
             Player Login
         </div>
     </header>
+
+    <!-- Club Image Inserted Here -->
+    <div class="club-image-container">
+        <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Frame%2013128.png?raw=true" alt="Club Image" style="width: 100%; height: auto;">
+    </div>
+
     <section id="contestBanner" class="banner-section">
-    <h2 class="banner-text">"Coming Soon: The Ultimate Snooker+ Tournament!"</h2>
-</section>
+        <h2 class="banner-text">"Free Entry For Top 8!"</h2>
+    <p>Leaderboard closes in <span id="countdown"></span> .</p>
+
+    <!-- Add your JavaScript for the countdown here -->
+    <script>
+        // Set the date we're counting down to (3rd Feb)
+        var countDownDate = new Date("Feb 3, 2024 00:00:00").getTime();
+
+        // Update the countdown every 1 second
+        var x = setInterval(function () {
+
+            // Get the current date and time
+            var now = new Date().getTime();
+
+            // Calculate the remaining time
+            var distance = countDownDate - now;
+
+            // Calculate days, hours, minutes, and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the countdown
+            document.getElementById("countdown").innerHTML = days + " Days " ;
+
+            // If the countdown is over, display a message
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
+    </section>
 
     <main>
         <div class="search-bar">
@@ -38,9 +76,8 @@
             <!-- Content will be displayed here dynamically -->
         </div>
     </main>
+
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="datapull.js"></script>
-    <script>
-
 </body>
 </html>

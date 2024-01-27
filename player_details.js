@@ -281,7 +281,7 @@ async function handlePaymentSuccess(playerName, amount, _paymentId) {
   try {
     loaderInstance.showLoader();
 
-    fetch("http://35.207.223.133/record_payment/", {
+    fetch("https://payment.snookerplus.in/record_payment/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -315,7 +315,7 @@ const preparePayment = (playerName, paymentAmount) => {
   try {
     loaderInstance.showLoader();
 
-    fetch("http://35.207.223.133/payment/options/", {
+    fetch("https://payment.snookerplus.in/payment/options/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

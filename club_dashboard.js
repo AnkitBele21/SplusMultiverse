@@ -68,7 +68,7 @@ async function createTableWisePerformanceGraph() {
     const data = await fetchData('club', '!A:B:F'); // Fetching data from columns A, B, and F
     const tables = data.map(row => row[0]);
     const occupancy = data.map(row => row[1]);
-    const tableStatus = data.map(row => row[2]); // Column F data
+    const tableStatus = data.map(row => row[5]); // Column F data
 
     // Set bar colors based on table status
     const barColors = tableStatus.map(status => status === '1' ? '#01AB7A' : '#CCCCCC');

@@ -18,7 +18,7 @@ async function displayClubDetails() {
     });
 }
 
-function createGraph(data, labels, canvasId, graphTitle) {
+function createGraph(data, labels, canvasId, graphTitle, backgroundColors) {
     var ctx = document.getElementById(canvasId).getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -27,7 +27,7 @@ function createGraph(data, labels, canvasId, graphTitle) {
             datasets: [{
                 label: graphTitle,
                 data: data,
-                backgroundColor: '#01AB7A',
+                backgroundColor: backgroundColors || '#01AB7A', // Use provided colors or default color
                 borderColor: '#018a5e',
                 borderWidth: 1,
             }]
@@ -65,10 +65,15 @@ function createGraph(data, labels, canvasId, graphTitle) {
 }
 
 async function createTableWisePerformanceGraph() {
-    const data = await fetchData('club', '!A:B'); // Fetching data from columns A and B
+    const data = await fetchData('club', '!A:B:F'); // Fetching data from columns A, B, and F
     const tables = data.map(row => row[0]);
     const occupancy = data.map(row => row[1]);
-    createGraph(occupancy, tables, 'tableWisePerformanceChart', 'Table\'s Performance');
+    const tableStatus = data.map(row => row[2]); // Column F data
+
+    // Set bar colors based on table status
+    const barColors = tableStatus.map(status => status === '1' ? '#01AB7A' : '#CCCCCC');
+
+    createGraph(occupancy, tables, 'tableWisePerformanceChart', 'Table\'s Performance', barColors);
 }
 
 async function createDateWisePerformanceGraph() {

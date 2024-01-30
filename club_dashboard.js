@@ -77,18 +77,19 @@ async function createTableWisePerformanceGraph() {
 }
 
 async function createDateWisePerformanceGraph() {
-    const data = await fetchData('club2', '!A:C'); // Fetching data from columns A and C
+    const data = await fetchData('club2', '!A:D'); // Fetching data from columns A, C, and D
     const dates = data.map(row => row[0]);
     const occupancy = data.map(row => row[2]);
+    const dayOfWeek = data.map(row => row[3]); // Column D data
 
-    // Set bar colors, highlighting Sundays
-    const barColors = dates.map(dateString => {
-        const date = new Date(dateString);
-        return date.getDay() === 0 ? '#F6AE2D' : '#01AB7A'; // Highlight Sundays in red
-    });
+    // Set bar colors based on whether the day is Sunday
+    const barColors = dayOfWeek.map(day => day === 'Sunday' ? '#F6AE2D' : '#01AB7A'); // Highlight Sundays in red
 
     createGraph(occupancy, dates, 'dateWisePerformanceChart', 'Club Performance', barColors);
 }
+
+// Rest of your code remains the same
+
 
 // Rest of your code remains the same
 

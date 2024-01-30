@@ -84,7 +84,6 @@ async function createDateWisePerformanceGraph() {
 
     // Set bar colors based on whether the day is Sunday
     const barColors = dayOfWeek.map(day => day === 'Sunday' ? '#F6AE2D' : '#01AB7A'); // Highlight Sundays in red
-    const barColors = dayOfWeek.map(day => day === 'Max' ? '#C5C5C5' : '#01AB7A');
 
     createGraph(occupancy, dates, 'dateWisePerformanceChart', 'Club Performance', barColors);
 }

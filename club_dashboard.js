@@ -80,8 +80,15 @@ async function createDateWisePerformanceGraph() {
     const data = await fetchData('club2', '!A:C'); // Fetching data from columns A and C
     const dates = data.map(row => row[0]);
     const occupancy = data.map(row => row[2]);
-    createGraph(occupancy, dates, 'dateWisePerformanceChart', 'Club Performance');
+
+    const backgroundColors = dates.map(date => {
+        const dayOfWeek = new Date(date).getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        return dayOfWeek === 0 ? '#FF0000' : '#01AB7A'; // Red for Sundays, default color for other days
+    });
+
+    createGraph(occupancy, dates, 'dateWisePerformanceChart', 'Club Performance', backgroundColors);
 }
+
 
 window.onload = function() {
     displayClubDetails();

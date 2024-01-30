@@ -82,11 +82,20 @@ async function createDateWisePerformanceGraph() {
     const occupancy = data.map(row => row[2]);
     const dayOfWeek = data.map(row => row[3]); // Column D data
 
-    // Set bar colors based on whether the day is Sunday
-    const barColors = dayOfWeek.map(day => day === 'Sunday' ? '#F6AE2D' : '#01AB7A'); // Highlight Sundays in red
+    // Set bar colors based on the day and special conditions
+    const barColors = dates.map((date, index) => {
+        if (dayOfWeek[index] === 'Sunday') {
+            return '#F6AE2D'; // Highlight Sundays
+        } else if (!isNaN(date) && dayOfWeek[index] === 'Max') {
+            return '#A0A0A0'; // Grey color for 'Max' entries without a date
+        } else {
+            return '#01AB7A'; // Default color
+        }
+    });
 
     createGraph(occupancy, dates, 'dateWisePerformanceChart', 'Club Performance', barColors);
 }
+
 
 // Rest of your code remains the same
 

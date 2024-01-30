@@ -81,13 +81,16 @@ async function createDateWisePerformanceGraph() {
     const dates = data.map(row => row[0]);
     const occupancy = data.map(row => row[2]);
 
-    const backgroundColors = dates.map(date => {
-        const dayOfWeek = new Date(date).getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-        return dayOfWeek === 0 ? '#FF0000' : '#01AB7A'; // Red for Sundays, default color for other days
+    // Set bar colors, highlighting Sundays
+    const barColors = dates.map(dateString => {
+        const date = new Date(dateString);
+        return date.getDay() === 0 ? '#FF0000' : '#01AB7A'; // Highlight Sundays in red
     });
 
-    createGraph(occupancy, dates, 'dateWisePerformanceChart', 'Club Performance', backgroundColors);
+    createGraph(occupancy, dates, 'dateWisePerformanceChart', 'Club Performance', barColors);
 }
+
+// Rest of your code remains the same
 
 
 window.onload = function() {

@@ -146,6 +146,10 @@ main {
 .black-level-card .player-coins {
     color: gold; /* Golden coins text */
 }
+.top-eight {
+    border: 2px solid gold; /* Gold border for top 8 players */
+    background-color: rgba(255, 215, 0, 0.1); /* Light gold background */
+}
 
 /* Optional: Add any additional styling for Black level cards */
 

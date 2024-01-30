@@ -82,70 +82,25 @@ async function createDateWisePerformanceGraph() {
     const occupancy = data.map(row => row[2]);
     const dayOfWeek = data.map(row => row[3]); // Column D data
 
-    // Prepare datasets for the chart
-    const datasets = dates.map((date, index) => {
-        let backgroundColor;
-        let widthPercentage = 100; // Default width for regular bars
-
+    // Set bar colors based on the day and special conditions
+    const barColors = dates.map((date, index) => {
         if (dayOfWeek[index] === 'Sunday') {
-            backgroundColor = '#F6AE2D'; // Highlight Sundays
+            return '#F6AE2D'; // Highlight Sundays
         } else if (!isNaN(date) && dayOfWeek[index] === 'Max') {
-            backgroundColor = '#A0A0A0'; // Grey color for 'Max' entries
-            widthPercentage = parseFloat(date); // Use the number as the percentage width
+            return '#A0A0A0'; // Grey color for 'Max' entries without a date
         } else {
-            backgroundColor = '#01AB7A'; // Default color
-        }
-
-        return {
-            label: dates[index],
-            data: [occupancy[index]],
-            backgroundColor: backgroundColor,
-            barPercentage: widthPercentage / 100,
-            categoryPercentage: 1
-        };
-    });
-
-    createCustomGraph(datasets, 'dateWisePerformanceChart', 'Club Performance');
-}
-
-function createCustomGraph(datasets, canvasId, graphTitle) {
-    var ctx = document.getElementById(canvasId).getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [''], // Single label for all bars
-            datasets: datasets
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        title: function(context) {
-                            return `Details for ${context[0].dataset.label}`;
-                        }
-                    }
-                }
-            },
-            title: {
-                display: true,
-                text: graphTitle,
-                font: {
-                    size: 18,
-                    weight: 'bold'
-                },
-                color: '#01AB7A'
-            }
+            return '#01AB7A'; // Default color
         }
     });
+
+    createGraph(occupancy, dates, 'dateWisePerformanceChart', 'Club Performance', barColors);
 }
+
+
+// Rest of your code remains the same
+
+
+// Rest of your code remains the same
 
 
 window.onload = function() {

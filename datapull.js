@@ -24,11 +24,6 @@ function createPlayerCard(player) {
     const playerCard = document.createElement('div');
     playerCard.className = 'player-card';
 
-    // Highlight top 8 players
-    if (rank <= 8) {
-        playerCard.classList.add('top-eight'); // Add a special class for top 8 players
-    }
-
     const playerInfo = document.createElement('div');
     playerInfo.className = 'player-info';
 
@@ -67,7 +62,35 @@ function createPlayerCard(player) {
     const progressBarInner = document.createElement('div');
     progressBarInner.className = 'progress-bar-inner';
 
-    // ... existing code for setting progress bar color and width ...
+    let progressBarColor = '#F44336'; // Default: Red
+    if (coins >= 21 && coins <= 30) {
+        progressBarColor = '#FFEB3B'; // Yellow
+    } else if (coins >= 31 && coins <= 40) {
+        progressBarColor = '#4CAF50'; // Green
+    } else if (coins >= 41 && coins <= 50) {
+        progressBarColor = '#795548'; // Brown
+    } else if (coins >= 51 && coins <= 60) {
+        progressBarColor = '#2196F3'; // Blue
+    } else if (coins >= 61 && coins <= 70) {
+        progressBarColor = '#E91E63'; // Pink
+    } else if (coins > 70) {
+        progressBarColor = '#000000'; // Black
+    }
+
+    progressBarInner.style.backgroundColor = progressBarColor;
+
+    const colorMinCoins = [0, 21, 31, 41, 51, 61, 71];
+    const colorMaxCoins = [20, 30, 40, 50, 60, 70, 1000];
+    let progressBarWidth = 0;
+
+    for (let i = 0; i < colorMinCoins.length; i++) {
+        if (coins >= colorMinCoins[i] && coins <= colorMaxCoins[i]) {
+            progressBarWidth = ((coins - colorMinCoins[i]) + 1) / (colorMaxCoins[i] - colorMinCoins[i] + 1) * 100;
+            break;
+        }
+    }
+
+    progressBarInner.style.width = `${progressBarWidth}%`;
 
     progressBar.appendChild(progressBarInner); // Append the inner div to the progress bar
 
@@ -81,11 +104,12 @@ function createPlayerCard(player) {
         // ... existing progress bar code ...
     }
     playerName.addEventListener('click', function() {
-        window.location.href = `https://leaderboard.snookerplus.in/playerinfo?player=${encodeURIComponent(name)}`;
-    });
+    window.location.href = `https://leaderboard.snookerplus.in/playerinfo?player=${encodeURIComponent(name)}`;
+});
 
     return playerCard;
 }
+
 
 // Function to display players
 function displayPlayers(players) {
@@ -139,7 +163,7 @@ let lastScrollTop = 0;
 const floatingButton = document.getElementById('floatingButton');
 
 window.addEventListener("scroll", function() {
-    let scrollTop = window.pageYOffset or document.documentElement.scrollTop;
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     if (scrollTop > lastScrollTop) {
         floatingButton.style.opacity = "0";
     } else {

@@ -1,49 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snooker+ Tournament</title>
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="tournament.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="tournaments.css">
+    <title>Snooker+ Tournament</title>
 </head>
+
 <body>
 
-  <header class="bg-dark text-white text-center py-3">
-    <h1>Snooker+ Tournament</h1>
-  </header>
+    <header class="banner-section">
+        <img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%" alt="Snooker Plus Logo">
+        <h1 class="banner-text">Snooker+ Tournament</h1>
+        <button id="loginButton">Login</button>
+    </header>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#groupStage">Group Stage</a></li>
-          <li class="nav-item"><a class="nav-link" href="#knockout">Knockout</a></li>
-          <li class="nav-item"><a class="nav-link" href="#quarterFinals">Quarter Finals</a></li>
-          <li class="nav-item"><a class="nav-link" href="#semiFinals">Semi Finals</a></li>
-          <li class="nav-item"><a class="nav-link" href="#finals">Finals</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    <main>
+        <!-- Tab content goes here -->
+        <div id="groupStage" class="tab-content"></div>
+        <div id="knockout" class="tab-content"></div>
+        <div id="quarterFinal" class="tab-content"></div>
+        <div id="semiFinal" class="tab-content"></div>
+        <div id="final" class="tab-content"></div>
+    </main>
 
-  <section class="container my-4">
-    <div class="row">
-      <!-- Content for each round will be dynamically loaded here -->
-    </div>
-  </section>
-
-  <!-- Bootstrap JS and Popper.js -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Your custom JavaScript -->
-  <script src="tournament.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="tournament.js"></script>
 </body>
+
 </html>

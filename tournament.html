@@ -4,100 +4,85 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Snooker+ Tournament</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-    }
 
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      text-align: center;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-around;
-      background-color: #444;
-      padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-
-    nav a:hover {
-      background-color: #666;
-    }
-
-    section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 20px;
-    }
-
-    .round {
-      width: 30%;
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-  </style>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
-  <header>
+  <header class="bg-dark text-white text-center py-3">
     <h1>Snooker+ Tournament</h1>
   </header>
 
-  <nav>
-    <a href="#groupStage">Group Stage</a>
-    <a href="#knockout">Knockout</a>
-    <a href="#quarterFinals">Quarter Finals</a>
-    <a href="#semiFinals">Semi Finals</a>
-    <a href="#finals">Finals</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="#groupStage">Group Stage</a></li>
+          <li class="nav-item"><a class="nav-link" href="#knockout">Knockout</a></li>
+          <li class="nav-item"><a class="nav-link" href="#quarterFinals">Quarter Finals</a></li>
+          <li class="nav-item"><a class="nav-link" href="#semiFinals">Semi Finals</a></li>
+          <li class="nav-item"><a class="nav-link" href="#finals">Finals</a></li>
+        </ul>
+      </div>
+    </div>
   </nav>
 
-  <section>
-    <div class="round" id="groupStage">
-      <h2>Group Stage</h2>
-      <!-- Content for Group Stage -->
-    </div>
+  <section class="container my-4">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Group Stage</h2>
+            <!-- Content for Group Stage -->
+          </div>
+        </div>
+      </div>
 
-    <div class="round" id="knockout">
-      <h2>Knockout</h2>
-      <!-- Content for Knockout -->
-    </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Knockout</h2>
+            <!-- Content for Knockout -->
+          </div>
+        </div>
+      </div>
 
-    <div class="round" id="quarterFinals">
-      <h2>Quarter Finals</h2>
-      <!-- Content for Quarter Finals -->
-    </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Quarter Finals</h2>
+            <!-- Content for Quarter Finals -->
+          </div>
+        </div>
+      </div>
 
-    <div class="round" id="semiFinals">
-      <h2>Semi Finals</h2>
-      <!-- Content for Semi Finals -->
-    </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Semi Finals</h2>
+            <!-- Content for Semi Finals -->
+          </div>
+        </div>
+      </div>
 
-    <div class="round" id="finals">
-      <h2>Finals</h2>
-      <!-- Content for Finals -->
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Finals</h2>
+            <!-- Content for Finals -->
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

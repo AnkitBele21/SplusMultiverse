@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snooker+ Tournament</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #444;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #666;
+    }
+
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+    }
+
+    .round {
+      width: 30%;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Snooker+ Tournament</h1>
+  </header>
+
+  <nav>
+    <a href="#groupStage">Group Stage</a>
+    <a href="#knockout">Knockout</a>
+    <a href="#quarterFinals">Quarter Finals</a>
+    <a href="#semiFinals">Semi Finals</a>
+    <a href="#finals">Finals</a>
+  </nav>
+
+  <section>
+    <div class="round" id="groupStage">
+      <h2>Group Stage</h2>
+      <!-- Content for Group Stage -->
+    </div>
+
+    <div class="round" id="knockout">
+      <h2>Knockout</h2>
+      <!-- Content for Knockout -->
+    </div>
+
+    <div class="round" id="quarterFinals">
+      <h2>Quarter Finals</h2>
+      <!-- Content for Quarter Finals -->
+    </div>
+
+    <div class="round" id="semiFinals">
+      <h2>Semi Finals</h2>
+      <!-- Content for Semi Finals -->
+    </div>
+
+    <div class="round" id="finals">
+      <h2>Finals</h2>
+      <!-- Content for Finals -->
+    </div>
+  </section>
+
+</body>
+</html>

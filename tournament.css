@@ -1,16 +1,29 @@
-/* Add your custom styles here */
-body {
-  padding-top: 60px;
+/* Your existing CSS styles */
+/* ... */
+
+/* New styles for tournament page */
+.tab-content {
+    display: none;
 }
 
-.navbar {
-  margin-bottom: 20px;
+/* Adjust styles based on round colors */
+#groupStage {
+    background-color: #28a745; /* Green */
 }
 
-.card {
-  transition: transform 0.2s;
+#knockout {
+    background-color: #964b00; /* Brown */
 }
 
-.card:hover {
-  transform: scale(1.05);
+#quarterFinal {
+    background-color: #0000ff; /* Blue */
+}
+
+#semiFinal {
+    background-color: #ff69b4; /* Pink */
+}
+
+#final {
+    background-color: #000000; /* Black */
+    color: #ffd700; /* Gold */
 }

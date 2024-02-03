@@ -50,13 +50,16 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Initial display of the Group Stage
-  displayRoundData('Group Stage');
+  //displayRoundData('Group Stage');
+    displayRoundData('Knockout');
+
 
   // Event listeners for navigation
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function (event) {
       event.preventDefault();
       const round = this.getAttribute('href').substring(1); // Extract round name from href
+      console.log(round);
       displayRoundData(round);
     });
   });

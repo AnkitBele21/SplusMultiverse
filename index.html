@@ -56,8 +56,9 @@
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display the countdown
-            document.getElementById("countdown").innerHTML = days + " Days " ;
+             // Display the result in the element with id="countdownTimer"
+        document.getElementById("countdownTimer").innerHTML = hours + "h "
+        + minutes + "m " + seconds + "s ";
 
             // If the countdown is over, display a message
             if (distance < 0) {

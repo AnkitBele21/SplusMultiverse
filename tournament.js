@@ -48,9 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     return card;
   }
-// Add this at the end of your existing JavaScript to apply round-specific styles
-document.addEventListener('DOMContentLoaded', function () {
-  // Your existing code...
 
   // Apply round-specific styles
   function applyRoundStyles(round) {

@@ -48,9 +48,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     return card;
   }
+// Add this at the end of your existing JavaScript to apply round-specific styles
+document.addEventListener('DOMContentLoaded', function () {
+  // Your existing code...
+
+  // Apply round-specific styles
+  function applyRoundStyles(round) {
+    const roundContainer = document.querySelector('.row');
+    roundContainer.style.backgroundColor = getRoundColor(round);
+  }
+
+  // Determine round color based on the round name
+  function getRoundColor(round) {
+    switch (round) {
+      case 'groupStage':
+        return '#28a745'; // Green
+      case 'knockout':
+        return '#964b00'; // Brown
+      case 'quarterFinals':
+        return '#0000ff'; // Blue
+      case 'semiFinals':
+        return '#ff69b4'; // Pink
+      case 'finals':
+        return '#000000'; // Black
+      default:
+        return '#ffffff'; // Default to white
+    }
+  }
 
   // Initial display of the Group Stage
-    displayRoundData('groupStage');
+  displayRoundData('groupStage');
+  applyRoundStyles('groupStage');
 
   // Event listeners for navigation
   document.querySelectorAll('.nav-link').forEach(link => {
@@ -58,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault();
       const round = this.getAttribute('href').substring(1); // Extract round name from href
       displayRoundData(round);
+      applyRoundStyles(round);
     });
   });
 });

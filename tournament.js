@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Initial display of the Group Stage
-    displayRoundData('Group Stage');
+    displayRoundData('groupStage');
 
   // Event listeners for navigation
   document.querySelectorAll('.nav-link').forEach(link => {

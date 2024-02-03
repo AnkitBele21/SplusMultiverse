@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const data = await fetchData(round);
 
     const roundContainer = document.querySelector('.row');
-    roundContainer.innerHTML = ''; // Clear existing content
+    //roundContainer.innerHTML = ''; // Clear existing content
 
     data.forEach(match => {
       const matchCard = createMatchCard(match);

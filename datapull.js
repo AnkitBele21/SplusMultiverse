@@ -40,6 +40,20 @@ function createPlayerCard(player) {
         playerName.appendChild(championIcon);
     }
 
+    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
+    if (status && status.toLowerCase() === 'playing now') {
+        const playingAtClub = document.createElement('div');
+        playingAtClub.textContent = 'Playing at Club';
+        playingAtClub.className = 'playing-at-club';
+        playerInfo.appendChild(playingAtClub);
+    }
+
+    // Displaying S+ Coins
+    const playerCoins = document.createElement('span');
+    playerCoins.className = 'player-coins';
+    playerCoins.textContent = `S+ Coins: ${coins}`;
+    playerInfo.appendChild(playerCoins);
+
     playerInfo.appendChild(playerName);
 
     // Add YouTube play button if link exists
@@ -51,19 +65,6 @@ function createPlayerCard(player) {
         playButton.textContent = '▶️';
         playerInfo.appendChild(playButton);
     }
-     
-    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
-    if (status && status.toLowerCase() === 'playing now') {
-        const playingAtClub = document.createElement('span');
-        playingAtClub.textContent = 'Playing at Club';
-        playingAtClub.className = 'playing-at-club';
-        playerInfo.appendChild(playingAtClub);
-    }
-
-    const playerCoins = document.createElement('span');
-    playerCoins.className = 'player-coins';
-    playerCoins.textContent = `S+ Coins: ${coins}`;
-    playerInfo.appendChild(playerCoins);
 
     const progressBar = document.createElement('div');
     progressBar.className = 'progress-bar';

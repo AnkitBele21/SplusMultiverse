@@ -169,22 +169,39 @@ function searchTable() {
     }
 }
 
-// Function to toggle display of players based on "Playing Now" status
+// Define a global variable to track the toggle state
+var showPlayingNowOnly = false;
+
+// Updated function to toggle display of players based on "Playing Now" status
 function togglePlayingNowPlayers() {
     var cards = document.getElementsByClassName("player-card");
+    var toggleButton = document.getElementById('toggleButton');
+    
+    // Toggle the state
+    showPlayingNowOnly = !showPlayingNowOnly;
+
     for (var i = 0; i < cards.length; i++) {
         var status = cards[i].getElementsByClassName("playing-at-club")[0];
-        if (status && status.textContent === 'Playing at Studio') {
-            cards[i].style.display = "";
+        if (status && showPlayingNowOnly) {
+            // If we are showing "Playing Now" players only, hide others
+            if (status.textContent.includes('Playing at Studio')) {
+                cards[i].style.display = "";
+            } else {
+                cards[i].style.display = "none";
+            }
         } else {
-            cards[i].style.display = "none";
+            // If we are not filtering, show all players
+            cards[i].style.display = "";
         }
     }
 
-    // Check if onlinePlayersVisible is defined
-    if (typeof onlinePlayersVisible !== 'undefined') {
-        var toggleButton = document.getElementById('toggleButton');
-        toggleButton.classList.toggle('on', onlinePlayersVisible);
+    // Update the button's appearance based on the toggle state
+    if (showPlayingNowOnly) {
+        toggleButton.classList.add('on');
+        toggleButton.textContent = 'Show All';
+    } else {
+        toggleButton.classList.remove('on');
+        toggleButton.textContent = 'Available';
     }
 }
 

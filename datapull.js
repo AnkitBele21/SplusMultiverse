@@ -140,7 +140,7 @@ function fetchSheetData() {
                 rank: index + 1,
                 name: row[1],
                 coins: parseInt(row[2]),
-                youtubeLink: row[5] // Fetching the YouTube link from column F
+                youtubeLink: row[5], // Fetching the YouTube link from column F
                 status: row[33] // Fetching the status from column AH
             }));
             displayPlayers(players);

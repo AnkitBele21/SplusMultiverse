@@ -171,20 +171,16 @@ function searchTable() {
 
 // Function to toggle display of players based on "Playing Now" status
 function togglePlayingNowPlayers() {
-    var toggleButton = document.getElementById('toggleButton');
-    var isAvailableButtonOn = toggleButton.classList.contains('on');
-
     var cards = document.getElementsByClassName("player-card");
     for (var i = 0; i < cards.length; i++) {
         var status = cards[i].getElementsByClassName("playing-at-club")[0];
         if (status && status.textContent === 'Playing at Studio') {
-            if (isAvailableButtonOn) {
-                cards[i].style.display = "none";
-            } else {
-                cards[i].style.display = "";
-            }
+            cards[i].style.display = "";
+        } else {
+            cards[i].style.display = "none";
         }
     }
 
-    toggleButton.classList.toggle('on', !isAvailableButtonOn);
+    var toggleButton = document.getElementById('toggleButton');
+    toggleButton.classList.toggle('on', onlinePlayersVisible);
 }

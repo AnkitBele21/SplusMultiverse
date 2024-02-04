@@ -169,4 +169,35 @@ function searchTable() {
     }
 }
 
-// End of your file
+// Function to show only online players (Playing at Studio)
+function showOnlinePlayers() {
+    var cards = document.getElementsByClassName("player-card");
+    for (var i = 0; i < cards.length; i++) {
+        var status = cards[i].getElementsByClassName("playing-at-club")[0];
+        if (status && status.textContent.toLowerCase() === 'playing at studio') {
+            cards[i].style.display = "";
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+}
+
+// Function to show all players
+function showAllPlayers() {
+    var cards = document.getElementsByClassName("player-card");
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].style.display = "";
+    }
+}
+
+// Function to toggle online players
+function toggleOnlinePlayers() {
+    var onlinePlayersVisible = false;
+    var toggleButton = document.getElementById('toggleButton');
+    toggleButton.classList.toggle('on', onlinePlayersVisible);
+    if (onlinePlayersVisible) {
+        showOnlinePlayers();
+    } else {
+        showAllPlayers();
+    }
+}

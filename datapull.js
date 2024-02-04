@@ -1,11 +1,3 @@
-interface Player {
-    rank: number;
-    name: string;
-    coins: number;
-    youtubeLink: string;
-    status: string;
-}
-
 // Your API Key and Sheet ID
 const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
 const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
@@ -26,7 +18,7 @@ function initClient() {
 }
 
 // Function to create a player card element
-function createPlayerCard(player: Player) {
+function createPlayerCard(player) {
     const { rank, name, coins, youtubeLink, status } = player;
 
     const playerCard = document.createElement('div');
@@ -126,7 +118,7 @@ function createPlayerCard(player: Player) {
 }
 
 // Function to display players
-function displayPlayers(players: Player[]) {
+function displayPlayers(players) {
     const playerContainer = document.getElementById('playerContainer');
     playerContainer.innerHTML = '';
     players.forEach(player => {
@@ -142,14 +134,19 @@ function fetchSheetData() {
     }).then(function(response) {
         const values = response.result.values;
         if (values && values.length > 0) {
-            const players: Player[] = values.map((row, index) => ({
+            const players = values.map((row, index) => ({
                 rank: index + 1,
                 name: row[1],
                 coins: parseInt(row[2]),
-                youtubeLink: row[5],
-                status: row[33]
+                status: row[33],
+                youtubeLink: row[5]
             }));
-            displayPlayers(players);
+            console.log("Test1 "+ player);
+            console.log(typeof(name));
+            console.log(typeof(status));
+            console.log(typeof(coins));
+            console.log(status);
+            displayPlayers(name);
         } else {
             console.log('No data found.');
         }

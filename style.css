@@ -58,6 +58,7 @@ main {
     padding: 15px;
     border-radius: 8px;
     transition: transform 0.2s;
+    position: relative; /* Added position relative */
 }
 
 .player-card:hover {
@@ -72,19 +73,19 @@ main {
 }
 
 .player-name {
-    flex: 1; /* This ensures that the name takes up as much space as possible */
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Aligns content to the left */
+    justify-content: flex-start;
 }
 
 .play-button {
-    margin-left: 10px; /* Add some spacing between the name and the play button */
-    margin-right: 10px; /* Add some spacing between the play button and coins */
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .play-button:hover {
-    background-color: #018a5e; /* Darker green on hover */
+    background-color: #018a5e;
 }
 
 .progress-bar {
@@ -116,8 +117,9 @@ main {
     margin-left: 5px;
     font-size: 1.5em;
 }
+
 .banner-section {
-    background-color: #01AB7A; /* Example color, adjust as needed */
+    background-color: #01AB7A;
     padding: 8px 0;
     text-align: center;
 }
@@ -128,27 +130,30 @@ main {
     font-weight: Medium;
     margin: 0;
 }
+
 @media (max-width: 768px) {
     .banner-text {
         font-size: 18px;
     }
 }
+
 .black-level-card {
-    background-color: #000; /* Black background */
-    border: 2px solid gold; /* Golden border */
-    color: gold; /* Golden text */
+    background-color: #000;
+    border: 2px solid gold;
+    color: gold;
 }
 
 .black-level-card .player-name {
-    color: gold; /* Golden player name */
+    color: gold;
 }
 
 .black-level-card .player-coins {
-    color: gold; /* Golden coins text */
+    color: gold;
 }
+
 .top-eight {
-    border: 2px solid gold; /* Gold border for top 8 players */
-    background-color: rgba(255, 215, 0, 0.1); /* Light gold background */
+    border: 2px solid gold;
+    background-color: rgba(255, 215, 0, 0.1);
 }
 
 /* Optional: Add any additional styling for Black level cards */
@@ -156,10 +161,12 @@ main {
 /* Online Indicator */
 .online-indicator {
     display: inline-block;
-    margin-left: 5px;
-    font-size: 10px; /* Adjust the font size as needed */
-    background-color: #4CAF50; /* Green color for online indicator */
-    color: #ffffff; /* Text color (white) */
-    border-radius: 50%; /* Make it a circle */
-    padding: 2px 5px; /* Adjust padding as needed */
+    position: absolute;
+    top: 5px; /* Adjust top position as needed */
+    right: 5px; /* Adjust right position as needed */
+    font-size: 10px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 2px 5px;
 }

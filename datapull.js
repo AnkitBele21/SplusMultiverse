@@ -138,14 +138,10 @@ function fetchSheetData() {
                 rank: index + 1,
                 name: row[1],
                 coins: parseInt(row[2]),
-                status: row[33],
-                youtubeLink: row[5]
+                youtubeLink: row[5],
+                status: row[33]
             }));
-            console.log(typeof(name));
-            console.log(typeof(status));
-            console.log(typeof(coins));
-            console.log(status);
-            displayPlayers(name);
+            displayPlayers(players);
         } else {
             console.log('No data found.');
         }

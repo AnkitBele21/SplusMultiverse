@@ -27,14 +27,7 @@ function createPlayerCard(player) {
     const playerInfo = document.createElement('div');
     playerInfo.className = 'player-info';
 
-    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
-    if (status && status.toLowerCase() === 'playing now') {
-        const playingAtClub = document.createElement('span');
-        playingAtClub.textContent = 'Playing at Club';
-        playingAtClub.className = 'playing-at-club';
-        playerInfo.appendChild(playingAtClub);
-    }
-
+   
     const playerName = document.createElement('span');
     playerName.className = 'player-name';
     playerName.textContent = `${rank}. ${name}`;
@@ -57,6 +50,14 @@ function createPlayerCard(player) {
         playButton.className = 'play-button';
         playButton.textContent = '▶️';
         playerInfo.appendChild(playButton);
+    }
+     
+    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
+    if (status && status.toLowerCase() === 'playing now') {
+        const playingAtClub = document.createElement('span');
+        playingAtClub.textContent = 'Playing at Club';
+        playingAtClub.className = 'playing-at-club';
+        playerInfo.appendChild(playingAtClub);
     }
 
     const playerCoins = document.createElement('span');

@@ -39,7 +39,7 @@ function createPlayerCard(player) {
         playerName.appendChild(championIcon);
     }
 
-    // Add online indicator if the status is "Playing Now"
+   // Add online indicator if the status is "Playing Now"
     if (status && status.toLowerCase() === 'playing now') {
         const onlineIndicator = document.createElement('span');
         onlineIndicator.textContent = '🟢'; // Using a green circle emoji as an indicator

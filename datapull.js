@@ -141,7 +141,6 @@ function fetchSheetData() {
                 status: row[33],
                 youtubeLink: row[5]
             }));
-            console.log("Test1 "+ player);
             console.log(typeof(name));
             console.log(typeof(status));
             console.log(typeof(coins));

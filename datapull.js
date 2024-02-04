@@ -181,6 +181,10 @@ function togglePlayingNowPlayers() {
         }
     }
 
-    var toggleButton = document.getElementById('toggleButton');
-    toggleButton.classList.toggle('on', onlinePlayersVisible);
+    // Check if onlinePlayersVisible is defined
+    if (typeof onlinePlayersVisible !== 'undefined') {
+        var toggleButton = document.getElementById('toggleButton');
+        toggleButton.classList.toggle('on', onlinePlayersVisible);
+    }
 }
+

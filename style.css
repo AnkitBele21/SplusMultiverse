@@ -156,11 +156,14 @@ main {
     background-color: rgba(255, 215, 0, 0.1);
 }
 
-/* Optional: Add any additional styling for Black level cards */
-
 .playing-at-club {
-    font-size: 10px; /* Adjust the font size as needed */
-    color: #4CAF50; /* Green color for "Playing at Club" text */
-    display: block; /* Ensure it's on a new line */
-    margin-bottom: 5px; /* Add some spacing between "Playing at Club" and player name */
+    font-size: 10px;
+    color: #4CAF50;
+    display: block;
+    margin-top: 5px; /* Adjusted from margin-bottom to margin-top */
 }
+
+.player-coins {
+    margin-top: 10px; /* Increased margin for better spacing */
+}
+

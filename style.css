@@ -153,4 +153,13 @@ main {
 
 /* Optional: Add any additional styling for Black level cards */
 
-
+/* Online Indicator */
+.online-indicator {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 10px; /* Adjust the font size as needed */
+    background-color: #4CAF50; /* Green color for online indicator */
+    color: #ffffff; /* Text color (white) */
+    border-radius: 50%; /* Make it a circle */
+    padding: 2px 5px; /* Adjust padding as needed */
+}

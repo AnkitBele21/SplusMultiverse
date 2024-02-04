@@ -80,7 +80,7 @@ function createPlayerCard(player) {
         progressBarColor = '#4CAF50'; // Green
     } else if (coins >= 41 && coins <= 50) {
         progressBarColor = '#795548'; // Brown
-    } else if (coins >= 51 and coins <= 60) {
+    } else if (coins >= 51 && coins <= 60) {
         progressBarColor = '#2196F3'; // Blue
     } else if (coins >= 61 && coins <= 70) {
         progressBarColor = '#E91E63'; // Pink

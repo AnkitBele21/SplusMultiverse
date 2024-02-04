@@ -19,7 +19,7 @@ function initClient() {
 
 // Function to create a player card element
 function createPlayerCard(player) {
-    const { rank, name, coins, youtubeLink } = player;
+    const { rank, name, coins, youtubeLink, status } = player;
 
     const playerCard = document.createElement('div');
     playerCard.className = 'player-card';
@@ -38,6 +38,7 @@ function createPlayerCard(player) {
         championIcon.className = 'champion-icon';
         playerName.appendChild(championIcon);
     }
+
     // Add online indicator if the status is "Playing Now"
     if (status && status.toLowerCase() === 'playing now') {
         const onlineIndicator = document.createElement('span');
@@ -45,7 +46,6 @@ function createPlayerCard(player) {
         onlineIndicator.className = 'online-indicator';
         playerName.appendChild(onlineIndicator);
     }
-
 
     playerInfo.appendChild(playerName);
 
@@ -100,24 +100,22 @@ function createPlayerCard(player) {
 
     progressBarInner.style.width = `${progressBarWidth}%`;
 
-    progressBar.appendChild(progressBarInner); // Append the inner div to the progress bar
+    progressBar.appendChild(progressBarInner);
 
     playerCard.appendChild(playerInfo);
     playerCard.appendChild(progressBar);
     if (coins > 70) {
         playerCard.className = 'player-card black-level-card';
-        // Remove the progress bar for Black level players
         progressBar.remove();
     } else {
         // ... existing progress bar code ...
     }
     playerName.addEventListener('click', function() {
-    window.location.href = `https://leaderboard.snookerplus.in/playerinfo?player=${encodeURIComponent(name)}`;
-});
+        window.location.href = `https://leaderboard.snookerplus.in/playerinfo?player=${encodeURIComponent(name)}`;
+    });
 
     return playerCard;
 }
-
 
 // Function to display players
 function displayPlayers(players) {
@@ -140,8 +138,8 @@ function fetchSheetData() {
                 rank: index + 1,
                 name: row[1],
                 coins: parseInt(row[2]),
-                youtubeLink: row[5], // Fetching the YouTube link from column F
-                status: row[33] // Fetching the status from column AH
+                youtubeLink: row[5],
+                status: row[33]
             }));
             displayPlayers(players);
         } else {

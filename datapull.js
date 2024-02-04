@@ -27,6 +27,7 @@ function createPlayerCard(player) {
     const playerInfo = document.createElement('div');
     playerInfo.className = 'player-info';
 
+   
     const playerName = document.createElement('span');
     playerName.className = 'player-name';
     playerName.textContent = `${rank}. ${name}`;
@@ -39,13 +40,7 @@ function createPlayerCard(player) {
         playerName.appendChild(championIcon);
     }
 
-    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
-    if (status && status.toLowerCase() === 'playing now') {
-        const playingAtClub = document.createElement('span');
-        playingAtClub.textContent = 'Playing at Club';
-        playingAtClub.className = 'playing-at-club';
-        playerInfo.appendChild(playingAtClub);
-    }
+    playerInfo.appendChild(playerName);
 
     // Add YouTube play button if link exists
     if (youtubeLink) {
@@ -56,8 +51,14 @@ function createPlayerCard(player) {
         playButton.textContent = '▶️';
         playerInfo.appendChild(playButton);
     }
-
-    playerInfo.appendChild(playerName);
+     
+    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
+    if (status && status.toLowerCase() === 'playing now') {
+        const playingAtClub = document.createElement('span');
+        playingAtClub.textContent = 'Playing at Club';
+        playingAtClub.className = 'playing-at-club';
+        playerInfo.appendChild(playingAtClub);
+    }
 
     const playerCoins = document.createElement('span');
     playerCoins.className = 'player-coins';
@@ -77,7 +78,7 @@ function createPlayerCard(player) {
         progressBarColor = '#4CAF50'; // Green
     } else if (coins >= 41 && coins <= 50) {
         progressBarColor = '#795548'; // Brown
-    } else if (coins >= 51 and coins <= 60) {
+    } else if (coins >= 51 && coins <= 60) {
         progressBarColor = '#2196F3'; // Blue
     } else if (coins >= 61 && coins <= 70) {
         progressBarColor = '#E91E63'; // Pink

@@ -6,6 +6,9 @@ const SHEET_NAME = 'Rank';
 // Load the Google Sheets API
 gapi.load('client', initClient);
 
+// Variable to store player data
+let players = [];
+
 // Initialize the Google Sheets API client
 function initClient() {
     gapi.client.init({
@@ -137,7 +140,7 @@ function fetchSheetData() {
     }).then(function (response) {
         const values = response.result.values;
         if (values && values.length > 0) {
-            const players = values.map((row, index) => ({
+            players = values.map((row, index) => ({
                 rank: index + 1,
                 name: row[1],
                 coins: parseInt(row[2]),
@@ -169,12 +172,44 @@ function searchTable() {
     }
 }
 
-// Function to show only online players (Playing at Studio)
-function showOnlinePlayers() {
+let lastScrollTop = 0;
+const floatingButton = document.getElementById('floatingButton');
+
+window.addEventListener("scroll", function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop > lastScrollTop) {
+        floatingButton.style.opacity = "0";
+    } else {
+        floatingButton.style.opacity = "1";
+    }
+    lastScrollTop = scrollTop;
+});
+
+// Variable to track the visibility of online players
+var onlinePlayersVisible = false;
+
+// Function to update the online player toggle button
+function updateToggleButton() {
+    var toggleButton = document.getElementById('toggleButton');
+    toggleButton.classList.toggle('on', onlinePlayersVisible);
+}
+
+// Function to show all players
+function showAllPlayers() {
+    // Code to show all players
     var cards = document.getElementsByClassName("player-card");
     for (var i = 0; i < cards.length; i++) {
-        var status = cards[i].getElementsByClassName("playing-at-club")[0];
-        if (status && status.textContent.toLowerCase() === 'playing at studio') {
+        cards[i].style.display = "";
+    }
+}
+
+// Function to display players based on the "K" column status
+function showPlayingNowPlayers() {
+    // Code to show only players with "Playing Now" status
+    var cards = document.getElementsByClassName("player-card");
+    for (var i = 0; i < cards.length; i++) {
+        var rank = parseInt(cards[i].getElementsByClassName("player-name")[0].textContent.split('.')[0]);
+        if (rank && players[rank - 1].status.toLowerCase() === 'playing now') {
             cards[i].style.display = "";
         } else {
             cards[i].style.display = "none";
@@ -182,21 +217,12 @@ function showOnlinePlayers() {
     }
 }
 
-// Function to show all players
-function showAllPlayers() {
-    var cards = document.getElementsByClassName("player-card");
-    for (var i = 0; i < cards.length; i++) {
-        cards[i].style.display = "";
-    }
-}
-
-// Function to toggle online players
-function toggleOnlinePlayers() {
-    var onlinePlayersVisible = false;
-    var toggleButton = document.getElementById('toggleButton');
-    toggleButton.classList.toggle('on', onlinePlayersVisible);
+// Function to toggle players based on "K" column status
+function togglePlayingNowPlayers() {
+    onlinePlayersVisible = !onlinePlayersVisible;
+    updateToggleButton();
     if (onlinePlayersVisible) {
-        showOnlinePlayers();
+        showPlayingNowPlayers();
     } else {
         showAllPlayers();
     }

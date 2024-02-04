@@ -72,14 +72,31 @@
         function toggleOnlinePlayers() {
             onlinePlayersVisible = !onlinePlayersVisible;
             if (onlinePlayersVisible) {
-                // Code to show online players
+                showOnlinePlayers();
             } else {
-                // Code to show all players
+                showAllPlayers();
             }
-            setTimeout(() => {
-                onlinePlayersVisible = false;
-                // Code to show all players after a certain time (e.g., 40 seconds)
-            }, 40000); // 40 seconds
+        }
+
+        function showOnlinePlayers() {
+            // Code to show only online players (Playing at Studio)
+            var cards = document.getElementsByClassName("player-card");
+            for (var i = 0; i < cards.length; i++) {
+                var status = cards[i].getElementsByClassName("playing-at-club")[0];
+                if (status && status.textContent === 'Playing at Studio') {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        function showAllPlayers() {
+            // Code to show all players
+            var cards = document.getElementsByClassName("player-card");
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].style.display = "";
+            }
         }
     </script>
 </body>

@@ -160,6 +160,7 @@ main {
 
 .playing-at-club {
     font-size: 10px; /* Adjust the font size as needed */
-    color: #4CAF50; /* Green color for online indicator */
-    margin-bottom: 5px; /* Add some spacing between "Playing at Club" and S+ Coins */
+    color: #4CAF50; /* Green color for "Playing at Club" text */
+    display: block; /* Ensure it's on a new line */
+    margin-top: 5px; /* Add some spacing between "Playing at Club" and player name */
 }

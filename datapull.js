@@ -11,7 +11,7 @@ function initClient() {
     gapi.client.init({
         apiKey: API_KEY,
         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-    }).then(function() {
+    }).then(function () {
         // Fetch data
         fetchSheetData();
     });
@@ -27,6 +27,14 @@ function createPlayerCard(player) {
     const playerInfo = document.createElement('div');
     playerInfo.className = 'player-info';
 
+    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
+    if (status && status.toLowerCase() === 'playing now') {
+        const playingAtClub = document.createElement('span');
+        playingAtClub.textContent = 'Playing at Club';
+        playingAtClub.className = 'playing-at-club';
+        playerInfo.appendChild(playingAtClub);
+    }
+
     const playerName = document.createElement('span');
     playerName.className = 'player-name';
     playerName.textContent = `${rank}. ${name}`;
@@ -37,14 +45,6 @@ function createPlayerCard(player) {
         championIcon.textContent = '🎖️'; // Using a medal emoji
         championIcon.className = 'champion-icon';
         playerName.appendChild(championIcon);
-    }
-
-  / Add "Playing at Club" above S+ Coins if the status is "Playing Now"
-    if (status && status.toLowerCase() === 'playing now') {
-        const playingAtClub = document.createElement('span');
-        playingAtClub.textContent = 'Playing at Club';
-        playingAtClub.className = 'playing-at-club';
-        playerInfo.appendChild(playingAtClub);
     }
 
     playerInfo.appendChild(playerName);
@@ -110,7 +110,7 @@ function createPlayerCard(player) {
     } else {
         // ... existing progress bar code ...
     }
-    playerName.addEventListener('click', function() {
+    playerName.addEventListener('click', function () {
         window.location.href = `https://leaderboard.snookerplus.in/playerinfo?player=${encodeURIComponent(name)}`;
     });
 
@@ -131,7 +131,7 @@ function fetchSheetData() {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: SHEET_ID,
         range: SHEET_NAME,
-    }).then(function(response) {
+    }).then(function (response) {
         const values = response.result.values;
         if (values && values.length > 0) {
             const players = values.map((row, index) => ({
@@ -145,7 +145,7 @@ function fetchSheetData() {
         } else {
             console.log('No data found.');
         }
-    }, function(response) {
+    }, function (response) {
         console.error('Error fetching data:', response.result.error.message);
     });
 }
@@ -169,7 +169,7 @@ function searchTable() {
 let lastScrollTop = 0;
 const floatingButton = document.getElementById('floatingButton');
 
-window.addEventListener("scroll", function() {
+window.addEventListener("scroll", function () {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     if (scrollTop > lastScrollTop) {
         floatingButton.style.opacity = "0";

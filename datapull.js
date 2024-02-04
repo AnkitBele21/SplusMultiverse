@@ -27,7 +27,7 @@ function createPlayerCard(player) {
     const playerInfo = document.createElement('div');
     playerInfo.className = 'player-info';
 
-   
+    // Player Name and Champion Icon
     const playerName = document.createElement('span');
     playerName.className = 'player-name';
     playerName.textContent = `${rank}. ${name}`;
@@ -40,7 +40,9 @@ function createPlayerCard(player) {
         playerName.appendChild(championIcon);
     }
 
-    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
+    playerInfo.appendChild(playerName);
+
+    // Playing at Club Status
     if (status && status.toLowerCase() === 'playing now') {
         const playingAtClub = document.createElement('div');
         playingAtClub.textContent = 'Playing at Club';
@@ -48,15 +50,7 @@ function createPlayerCard(player) {
         playerInfo.appendChild(playingAtClub);
     }
 
-    // Displaying S+ Coins
-    const playerCoins = document.createElement('span');
-    playerCoins.className = 'player-coins';
-    playerCoins.textContent = `S+ Coins: ${coins}`;
-    playerInfo.appendChild(playerCoins);
-
-    playerInfo.appendChild(playerName);
-
-    // Add YouTube play button if link exists
+    // YouTube Play Button
     if (youtubeLink) {
         const playButton = document.createElement('a');
         playButton.href = youtubeLink;
@@ -66,6 +60,25 @@ function createPlayerCard(player) {
         playerInfo.appendChild(playButton);
     }
 
+    // S+ Coins Container
+    const playerCoinsContainer = document.createElement('div');
+    playerCoinsContainer.className = 'player-coins-container';
+
+    // S+ Coins Label
+    const coinsLabel = document.createElement('span');
+    coinsLabel.className = 'coins-label';
+    coinsLabel.textContent = 'S+ Coins:';
+    playerCoinsContainer.appendChild(coinsLabel);
+
+    // S+ Coins Value
+    const coinsValue = document.createElement('span');
+    coinsValue.className = 'coins-value';
+    coinsValue.textContent = coins;
+    playerCoinsContainer.appendChild(coinsValue);
+
+    playerInfo.appendChild(playerCoinsContainer);
+
+    // Progress Bar
     const progressBar = document.createElement('div');
     progressBar.className = 'progress-bar';
 
@@ -106,12 +119,7 @@ function createPlayerCard(player) {
 
     playerCard.appendChild(playerInfo);
     playerCard.appendChild(progressBar);
-    if (coins > 70) {
-        playerCard.className = 'player-card black-level-card';
-        progressBar.remove();
-    } else {
-        // ... existing progress bar code ...
-    }
+
     playerName.addEventListener('click', function () {
         window.location.href = `https://leaderboard.snookerplus.in/playerinfo?player=${encodeURIComponent(name)}`;
     });

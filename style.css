@@ -158,15 +158,8 @@ main {
 
 /* Optional: Add any additional styling for Black level cards */
 
-/* Online Indicator */
-.online-indicator {
-    display: inline-block;
-    position: absolute;
-    top: 5px; /* Adjust top position as needed */
-    right: 5px; /* Adjust right position as needed */
-    font-size: 10px;
-    background-color: #4CAF50;
-    color: #ffffff;
-    border-radius: 50%;
-    padding: 2px 5px;
+.playing-at-club {
+    font-size: 10px; /* Adjust the font size as needed */
+    color: #4CAF50; /* Green color for online indicator */
+    margin-bottom: 5px; /* Add some spacing between "Playing at Club" and S+ Coins */
 }

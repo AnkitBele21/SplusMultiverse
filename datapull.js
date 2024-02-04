@@ -80,7 +80,7 @@ function createPlayerCard(player) {
         progressBarColor = '#4CAF50'; // Green
     } else if (coins >= 41 && coins <= 50) {
         progressBarColor = '#795548'; // Brown
-    } else if (coins >= 51 && coins <= 60) {
+    } else if (coins >= 51 and coins <= 60) {
         progressBarColor = '#2196F3'; // Blue
     } else if (coins >= 61 && coins <= 70) {
         progressBarColor = '#E91E63'; // Pink
@@ -171,53 +171,20 @@ function searchTable() {
 
 // Function to toggle display of players based on "Playing Now" status
 function togglePlayingNowPlayers() {
+    var toggleButton = document.getElementById('toggleButton');
+    var isAvailableButtonOn = toggleButton.classList.contains('on');
+
     var cards = document.getElementsByClassName("player-card");
     for (var i = 0; i < cards.length; i++) {
         var status = cards[i].getElementsByClassName("playing-at-club")[0];
         if (status && status.textContent === 'Playing at Studio') {
-            cards[i].style.display = "";
-        } else {
-            cards[i].style.display = "none";
+            if (isAvailableButtonOn) {
+                cards[i].style.display = "none";
+            } else {
+                cards[i].style.display = "";
+            }
         }
     }
-}
 
-// Function to show all players
-function showAllPlayers() {
-    var cards = document.getElementsByClassName("player-card");
-    for (var i = 0; i < cards.length; i++) {
-        cards[i].style.display = "";
-    }
-}
-
-// Function to toggle display of online players
-function toggleOnlinePlayers() {
-    var onlinePlayersVisible = false;
-    var toggleButton = document.getElementById('toggleButton');
-    onlinePlayersVisible = !onlinePlayersVisible;
-    toggleButton.classList.toggle('on', onlinePlayersVisible);
-    if (onlinePlayersVisible) {
-        showOnlinePlayers();
-    } else {
-        showAllPlayers();
-    }
-}
-
-// Function to update toggle button based on online players visibility
-function updateToggleButton() {
-    var toggleButton = document.getElementById('toggleButton');
-    toggleButton.classList.toggle('on', onlinePlayersVisible);
-}
-
-// Function to show only online players (Playing at Studio)
-function showOnlinePlayers() {
-    var cards = document.getElementsByClassName("player-card");
-    for (var i = 0; i < cards.length; i++) {
-        var status = cards[i].getElementsByClassName("playing-at-club")[0];
-        if (status && status.textContent === 'Playing at Studio') {
-            cards[i].style.display = "";
-        } else {
-            cards[i].style.display = "none";
-        }
-    }
+    toggleButton.classList.toggle('on', !isAvailableButtonOn);
 }

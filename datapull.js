@@ -139,7 +139,7 @@ function fetchSheetData() {
                 name: row[1],
                 coins: parseInt(row[2]),
                 youtubeLink: row[5],
-                status: row[33] as string
+                status: row[33]
             }));
             displayPlayers(players);
         } else {

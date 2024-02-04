@@ -1,33 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-481JRCY8MD"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-481JRCY8MD');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snooker Plus Leaderboard</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Added styles for the search bar and toggle button */
         .search-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-
         #toggleButton {
             cursor: pointer;
             background-color: grey;
@@ -36,45 +30,33 @@
             padding: 5px 10px;
             border-radius: 5px;
         }
-
         #toggleButton.on {
             background-color: green;
         }
     </style>
 </head>
-
 <body>
     <header>
         <div class="left-header">
             <img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="Snooker Plus Logo">
             <h1>Leaderboard</h1>
         </div>
-        <div id="loginButton" onclick="location.href='https://ankitbele21.github.io/centurydewas/playerinfo'">
-            Player Login
-        </div>
+        <div id="loginButton" onclick="location.href='https://ankitbele21.github.io/centurydewas/playerinfo'">Player Login</div>
     </header>
-
-    <!-- Club Image Inserted Here -->
     <div class="club-image-container">
         <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Facebook%20cover%20-%201.png?raw=true" alt="Club Image" style="width: 100%; height: auto;">
     </div>
-
     <section id="contestBanner" class="banner-section">
         <button id="registerButton" onclick="location.href='https://forms.gle/wRaGHxRvWCwqsPcCA'">Register Now</button>
     </section>
-
     <main>
         <div class="search-bar">
             <input type="text" id="searchInput" oninput="searchTable()" placeholder="Search for players..." class="form-control">
             <button id="toggleButton" onclick="togglePlayingNowPlayers()">Available</button>
         </div>
-        <div id="playerContainer">
-            <!-- Content will be displayed here dynamically -->
-        </div>
+        <div id="playerContainer"></div>
     </main>
-
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="datapull.js"></script>
 </body>
-
 </html>

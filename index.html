@@ -28,33 +28,17 @@
             margin-bottom: 10px;
         }
 
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 40px;
-            height: 20px;
-            background-color: grey;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        .toggle-switch::before {
-            content: "";
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            background-color: white;
-            border-radius: 50%;
-            transition: 0.3s;
-            transform: translateX(0);
-        }
-
-        input:checked + .toggle-switch::before {
-            transform: translateX(20px);
-        }
-
         #toggleButton {
-            display: none;
+            cursor: pointer;
+            background-color: grey;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #toggleButton.on {
+            background-color: green;
         }
     </style>
 </head>
@@ -82,8 +66,7 @@
     <main>
         <div class="search-bar">
             <input type="text" id="searchInput" oninput="searchTable()" placeholder="Search for players..." class="form-control">
-            <label class="toggle-switch" for="toggleButton"></label>
-            <input type="checkbox" id="toggleButton" onclick="toggleOnlinePlayers()">
+            <button id="toggleButton" onclick="toggleOnlinePlayers()">Toggle Online Players</button>
         </div>
         <div id="playerContainer">
             <!-- Content will be displayed here dynamically -->
@@ -97,11 +80,17 @@
 
         function toggleOnlinePlayers() {
             onlinePlayersVisible = !onlinePlayersVisible;
+            updateToggleButton();
             if (onlinePlayersVisible) {
                 showOnlinePlayers();
             } else {
                 showAllPlayers();
             }
+        }
+
+        function updateToggleButton() {
+            var toggleButton = document.getElementById('toggleButton');
+            toggleButton.classList.toggle('on', onlinePlayersVisible);
         }
 
         function showOnlinePlayers() {

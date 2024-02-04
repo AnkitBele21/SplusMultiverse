@@ -38,6 +38,14 @@ function createPlayerCard(player) {
         championIcon.className = 'champion-icon';
         playerName.appendChild(championIcon);
     }
+    // Add online indicator if the status is "Playing Now"
+    if (status && status.toLowerCase() === 'playing now') {
+        const onlineIndicator = document.createElement('span');
+        onlineIndicator.textContent = '🟢'; // Using a green circle emoji as an indicator
+        onlineIndicator.className = 'online-indicator';
+        playerName.appendChild(onlineIndicator);
+    }
+
 
     playerInfo.appendChild(playerName);
 
@@ -133,6 +141,7 @@ function fetchSheetData() {
                 name: row[1],
                 coins: parseInt(row[2]),
                 youtubeLink: row[5] // Fetching the YouTube link from column F
+                status: row[33] // Fetching the status from column AH
             }));
             displayPlayers(players);
         } else {

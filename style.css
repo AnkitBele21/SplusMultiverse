@@ -158,4 +158,7 @@ main {
 
 /* Optional: Add any additional styling for Black level cards */
 
-
+.playing-at-club {
+    font-size: 10px; /* Adjust the font size as needed */
+    color: #4CAF50; /* Green color for "Playing at Club" text */
+}

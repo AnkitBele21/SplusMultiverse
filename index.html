@@ -66,7 +66,7 @@
     <main>
         <div class="search-bar">
             <input type="text" id="searchInput" oninput="searchTable()" placeholder="Search for players..." class="form-control">
-            <button id="toggleButton" onclick="toggleOnlinePlayers()">Available</button>
+            <button id="toggleButton" onclick="togglePlayingNowPlayers()">Available</button>
         </div>
         <div id="playerContainer">
             <!-- Content will be displayed here dynamically -->
@@ -76,43 +76,7 @@
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="datapull.js"></script>
     <script>
-        var onlinePlayersVisible = false;
-
-        function toggleOnlinePlayers() {
-            onlinePlayersVisible = !onlinePlayersVisible;
-            updateToggleButton();
-            if (onlinePlayersVisible) {
-                showOnlinePlayers();
-            } else {
-                showAllPlayers();
-            }
-        }
-
-        function updateToggleButton() {
-            var toggleButton = document.getElementById('toggleButton');
-            toggleButton.classList.toggle('on', onlinePlayersVisible);
-        }
-
-        function showOnlinePlayers() {
-            // Code to show only online players (Playing at Studio)
-            var cards = document.getElementsByClassName("player-card");
-            for (var i = 0; i < cards.length; i++) {
-                var status = cards[i].getElementsByClassName("playing-at-club")[0];
-                if (status && status.textContent.toLowerCase() === 'playing at studio') {
-                    cards[i].style.display = "";
-                } else {
-                    cards[i].style.display = "none";
-                }
-            }
-        }
-
-        function showAllPlayers() {
-            // Code to show all players
-            var cards = document.getElementsByClassName("player-card");
-            for (var i = 0; i < cards.length; i++) {
-                cards[i].style.display = "";
-            }
-        }
+        // Add your custom scripts if any
     </script>
 </body>
 

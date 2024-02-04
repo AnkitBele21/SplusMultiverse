@@ -28,8 +28,31 @@
             margin-bottom: 10px;
         }
 
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            background-color: grey;
+            border-radius: 20px;
+        }
+
+        .toggle-switch::before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        input:checked + .toggle-switch::before {
+            transform: translateX(20px);
+        }
+
         #toggleButton {
-            margin-left: 10px;
+            display: none;
         }
     </style>
 </head>
@@ -57,7 +80,8 @@
     <main>
         <div class="search-bar">
             <input type="text" id="searchInput" oninput="searchTable()" placeholder="Search for players..." class="form-control">
-            <button id="toggleButton" onclick="toggleOnlinePlayers()">Toggle Online Players</button>
+            <label class="toggle-switch" for="toggleButton"></label>
+            <input type="checkbox" id="toggleButton" onclick="toggleOnlinePlayers()">
         </div>
         <div id="playerContainer">
             <!-- Content will be displayed here dynamically -->

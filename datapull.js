@@ -1,3 +1,11 @@
+interface Player {
+    rank: number;
+    name: string;
+    coins: number;
+    youtubeLink: string;
+    status: string;
+}
+
 // Your API Key and Sheet ID
 const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
 const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
@@ -18,7 +26,7 @@ function initClient() {
 }
 
 // Function to create a player card element
-function createPlayerCard(player) {
+function createPlayerCard(player: Player) {
     const { rank, name, coins, youtubeLink, status } = player;
 
     const playerCard = document.createElement('div');
@@ -118,7 +126,7 @@ function createPlayerCard(player) {
 }
 
 // Function to display players
-function displayPlayers(players) {
+function displayPlayers(players: Player[]) {
     const playerContainer = document.getElementById('playerContainer');
     playerContainer.innerHTML = '';
     players.forEach(player => {
@@ -134,7 +142,7 @@ function fetchSheetData() {
     }).then(function(response) {
         const values = response.result.values;
         if (values && values.length > 0) {
-            const players = values.map((row, index) => ({
+            const players: Player[] = values.map((row, index) => ({
                 rank: index + 1,
                 name: row[1],
                 coins: parseInt(row[2]),

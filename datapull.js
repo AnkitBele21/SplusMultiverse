@@ -54,8 +54,17 @@ function createPlayerCard(player) {
     playerName.className = 'player-name';
     playerName.textContent = `${rank}. ${name}`;
 
+    // Check if player is a champion and add a medal icon
+    if (["Arpit", "Saurav Johari"].includes(name)) {
+        const championIcon = document.createElement('span');
+        championIcon.textContent = '🎖️'; // Using a medal emoji
+        championIcon.className = 'champion-icon';
+        playerName.appendChild(championIcon);
+    }
+
     playerInfo.appendChild(playerName);
 
+    // Add YouTube play button if link exists
     if (youtubeLink) {
         const playButton = document.createElement('a');
         playButton.href = youtubeLink;
@@ -65,11 +74,14 @@ function createPlayerCard(player) {
         playerInfo.appendChild(playButton);
     }
 
+    // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
     if (status && status.toLowerCase() === 'playing now') {
         const playingAtClub = document.createElement('span');
-        playingAtClub.textContent = 'Playing at Studio';
+        playingAtClub.textContent = 'Playing at Studio ';
         playingAtClub.className = 'playing-at-club';
         playerInfo.appendChild(playingAtClub);
+
+        // Add green border for players playing at the club
         playerCard.classList.add('playing-at-club-border');
     }
 
@@ -78,7 +90,53 @@ function createPlayerCard(player) {
     playerCoins.textContent = `S+ Coins: ${coins}`;
     playerInfo.appendChild(playerCoins);
 
+    const progressBar = document.createElement('div');
+    progressBar.className = 'progress-bar';
+
+    const progressBarInner = document.createElement('div');
+    progressBarInner.className = 'progress-bar-inner';
+
+    let progressBarColor = '#F44336'; // Default: Red
+    if (coins >= 21 && coins <= 30) {
+        progressBarColor = '#FFEB3B'; // Yellow
+    } else if (coins >= 31 && coins <= 40) {
+        progressBarColor = '#4CAF50'; // Green
+    } else if (coins >= 41 && coins <= 50) {
+        progressBarColor = '#795548'; // Brown
+    } else if (coins >= 51 && coins <= 60) {
+        progressBarColor = '#2196F3'; // Blue
+    } else if (coins >= 61 && coins <= 70) {
+        progressBarColor = '#E91E63'; // Pink
+    } else if (coins > 70) {
+        progressBarColor = '#000000'; // Black
+    }
+
+    progressBarInner.style.backgroundColor = progressBarColor;
+
+    const colorMinCoins = [0, 21, 31, 41, 51, 61, 71];
+    const colorMaxCoins = [20, 30, 40, 50, 60, 70, 1000];
+    let progressBarWidth = 0;
+
+    for (let i = 0; i < colorMinCoins.length; i++) {
+        if (coins >= colorMinCoins[i] && coins <= colorMaxCoins[i]) {
+            progressBarWidth = ((coins - colorMinCoins[i]) + 1) / (colorMaxCoins[i] - colorMinCoins[i] + 1) * 100;
+            break;
+        }
+    }
+
+    progressBarInner.style.width = `${progressBarWidth}%`;
+
+    progressBar.appendChild(progressBarInner);
+
     playerCard.appendChild(playerInfo);
+    playerCard.appendChild(progressBar);
+    if (coins > 70) {
+        playerCard.className = 'player-card black-level-card';
+        progressBar.remove();
+    }
+    playerName.addEventListener('click', function () {
+        window.location.href = `https://leaderboard.snookerplus.in/playerinfo?player=${encodeURIComponent(name)}`;
+    });
 
     return playerCard;
 }

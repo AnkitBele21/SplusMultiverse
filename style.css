@@ -166,4 +166,15 @@ main {
 .player-coins {
     margin-top: 10px; /* Increased margin for better spacing */
 }
+.player-card.playing-at-club-border {
+    border: 2px solid #4CAF50; /* Green color for playing at the club border */
+}
+
+.player-card.playing-at-club-border .player-info {
+    border: 2px solid #4CAF50; /* Apply border to player-info within playing at the club */
+}
+
+.player-card.playing-at-club-border .progress-bar {
+    border: 2px solid #4CAF50; /* Apply border to progress-bar within playing at the club */
+}
 

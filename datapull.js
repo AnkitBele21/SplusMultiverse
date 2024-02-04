@@ -169,18 +169,4 @@ function searchTable() {
     }
 }
 
-let lastScrollTop = 0;
-const floatingButton = document.getElementById('floatingButton');
-
-window.addEventListener("scroll", function () {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > lastScrollTop) {
-        floatingButton.style.opacity = "0";
-    } else {
-        floatingButton.style.opacity = "1";
-    }
-    lastScrollTop = scrollTop;
-});
-
-// Call the initClient function to start fetching data
-initClient();
+// End of your file

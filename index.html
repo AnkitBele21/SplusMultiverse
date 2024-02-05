@@ -48,6 +48,7 @@
     </div>
     <section id="contestBanner" class="banner-section">
         <button id="registerButton" onclick="location.href='https://forms.gle/wRaGHxRvWCwqsPcCA'">Register Now</button>
+        <div id="countdown"></div>
     </section>
     <main>
         <div class="search-bar">
@@ -58,5 +59,27 @@
     </main>
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="datapull.js"></script>
+    <script>
+        const registrationDeadline = new Date('February 7, 2024 23:59:59 GMT+0000');
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeRemaining = registrationDeadline - now;
+
+            if (timeRemaining > 0) {
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').innerHTML = `Closes in ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                document.getElementById('countdown').innerHTML = 'Registration Closed';
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        updateCountdown();
+    </script>
 </body>
 </html>

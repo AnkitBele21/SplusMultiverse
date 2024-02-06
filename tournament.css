@@ -90,9 +90,4 @@ h1 {
 .col-md-4.card-finals .card { border-left: 5px solid #000000; /* Black */ }
  }
 
-@media (max-width: 767px) {
-    .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
 }

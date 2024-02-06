@@ -12,17 +12,24 @@ header {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
-.sticky-top {
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.round-selector {
     position: sticky;
     top: 0;
     z-index: 1020;
+    text-align: center;
 }
 
-.dropdown .btn {
-    background-color: #33363B; /* Default color, changes with round */
-    color: #FFFFFF;
-    border: none;
-}
+/* Dynamic background color for round selector */
+.groupStage { background-color: #28a745; }
+.knockout { background-color: #964b00; }
+.quarterFinals { background-color: #0000ff; }
+.semiFinals { background-color: #ff69b4; }
+.finals { background-color: #000000; }
 
 .container {
     padding: 20px;
@@ -35,13 +42,13 @@ header {
 }
 
 .col-md-4 {
-    flex: 0 0 100%; /* Single column layout */
+    flex: 0 0 100%;
     margin-bottom: 20px;
 }
 
 .card {
     background-color: #33363B;
-    border-left: 5px solid #01AB7A; /* Color changes with round */
+    border-left: 5px solid #01AB7A;
     border-radius: 8px;
     color: #FFFFFF;
     transition: transform 0.2s;

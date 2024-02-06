@@ -12,11 +12,6 @@ header {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-}
-
 .sticky-top {
     position: sticky;
     top: 0;
@@ -24,8 +19,9 @@ img {
 }
 
 .dropdown .btn {
-    width: 100%;
-    text-align: center;
+    background-color: #33363B; /* Default color, changes with round */
+    color: #FFFFFF;
+    border: none;
 }
 
 .container {
@@ -39,13 +35,13 @@ img {
 }
 
 .col-md-4 {
-    flex: 0 0 100%; /* Adjusted for single column layout on all devices */
+    flex: 0 0 100%; /* Single column layout */
     margin-bottom: 20px;
 }
 
 .card {
     background-color: #33363B;
-    border-left: 5px solid #01AB7A;
+    border-left: 5px solid #01AB7A; /* Color changes with round */
     border-radius: 8px;
     color: #FFFFFF;
     transition: transform 0.2s;

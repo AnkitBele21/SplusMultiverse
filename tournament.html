@@ -15,18 +15,16 @@
     <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Frame%2013155%20(1).png?raw=true" alt="Snooker+ Tournament Logo" class="img-fluid">
   </header>
 
-  <div class="round-selector sticky-top bg-dark" id="roundSelector">
-    <div class="dropdown text-center">
-        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span id="currentRoundText">Group Stage</span>
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#groupStage">Group Stage</a>
-            <a class="dropdown-item" href="#knockout">Knockout</a>
-            <a class="dropdown-item" href="#quarterFinals">Quarter Finals</a>
-            <a class="dropdown-item" href="#semiFinals">Semi Finals</a>
-            <a class="dropdown-item" href="#finals">Finals</a>
-        </div>
+  <div class="round-selector sticky-top bg-dark text-center" id="roundSelector">
+    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span id="currentRoundText">Group Stage</span>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" onclick="displayRoundData('groupStage')">Group Stage</a>
+        <a class="dropdown-item" href="#" onclick="displayRoundData('knockout')">Knockout</a>
+        <a class="dropdown-item" href="#" onclick="displayRoundData('quarterFinals')">Quarter Finals</a>
+        <a class="dropdown-item" href="#" onclick="displayRoundData('semiFinals')">Semi Finals</a>
+        <a class="dropdown-item" href="#" onclick="displayRoundData('finals')">Finals</a>
     </div>
   </div>
 
@@ -36,7 +34,7 @@
     </div>
   </section>
 
-  <!-- Switch to the full version of jQuery -->
+  <!-- Full version of jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

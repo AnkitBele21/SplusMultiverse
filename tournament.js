@@ -14,13 +14,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const roundContainer = document.querySelector('.row');
         roundContainer.innerHTML = '';
         data.forEach(match => {
-            const matchCard = createMatchCard(match, round);
+            const matchCard = createMatchCard(match);
             roundContainer.appendChild(matchCard);
         });
         updateCurrentRoundIndicator(round);
+        updateRoundSelectorColor(round);
     }
 
-    function createMatchCard(match, round) {
+    function createMatchCard(match) {
         const card = document.createElement('div');
         card.classList.add('col-md-4', 'mb-4');
 
@@ -30,7 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const cardContent = `
             <h5 class="card-title">${match[2]} vs ${match[3]}</h5>
             <div class="card-text">
-                Table: ${match[4]} | ${match[5]}, ${match[6]}<br>
+                Table: ${match[4]}<br>
+                Date & Time: ${match[5]}, ${match[6]}<br>
                 Winner: <strong>${match[7]}</strong><br>
                 <a href="${match[8]}" target="_blank">Match Link</a>
             </div>
@@ -50,21 +52,27 @@ document.addEventListener('DOMContentLoaded', function () {
             'semiFinals': 'Semi Finals',
             'finals': 'Finals'
         };
-        document.getElementById('currentRoundText').textContent = roundNames[round] || 'Unknown Round';
-        // Update the button's text and color based on the selected round
-        const dropdownButton = document.getElementById('dropdownMenuButton');
-        dropdownButton.innerHTML = `Current Round: <span id="currentRoundText">${roundNames[round] || 'Unknown Round'}</span>`;
+        document.getElementById('currentRoundText').textContent = roundNames[round];
     }
 
-    displayRoundData('groupStage');
+    function updateRoundSelectorColor(round) {
+        const roundSelector = document.getElementById('roundSelector');
+        // Remove previous round color classes
+        roundSelector.classList.remove('groupStage', 'knockout', 'quarterFinals', 'semiFinals', 'finals');
+        // Add current round color class
+        roundSelector.classList.add(round);
+    }
 
     document.querySelectorAll('.dropdown-item').forEach(item => {
         item.addEventListener('click', function (event) {
             event.preventDefault();
             const round = this.getAttribute('href').substring(1);
             displayRoundData(round);
-            // Manually hide the dropdown menu
-            document.querySelector('.dropdown-menu').classList.remove('show');
+            // Close the dropdown menu
+            document.querySelector('.dropdown-toggle').click();
         });
     });
+
+    // Initial display for Group Stage
+    displayRoundData('groupStage');
 });

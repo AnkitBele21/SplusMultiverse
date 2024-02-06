@@ -85,10 +85,29 @@ img {
 .card-link:hover {
     color: #FFEB3B;
 }
-/* Add to your existing CSS */
-.groupstage .card-body { background-color: #28a745; }
-.knockout .card-body { background-color: #964b00; }
-.quarterfinals .card-body { background-color: #0000ff; }
-.semifinals .card-body { background-color: #ff69b4; }
-.finals .card-body { background-color: #000000; }
+.round-groupstage .card-body { background-color: #28a745; color: #fff; }
+.round-knockout .card-body { background-color: #964b00; color: #fff; }
+.round-quarterfinals .card-body { background-color: #0000ff; color: #fff; }
+.round-semifinals .card-body { background-color: #ff69b4; color: #fff; }
+.round-finals .card-body { background-color: #000000; color: #fff; }
 
+.card {
+    border-left: 5px solid transparent; /* Add a border to the left for visual emphasis */
+}
+
+.card-body {
+    transition: background-color 0.3s ease; /* Smooth transition for background color change */
+}
+
+/* Refine the card design */
+.card-title {
+    font-size: 1.25rem; /* Larger title */
+}
+
+.card-text {
+    font-size: 1rem; /* Readable text size */
+}
+
+.card-link {
+    color: #FFEB3B; /* Bright link color for contrast */
+}

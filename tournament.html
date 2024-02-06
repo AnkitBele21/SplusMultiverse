@@ -4,34 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Snooker+ Tournament</title>
-  <!-- Bootstrap CSS for styling only -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="tournament.css">
 </head>
 <body>
 
-  <header class="text-center py-3">
-    <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Frame%2013155%20(1).png?raw=true" alt="Snooker+ Tournament Logo" class="img-fluid">
-  </header>
+<header class="text-center py-3">
+  <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Frame%2013155%20(1).png?raw=true" alt="Snooker+ Tournament Logo" class="img-fluid">
+</header>
 
-  <div class="round-selector sticky-top bg-dark text-center" id="roundSelector">
-    <span id="currentRoundText">Group Stage</span>
-    <div id="dropdownContent" class="dropdown-content">
-        <a href="#" onclick="changeRound('groupStage')">Group Stage</a>
-        <a href="#" onclick="changeRound('knockout')">Knockout</a>
-        <a href="#" onclick="changeRound('quarterFinals')">Quarter Finals</a>
-        <a href="#" onclick="changeRound('semiFinals')">Semi Finals</a>
-        <a href="#" onclick="changeRound('finals')">Finals</a>
-    </div>
+<div class="round-selector sticky-top bg-dark text-center" id="roundSelector">
+  <span id="currentRoundText">Group Stage</span>
+  <div id="dropdownContent" class="dropdown-content" style="display: none;">
+      <a href="#" onclick="changeRound('groupStage')">Group Stage</a>
+      <a href="#" onclick="changeRound('knockout')">Knockout</a>
+      <a href="#" onclick="changeRound('quarterFinals')">Quarter Finals</a>
+      <a href="#" onclick="changeRound('semiFinals')">Semi Finals</a>
+      <a href="#" onclick="changeRound('finals')">Finals</a>
   </div>
+</div>
 
-  <section class="container my-4">
-    <div class="row" id="matchesContainer">
-      <!-- Match cards will be loaded here -->
-    </div>
-  </section>
+<section class="container my-4">
+  <div class="row" id="matchesContainer">
+    <!-- Match cards will be loaded here -->
+  </div>
+</section>
 
-  <script src="tournament.js"></script>
+<script src="tournament.js"></script>
 </body>
 </html>

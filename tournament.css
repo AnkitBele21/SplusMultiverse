@@ -80,12 +80,15 @@ h1 {
     text-decoration: underline;
 }
 
-/* Round-specific card border colors */
-.row.round-groupStage .card { border-left: 5px solid #28a745; /* Green */ }
-.row.round-knockout .card { border-left: 5px solid #964b00; /* Brown */ }
-.row.round-quarterFinals .card { border-left: 5px solid #0000ff; /* Blue */ }
-.row.round-semiFinals .card { border-left: 5px solid #ff69b4; /* Pink */ }
-.row.round-finals .card { border-left: 5px solid #000000; /* Black */ }
+/* Existing styles remain unchanged */
+
+/* Round-specific card border colors applied to the card container */
+.col-md-4.card-groupStage .card { border-left: 5px solid #28a745; /* Green */ }
+.col-md-4.card-knockout .card { border-left: 5px solid #964b00; /* Brown */ }
+.col-md-4.card-quarterFinals .card { border-left: 5px solid #0000ff; /* Blue */ }
+.col-md-4.card-semiFinals .card { border-left: 5px solid #ff69b4; /* Pink */ }
+.col-md-4.card-finals .card { border-left: 5px solid #000000; /* Black */ }
+ }
 
 /* Responsive adjustments */
 @media (max-width: 767px) {

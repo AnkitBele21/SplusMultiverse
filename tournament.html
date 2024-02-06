@@ -1,9 +1,20 @@
-<header class="bg-dark text-white text-center py-3">
-    <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Frame%2013155%20(1).png?raw=true" alt="Snooker+ Tournament Logo" class="img-fluid">
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="tournament.css">
+</head>
+<body>
 
-<!-- Updated Navigation with Dropdown -->
-<div class="sticky-top bg-dark" id="roundSelector">
+  <header class="text-center py-3">
+    <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Frame%2013155%20(1).png?raw=true" alt="Snooker+ Tournament Logo" class="img-fluid">
+  </header>
+
+  <div class="sticky-top bg-dark" id="roundSelector">
     <div class="dropdown text-center">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Current Round: <span id="currentRoundText">Group Stage</span>
@@ -16,10 +27,19 @@
             <a class="dropdown-item" href="#finals">Finals</a>
         </div>
     </div>
-</div>
+  </div>
 
-<section class="container my-4">
+  <section class="container my-4">
     <div class="row">
-        <!-- Match cards will be loaded here -->
+      <!-- Match cards will be loaded here -->
     </div>
-</section>
+  </section>
+
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Your custom JavaScript -->
+  <script src="tournament.js"></script>
+</body>
+</html>

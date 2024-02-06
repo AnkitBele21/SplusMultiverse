@@ -21,7 +21,7 @@ img {
     position: sticky;
     top: 0;
     z-index: 1020;
-    background-color: #33363B; /* Default color */
+    background-color: #33363B;
     color: white;
     padding: 10px 0;
     cursor: pointer;
@@ -64,7 +64,6 @@ img {
 
 .card {
     background-color: #33363B;
-    border: none;
     border-radius: 8px;
     color: #FFFFFF;
     transition: transform 0.2s;

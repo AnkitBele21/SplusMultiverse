@@ -17,15 +17,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const matchCard = createMatchCard(match, round);
             roundContainer.appendChild(matchCard);
         });
+        applyRoundStyles(round); // Ensure styles are applied after cards are added
     }
 
     function createMatchCard(match, round) {
         const card = document.createElement('div');
-        card.classList.add('col-md-4', 'mb-4');
+        card.classList.add('col-md-4', 'mb-4', `card-${round}`); // Include round-specific class here
 
         const cardBody = document.createElement('div');
         cardBody.classList.add('card', 'h-100', 'p-3');
-        cardBody.classList.add(`card-${round}`); // Apply round-specific class for styling
 
         const cardContent = `
             <h5 class="card-title">${match[2]} vs ${match[3]}</h5>
@@ -42,23 +42,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return card;
     }
 
+    // This function is simplified as CSS now handles the styling
     function applyRoundStyles(round) {
-        // This function now updates card border color instead of background
-        const roundColor = getRoundColor(round);
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.borderLeftColor = roundColor;
-        });
+        // No JavaScript-based styling needed if CSS handles it all
     }
 
     function getRoundColor(round) {
-        switch (round) {
-            case 'groupStage': return '#28a745';
-            case 'knockout': return '#964b00';
-            case 'quarterFinals': return '#0000ff';
-            case 'semiFinals': return '#ff69b4';
-            case 'finals': return '#000000';
-            default: return '#01AB7A'; // Use default color if round is unspecified
-        }
+        // This function can remain for other uses or be removed if unused
     }
 
     displayRoundData('groupStage'); // Initial display
@@ -68,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             const round = this.getAttribute('href').substring(1);
             displayRoundData(round);
-            applyRoundStyles(round);
         });
     });
 });

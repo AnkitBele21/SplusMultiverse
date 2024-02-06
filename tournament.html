@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snooker+ Tournament</title
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <!-- Custom CSS -->
@@ -14,10 +15,10 @@
     <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Frame%2013155%20(1).png?raw=true" alt="Snooker+ Tournament Logo" class="img-fluid">
   </header>
 
-  <div class="sticky-top bg-dark" id="roundSelector">
-    <div class="dropdown text-center">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Round: <span id="currentRoundText">Group Stage</span>
+  <div class="round-selector sticky-top bg-dark text-center" id="roundSelector">
+    <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span id="currentRoundText">Group Stage</span>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#groupStage">Group Stage</a>
@@ -39,7 +40,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Your custom JavaScript -->
+  <!-- Custom JavaScript -->
   <script src="tournament.js"></script>
 </body>
 </html>

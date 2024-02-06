@@ -12,17 +12,17 @@ document.addEventListener('DOMContentLoaded', function () {
     async function displayRoundData(round) {
         const data = await fetchData(round);
         const roundContainer = document.querySelector('.row');
-        roundContainer.innerHTML = '';
+        roundContainer.innerHTML = ''; // Clear existing content
         data.forEach(match => {
             const matchCard = createMatchCard(match, round);
             roundContainer.appendChild(matchCard);
         });
-        applyRoundStyles(round); // Ensure styles are applied after cards are added
+        updateCurrentRoundIndicator(round); // Update the round indicator
     }
 
     function createMatchCard(match, round) {
         const card = document.createElement('div');
-        card.classList.add('col-md-4', 'mb-4', `card-${round}`); // Include round-specific class here
+        card.classList.add('col-md-4', 'mb-4', `card-${round}`); // Apply round-specific class for styling
 
         const cardBody = document.createElement('div');
         cardBody.classList.add('card', 'h-100', 'p-3');
@@ -42,13 +42,16 @@ document.addEventListener('DOMContentLoaded', function () {
         return card;
     }
 
-    // This function is simplified as CSS now handles the styling
-    function applyRoundStyles(round) {
-        // No JavaScript-based styling needed if CSS handles it all
-    }
-
-    function getRoundColor(round) {
-        // This function can remain for other uses or be removed if unused
+    function updateCurrentRoundIndicator(round) {
+        const roundNames = {
+            'groupStage': 'Group Stage',
+            'knockout': 'Knockout',
+            'quarterFinals': 'Quarter Finals',
+            'semiFinals': 'Semi Finals',
+            'finals': 'Finals'
+        };
+        const currentRoundDiv = document.querySelector('.current-round');
+        currentRoundDiv.textContent = `Current Round: ${roundNames[round] || 'Unknown Round'}`;
     }
 
     displayRoundData('groupStage'); // Initial display

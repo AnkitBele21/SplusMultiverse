@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     async function fetchData(round) {
         const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A:I?key=${API_KEY}`);
         const data = await response.json();
-        // Adjust for case sensitivity and ensure matching with sheet data
         return data.values.slice(1).filter(match => match[1].trim().toLowerCase() === round.toLowerCase());
     }
 
@@ -23,9 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function createMatchCard(match, round) {
-        const colorClass = round.replace(/\s+/g, '').toLowerCase(); // Convert round to a single word lowercase for CSS class
         const card = document.createElement('div');
-        card.className = `card mb-3 ${colorClass}`;
+        card.className = `card mb-3 round-${round.replace(/\s+/g, '').toLowerCase()}`;
         card.innerHTML = `
             <div class="card-body">
                 <h5 class="card-title">${match[2]} vs ${match[3]}</h5>
@@ -44,14 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateRoundSelectorColor(round) {
         const colors = {
-            'groupstage': '#28a745',
-            'knockout': '#964b00',
-            'quarterfinals': '#0000ff',
-            'semifinals': '#ff69b4',
-            'finals': '#000000'
+            'groupstage': '#28a745', // Green
+            'knockout': '#964b00', // Brown
+            'quarterfinals': '#0000ff', // Blue
+            'semifinals': '#ff69b4', // Pink
+            'finals': '#000000' // Black
         };
-        const colorClass = round.replace(/\s+/g, '').toLowerCase();
-        document.getElementById('roundSelector').style.backgroundColor = colors[colorClass] || '#33363B'; // Default color if not matched
+        const colorKey = round.replace(/\s+/g, '').toLowerCase();
+        document.getElementById('roundSelector').style.backgroundColor = colors[colorKey];
     }
 
     document.getElementById('roundSelector').addEventListener('click', function() {
@@ -59,5 +57,5 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     });
 
-    changeRound('Group Stage'); // Initialize with the "Group Stage" round
+    changeRound('Group Stage');
 });

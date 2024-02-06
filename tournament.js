@@ -23,23 +23,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Function to create a match card
-  function createMatchCard(match) {
+ // Function to create a match card
+function createMatchCard(match) {
     const card = document.createElement('div');
     card.classList.add('col-md-4', 'mb-4');
 
     const cardBody = document.createElement('div');
-    cardBody.classList.add('card', 'h-100');
+    cardBody.classList.add('card', 'h-100', 'p-3');
 
+    // Simplified card content
     const cardContent = `
-      <div class="card-body">
-        <h5 class="card-title">Match ID: ${match[0]}</h5>
-        <p class="card-text">Round: ${match[1]}</p>
-        <p class="card-text">Players: ${match[2]} vs ${match[3]}</p>
-        <p class="card-text">Table: ${match[4]}</p>
-        <p class="card-text">Date & Time: ${match[5]}, ${match[6]}</p>
-        <p class="card-text">Winner: ${match[7]}</p>
-        <p class="card-text">Link: ${match[8]}</p>
+      <h5 class="card-title">Match ID: ${match[0]}</h5>
+      <div class="card-text">
+        <strong>${match[2]}</strong> vs <strong>${match[3]}</strong><br>
+        Table: ${match[4]} | ${match[5]}, ${match[6]}<br>
+        Winner: <strong>${match[7]}</strong><br>
+        <a href="${match[8]}" target="_blank">Match Link</a>
       </div>
     `;
 
@@ -47,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
     card.appendChild(cardBody);
 
     return card;
-  }
+}
+
 
   // Apply round-specific styles
   function applyRoundStyles(round) {

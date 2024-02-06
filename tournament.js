@@ -14,16 +14,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const matchesContainer = document.getElementById('matchesContainer');
         matchesContainer.innerHTML = '';
         data.forEach(match => {
-            const matchCard = createMatchCard(match);
+            const matchCard = createMatchCard(match, round);
             matchesContainer.appendChild(matchCard);
         });
         updateCurrentRoundIndicator(round);
         updateRoundSelectorColor(round);
     }
 
-    function createMatchCard(match) {
+    function createMatchCard(match, round) {
         const card = document.createElement('div');
-        card.className = 'card mb-3';
+        card.className = `card mb-3 ${round}`;
         card.innerHTML = `
             <div class="card-body">
                 <h5 class="card-title">${match[2]} vs ${match[3]}</h5>
@@ -58,12 +58,10 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('roundSelector').style.backgroundColor = colors[round];
     }
 
-    // Directly attach event listener to toggle the dropdown
     document.getElementById('roundSelector').addEventListener('click', function() {
         const dropdownContent = document.getElementById('dropdownContent');
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     });
 
-    // Initially display Group Stage matches
     changeRound('groupStage');
 });

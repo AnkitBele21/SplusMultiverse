@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return data.values.filter(match => match[1] === round);
     }
 
-    async function displayRoundData(round) {
+    window.displayRoundData = async function(round) { // Make it accessible globally
         const data = await fetchData(round);
         const roundContainer = document.querySelector('.row');
         roundContainer.innerHTML = '';
@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
             roundContainer.appendChild(matchCard);
         });
         updateCurrentRoundIndicator(round);
-        updateRoundSelectorColor(round);
     }
 
     function createMatchCard(match) {

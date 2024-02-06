@@ -85,3 +85,10 @@ img {
 .card-link:hover {
     color: #FFEB3B;
 }
+/* Add to your existing CSS */
+.groupstage .card-body { background-color: #28a745; }
+.knockout .card-body { background-color: #964b00; }
+.quarterfinals .card-body { background-color: #0000ff; }
+.semifinals .card-body { background-color: #ff69b4; }
+.finals .card-body { background-color: #000000; }
+

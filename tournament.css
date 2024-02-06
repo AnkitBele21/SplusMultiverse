@@ -21,7 +21,7 @@ img {
     position: sticky;
     top: 0;
     z-index: 1020;
-    background-color: #33363B; /* Default color, dynamically updated by JS */
+    background-color: #33363B; /* Default color */
     color: white;
     padding: 10px 0;
     cursor: pointer;
@@ -35,7 +35,7 @@ img {
     width: 100%;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
-    text-align: left;
+    text-align: center;
 }
 
 .dropdown-content a {
@@ -64,25 +64,25 @@ img {
 
 .card {
     background-color: #33363B;
-    border-left: 5px solid #01AB7A; /* Default, dynamically updated */
+    border: none;
     border-radius: 8px;
     color: #FFFFFF;
     transition: transform 0.2s;
+    margin-bottom: 20px;
 }
 
 .card:hover {
     transform: scale(1.05);
 }
 
-.card-title, .card-text {
-    color: inherit;
+.card-body {
+    padding: 20px;
 }
 
-.card-text a {
+.card-title, .card-text, .card-link {
+    color: #FFFFFF;
+}
+
+.card-link:hover {
     color: #FFEB3B;
-    text-decoration: none;
-}
-
-.card-text a:hover {
-    text-decoration: underline;
 }

@@ -6,39 +6,26 @@ body {
     padding: 0;
 }
 
-header, nav {
+header {
     background-color: #33363B;
     padding: 20px;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
 }
 
-h1 {
-    color: #01AB7A;
-    margin: 10px 0;
-    font-size: 24px;
-    font-weight: bold;
+img {
+    max-width: 100%;
+    height: auto;
 }
 
-.navbar-nav {
-    display: flex;
-    justify-content: space-around;
+.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+.dropdown .btn {
     width: 100%;
-}
-
-.nav-link {
-    color: #FFFFFF;
-    font-size: 16px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: #01AB7A;
+    text-align: center;
 }
 
 .container {
@@ -52,19 +39,20 @@ h1 {
 }
 
 .col-md-4 {
-    flex: 0 0 48%;
+    flex: 0 0 100%; /* Adjusted for single column layout on all devices */
     margin-bottom: 20px;
 }
 
 .card {
     background-color: #33363B;
+    border-left: 5px solid #01AB7A;
     border-radius: 8px;
-    transition: transform 0.2s;
     color: #FFFFFF;
+    transition: transform 0.2s;
 }
 
 .card:hover {
-    transform: scale(1.02);
+    transform: scale(1.05);
 }
 
 .card-title, .card-text {
@@ -78,16 +66,4 @@ h1 {
 
 .card-text a:hover {
     text-decoration: underline;
-}
-
-/* Existing styles remain unchanged */
-
-/* Round-specific card border colors applied to the card container */
-.col-md-4.card-groupStage .card { border-left: 5px solid #28a745; /* Green */ }
-.col-md-4.card-knockout .card { border-left: 5px solid #964b00; /* Brown */ }
-.col-md-4.card-quarterFinals .card { border-left: 5px solid #0000ff; /* Blue */ }
-.col-md-4.card-semiFinals .card { border-left: 5px solid #ff69b4; /* Pink */ }
-.col-md-4.card-finals .card { border-left: 5px solid #000000; /* Black */ }
- }
-
 }

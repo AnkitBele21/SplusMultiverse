@@ -38,22 +38,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateCurrentRoundIndicator(round) {
         const roundNames = {
-            'groupStage': 'Group Stage',
-            'knockout': 'Knockout',
-            'quarterFinals': 'Quarter Finals',
-            'semiFinals': 'Semi Finals',
-            'finals': 'Finals'
+            'Group Stage': 'Group Stage',
+            'Knockout': 'Knockout',
+            'Quarter Finals': 'Quarter Finals',
+            'Semi Finals': 'Semi Finals',
+            'Finals': 'Finals'
         };
         document.getElementById('currentRoundText').textContent = roundNames[round];
     }
 
     function updateRoundSelectorColor(round) {
         const colors = {
-            'groupStage': '#28a745',
-            'knockout': '#964b00',
-            'quarterFinals': '#0000ff',
-            'semiFinals': '#ff69b4',
-            'finals': '#000000'
+            'Group Stage': '#28a745',
+            'Knockout': '#964b00',
+            'Quarter Finals': '#0000ff',
+            'Semi Finals': '#ff69b4',
+            'Finals': '#000000'
         };
         document.getElementById('roundSelector').style.backgroundColor = colors[round];
     }
@@ -63,5 +63,5 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     });
 
-    changeRound('groupStage');
+    changeRound('Group Stage');
 });

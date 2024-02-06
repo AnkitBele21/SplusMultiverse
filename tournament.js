@@ -6,10 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
     async function fetchData(round) {
         const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A:I?key=${API_KEY}`);
         const data = await response.json();
-        return data.values.filter(match => match[1] === round);
+        // Assuming the first row contains headers and actual data starts from the second row
+        return data.values.slice(1).filter(match => match[1] === round);
     }
 
-    window.displayRoundData = async function(round) {
+    window.changeRound = async function(round) {
         const data = await fetchData(round);
         const matchesContainer = document.getElementById('matchesContainer');
         matchesContainer.innerHTML = ''; // Clear previous matches
@@ -18,7 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
             matchesContainer.appendChild(matchCard);
         });
         updateCurrentRoundIndicator(round);
-        toggleDropdown(); // Hide the dropdown after selection
+        updateRoundSelectorColor(round);
+        // Hide the dropdown content
+        document.getElementById('dropdownContent').style.display = 'none';
     }
 
     function createMatchCard(match) {
@@ -45,7 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
             'finals': 'Finals'
         };
         document.getElementById('currentRoundText').textContent = roundNames[round];
-        // Update the background color based on the round
+    }
+
+    function updateRoundSelectorColor(round) {
         const colors = {
             'groupStage': '#28a745', // Green
             'knockout': '#964b00', // Brown
@@ -53,7 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'semiFinals': '#ff69b4', // Pink
             'finals': '#000000' // Black
         };
-        document.getElementById('roundSelector').style.backgroundColor = colors[round];
+        const roundSelector = document.getElementById('roundSelector');
+        roundSelector.style.backgroundColor = colors[round];
     }
 
     function toggleDropdown() {
@@ -62,5 +68,5 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Initially display Group Stage matches
-    displayRoundData('groupStage');
+    changeRound('groupStage');
 });

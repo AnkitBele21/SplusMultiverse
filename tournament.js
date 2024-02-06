@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', function () {
             'finals': 'Finals'
         };
         document.getElementById('currentRoundText').textContent = roundNames[round] || 'Unknown Round';
+        // Update the button's text and color based on the selected round
+        const dropdownButton = document.getElementById('dropdownMenuButton');
+        dropdownButton.innerHTML = `Current Round: <span id="currentRoundText">${roundNames[round] || 'Unknown Round'}</span>`;
     }
 
     displayRoundData('groupStage');
@@ -60,7 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             const round = this.getAttribute('href').substring(1);
             displayRoundData(round);
-            $('.dropdown-toggle').dropdown('hide'); // Hide dropdown after selection
+            // Manually hide the dropdown menu
+            document.querySelector('.dropdown-menu').classList.remove('show');
         });
     });
 });

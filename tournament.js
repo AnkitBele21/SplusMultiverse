@@ -11,19 +11,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.displayRoundData = async function(round) {
         const data = await fetchData(round);
-        const roundContainer = document.querySelector('.row');
-        roundContainer.innerHTML = '';
+        const matchesContainer = document.getElementById('matchesContainer');
+        matchesContainer.innerHTML = ''; // Clear previous matches
         data.forEach(match => {
             const matchCard = createMatchCard(match);
-            roundContainer.appendChild(matchCard);
+            matchesContainer.appendChild(matchCard);
         });
         updateCurrentRoundIndicator(round);
-        updateRoundSelectorColor(round);
-        toggleDropdown(); // Hide dropdown after selection
+        toggleDropdown(); // Hide the dropdown after selection
     }
 
     function createMatchCard(match) {
-        // Implementation remains the same as previously provided
+        const card = document.createElement('div');
+        card.className = 'card mb-3';
+        card.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">${match[2]} vs ${match[3]}</h5>
+                <p class="card-text">Table: ${match[4]}</p>
+                <p class="card-text">Date & Time: ${match[5]}, ${match[6]}</p>
+                <p class="card-text">Winner: ${match[7]}</p>
+                <a href="${match[8]}" class="card-link" target="_blank">Match Link</a>
+            </div>
+        `;
+        return card;
     }
 
     function updateCurrentRoundIndicator(round) {
@@ -35,9 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             'finals': 'Finals'
         };
         document.getElementById('currentRoundText').textContent = roundNames[round];
-    }
-
-    function updateRoundSelectorColor(round) {
+        // Update the background color based on the round
         const colors = {
             'groupStage': '#28a745', // Green
             'knockout': '#964b00', // Brown
@@ -45,8 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             'semiFinals': '#ff69b4', // Pink
             'finals': '#000000' // Black
         };
-        const roundSelector = document.getElementById('roundSelector');
-        roundSelector.style.backgroundColor = colors[round];
+        document.getElementById('roundSelector').style.backgroundColor = colors[round];
     }
 
     function toggleDropdown() {
@@ -54,6 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     }
 
-    // Initial display for Group Stage
+    // Initially display Group Stage matches
     displayRoundData('groupStage');
 });

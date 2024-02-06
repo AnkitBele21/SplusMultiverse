@@ -15,16 +15,16 @@
     <img src="https://github.com/AnkitBele21/centurydewas/blob/main/photo/Frame%2013155%20(1).png?raw=true" alt="Snooker+ Tournament Logo" class="img-fluid">
   </header>
 
-  <!-- Updated Round Selector with onClick Event -->
-  <div class="round-selector sticky-top text-center" id="roundSelector">
-    <span id="currentRoundText" onclick="toggleDropdown()">Group Stage</span>
-    <!-- Hidden Dropdown Content -->
-    <div id="dropdownContent" class="dropdown-content">
-        <a href="#" onclick="changeRound('groupStage')">Group Stage</a>
-        <a href="#" onclick="changeRound('knockout')">Knockout</a>
-        <a href="#" onclick="changeRound('quarterFinals')">Quarter Finals</a>
-        <a href="#" onclick="changeRound('semiFinals')">Semi Finals</a>
-        <a href="#" onclick="changeRound('finals')">Finals</a>
+  <div class="round-selector sticky-top" id="roundSelector">
+    <div class="text-center">
+        <span id="currentRoundText" onclick="toggleDropdown()">Group Stage</span>
+        <div id="dropdownContent" class="dropdown-content" style="display: none;">
+            <a href="#" onclick="displayRoundData('groupStage')">Group Stage</a>
+            <a href="#" onclick="displayRoundData('knockout')">Knockout</a>
+            <a href="#" onclick="displayRoundData('quarterFinals')">Quarter Finals</a>
+            <a href="#" onclick="displayRoundData('semiFinals')">Semi Finals</a>
+            <a href="#" onclick="displayRoundData('finals')">Finals</a>
+        </div>
     </div>
   </div>
 
@@ -34,7 +34,7 @@
     </div>
   </section>
 
-  <!-- jQuery, Popper.js, and Bootstrap JS -->
+  <!-- Full version of jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

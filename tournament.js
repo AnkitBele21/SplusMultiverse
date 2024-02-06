@@ -12,17 +12,17 @@ document.addEventListener('DOMContentLoaded', function () {
     async function displayRoundData(round) {
         const data = await fetchData(round);
         const roundContainer = document.querySelector('.row');
-        roundContainer.innerHTML = ''; // Clear existing content
+        roundContainer.innerHTML = '';
         data.forEach(match => {
             const matchCard = createMatchCard(match, round);
             roundContainer.appendChild(matchCard);
         });
-        updateCurrentRoundIndicator(round); // Update the round indicator
+        updateCurrentRoundIndicator(round);
     }
 
     function createMatchCard(match, round) {
         const card = document.createElement('div');
-        card.classList.add('col-md-4', 'mb-4', `card-${round}`); // Apply round-specific class for styling
+        card.classList.add('col-md-4', 'mb-4');
 
         const cardBody = document.createElement('div');
         cardBody.classList.add('card', 'h-100', 'p-3');
@@ -50,17 +50,17 @@ document.addEventListener('DOMContentLoaded', function () {
             'semiFinals': 'Semi Finals',
             'finals': 'Finals'
         };
-        const currentRoundDiv = document.querySelector('.current-round');
-        currentRoundDiv.textContent = `Current Round: ${roundNames[round] || 'Unknown Round'}`;
+        document.getElementById('currentRoundText').textContent = roundNames[round] || 'Unknown Round';
     }
 
-    displayRoundData('groupStage'); // Initial display
+    displayRoundData('groupStage');
 
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function (event) {
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function (event) {
             event.preventDefault();
             const round = this.getAttribute('href').substring(1);
             displayRoundData(round);
+            $('.dropdown-toggle').dropdown('hide'); // Hide dropdown after selection
         });
     });
 });

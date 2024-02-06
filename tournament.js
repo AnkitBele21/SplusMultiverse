@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     async function fetchData(round) {
         const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A:I?key=${API_KEY}`);
         const data = await response.json();
-        return data.values.slice(1).filter(match => match[1].toLowerCase() === round);
+        // Adjust for case sensitivity and ensure matching with sheet data
+        return data.values.slice(1).filter(match => match[1].trim().toLowerCase() === round.toLowerCase());
     }
 
     window.changeRound = async function(round) {
@@ -22,8 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function createMatchCard(match, round) {
+        const colorClass = round.replace(/\s+/g, '').toLowerCase(); // Convert round to a single word lowercase for CSS class
         const card = document.createElement('div');
-        card.className = `card mb-3 ${round}`;
+        card.className = `card mb-3 ${colorClass}`;
         card.innerHTML = `
             <div class="card-body">
                 <h5 class="card-title">${match[2]} vs ${match[3]}</h5>
@@ -37,25 +39,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateCurrentRoundIndicator(round) {
-        const roundNames = {
-            'Group Stage': 'Group Stage',
-            'Knockout': 'Knockout',
-            'Quarter Finals': 'Quarter Finals',
-            'Semi Finals': 'Semi Finals',
-            'Finals': 'Finals'
-        };
-        document.getElementById('currentRoundText').textContent = roundNames[round];
+        document.getElementById('currentRoundText').textContent = round;
     }
 
     function updateRoundSelectorColor(round) {
         const colors = {
-            'Group Stage': '#28a745',
-            'Knockout': '#964b00',
-            'Quarter Finals': '#0000ff',
-            'Semi Finals': '#ff69b4',
-            'Finals': '#000000'
+            'groupstage': '#28a745',
+            'knockout': '#964b00',
+            'quarterfinals': '#0000ff',
+            'semifinals': '#ff69b4',
+            'finals': '#000000'
         };
-        document.getElementById('roundSelector').style.backgroundColor = colors[round];
+        const colorClass = round.replace(/\s+/g, '').toLowerCase();
+        document.getElementById('roundSelector').style.backgroundColor = colors[colorClass] || '#33363B'; // Default color if not matched
     }
 
     document.getElementById('roundSelector').addEventListener('click', function() {
@@ -63,5 +59,5 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     });
 
-    changeRound('Group Stage');
+    changeRound('Group Stage'); // Initialize with the "Group Stage" round
 });

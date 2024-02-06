@@ -21,15 +21,31 @@ img {
     position: sticky;
     top: 0;
     z-index: 1020;
-    text-align: center;
+    background-color: #33363B; /* Default color, dynamically updated by JS */
+    color: white;
+    padding: 10px 0;
+    cursor: pointer;
 }
 
-/* Dynamic background color for round selector */
-.groupStage { background-color: #28a745; }
-.knockout { background-color: #964b00; }
-.quarterFinals { background-color: #0000ff; }
-.semiFinals { background-color: #ff69b4; }
-.finals { background-color: #000000; }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    color: black;
+    width: 100%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    text-align: left;
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: black;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
 
 .container {
     padding: 20px;
@@ -48,7 +64,7 @@ img {
 
 .card {
     background-color: #33363B;
-    border-left: 5px solid #01AB7A;
+    border-left: 5px solid #01AB7A; /* Default, dynamically updated */
     border-radius: 8px;
     color: #FFFFFF;
     transition: transform 0.2s;

@@ -42,17 +42,23 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('currentRoundText').textContent = round;
     }
 
-    function updateRoundSelectorColor(round) {
-        const colors = {
-            'groupstage': '#28a745', // Green
-            'knockout': '#964b00', // Brown
-            'quarterfinals': '#0000ff', // Blue
-            'semifinals': '#ff69b4', // Pink
-            'finals': '#000000' // Black
-        };
-        const colorKey = round.replace(/\s+/g, '').toLowerCase();
-        document.getElementById('roundSelector').style.backgroundColor = colors[colorKey];
+   function updateRoundSelectorColor(round) {
+    const colors = {
+        'Group Stage': '#28a745', // Green
+        'Knockout': '#964b00', // Brown
+        'Quarter Finals': '#0000ff', // Blue
+        'Semi Finals': '#ff69b4', // Pink
+        'Finals': '#000000' // Black
+    };
+    // Ensure the round name matches exactly as it appears in the HTML and Sheets
+    const color = colors[round];
+    if (color) {
+        document.getElementById('roundSelector').style.backgroundColor = color;
+    } else {
+        console.error('Round color not found:', round);
     }
+}
+
 
     document.getElementById('roundSelector').addEventListener('click', function() {
         const dropdownContent = document.getElementById('dropdownContent');

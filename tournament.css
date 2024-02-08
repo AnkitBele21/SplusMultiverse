@@ -18,28 +18,15 @@ img {
 }
 
 .round-selector {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: sticky;
     top: 0;
     z-index: 1020;
     background-color: #33363B;
     color: white;
-    padding: 10px;
+    padding: 10px 0;
     cursor: pointer;
     text-align: center;
 }
-
-#currentRoundText {
-    flex-grow: 1; /* Ensure the text takes up the available space */
-}
-
-.dropdown-arrow {
-    margin-left: auto; /* Push the arrow to the right */
-    font-size: 1rem; /* Adjust size as needed */
-}
-
 
 .dropdown-content {
     display: none;
@@ -113,5 +100,3 @@ img {
 .card.round-quarterfinals { border-left-color: #0000ff; }
 .card.round-semifinals { border-left-color: #ff69b4; }
 .card.round-finals { border-left-color: #000000; }
-
-

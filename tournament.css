@@ -9,7 +9,7 @@ body {
 header {
     background-color: #33363B;
     padding: 20px;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 img {
@@ -25,6 +25,7 @@ img {
     color: white;
     padding: 10px 0;
     cursor: pointer;
+    text-align: center;
 }
 
 .dropdown-content {
@@ -35,7 +36,6 @@ img {
     width: 100%;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
-    text-align: center;
 }
 
 .dropdown-content a {
@@ -53,61 +53,50 @@ img {
 
 .row {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.col-md-4 {
-    flex: 0 0 100%;
-    margin-bottom: 20px;
+    flex-direction: column; /* Ensure cards are displayed one below the other */
 }
 
 .card {
     background-color: #33363B;
-    border-radius: 8px;
+    border-radius: 10px;
     color: #FFFFFF;
-    transition: transform 0.2s;
     margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-left: 5px solid; /* Accent color stripe */
+    transition: all 0.3s ease;
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
 .card-body {
-    padding: 20px;
+    padding: 15px;
 }
 
-.card-title, .card-text, .card-link {
-    color: #FFFFFF;
-}
-
-.card-link:hover {
-    color: #FFEB3B;
-}
-.round-groupstage .card-body { background-color: #28a745; color: #fff; }
-.round-knockout .card-body { background-color: #964b00; color: #fff; }
-.round-quarterfinals .card-body { background-color: #0000ff; color: #fff; }
-.round-semifinals .card-body { background-color: #ff69b4; color: #fff; }
-.round-finals .card-body { background-color: #000000; color: #fff; }
-
-.card {
-    border-left: 5px solid transparent; /* Add a border to the left for visual emphasis */
-}
-
-.card-body {
-    transition: background-color 0.3s ease; /* Smooth transition for background color change */
-}
-
-/* Refine the card design */
 .card-title {
-    font-size: 1.25rem; /* Larger title */
+    font-size: 1.2rem;
+    margin-bottom: 10px;
 }
 
 .card-text {
-    font-size: 1rem; /* Readable text size */
+    font-size: 1rem;
+    margin-bottom: 10px;
 }
 
 .card-link {
-    color: #FFEB3B; /* Bright link color for contrast */
+    color: #FFEB3B;
+    font-weight: bold;
 }
+
+.card-link:hover {
+    color: #ffd700;
+}
+
+/* Round-specific accent colors */
+.round-groupstage .card { border-left-color: #28a745; }
+.round-knockout .card { border-left-color: #964b00; }
+.round-quarterfinals .card { border-left-color: #0000ff; }
+.round-semifinals .card { border-left-color: #ff69b4; }
+.round-finals .card { border-left-color: #000000; }

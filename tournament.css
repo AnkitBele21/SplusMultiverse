@@ -18,15 +18,28 @@ img {
 }
 
 .round-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: sticky;
     top: 0;
     z-index: 1020;
     background-color: #33363B;
     color: white;
-    padding: 10px 0;
+    padding: 10px;
     cursor: pointer;
     text-align: center;
 }
+
+#currentRoundText {
+    flex-grow: 1; /* Ensure the text takes up the available space */
+}
+
+.dropdown-arrow {
+    margin-left: auto; /* Push the arrow to the right */
+    font-size: 1rem; /* Adjust size as needed */
+}
+
 
 .dropdown-content {
     display: none;

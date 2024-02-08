@@ -94,10 +94,11 @@ img {
     color: #ffd700;
 }
 
-/* Round-specific accent colors */
-.round-groupstage .card { border-left-color: #28a745; } /* Green for Group Stage */
-.round-knockout .card { border-left-color: #964b00; } /* Brown for Knockout */
-.round-quarterfinals .card { border-left-color: #0000ff; } /* Blue for Quarter Finals */
-.round-semifinals .card { border-left-color: #ff69b4; } /* Pink for Semi Finals */
-.round-finals .card { border-left-color: #000000; } /* Black for Finals */
+/* Example CSS for card accent colors */
+.card.round-groupstage { border-left-color: #28a745; }
+.card.round-knockout { border-left-color: #964b00; }
+.card.round-quarterfinals { border-left-color: #0000ff; }
+.card.round-semifinals { border-left-color: #ff69b4; }
+.card.round-finals { border-left-color: #000000; }
+
 

@@ -173,4 +173,21 @@ main {
 .player-card.playing-at-club-border .progress-bar {
     border: 2px solid #4CAF50; /* Apply border to progress-bar within playing at the club */
 }
+#tournamentButton {
+    cursor: pointer;
+    background-color: #01AB7A; /* Your theme's accent color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: block; /* Ensure it's centered */
+    margin: 20px auto; /* Center the button within the section */
+}
+
+#tournamentButton:hover {
+    background-color: #018a5e; /* A darker shade for hover effect */
+}
 

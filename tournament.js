@@ -22,19 +22,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function createMatchCard(match, round) {
-        const card = document.createElement('div');
-        card.className = `card mb-3 round-${round.replace(/\s+/g, '').toLowerCase()}`;
-        card.innerHTML = `
-            <div class="card-body">
-                <h5 class="card-title">${match[2]} vs ${match[3]}</h5>
-                <p class="card-text">Table: ${match[4]}</p>
-                <p class="card-text">Date & Time: ${match[5]}, ${match[6]}</p>
-                <p class="card-text">Winner: ${match[7]}</p>
-                <a href="${match[8]}" class="card-link" target="_blank">Match Link</a>
-            </div>
-        `;
-        return card;
-    }
+    const roundClass = `round-${round.replace(/\s+/g, '').toLowerCase()}`; // Create a class based on the round
+    const card = document.createElement('div');
+    card.className = `card mb-3 ${roundClass}`; // Apply the round-specific class
+    card.innerHTML = `
+        <div class="card-body">
+            <h5 class="card-title">${match[2]} vs ${match[3]}</h5>
+            <p class="card-text">Table: ${match[4]}</p>
+            <p class="card-text">Date & Time: ${match[5]}, ${match[6]}</p>
+            <p class="card-text">Winner: ${match[7]}</p>
+            <a href="${match[8]}" class="card-link" target="_blank">Match Link</a>
+        </div>
+    `;
+    return card;
+}
+
 
     function updateCurrentRoundIndicator(round) {
         document.getElementById('currentRoundText').textContent = round;

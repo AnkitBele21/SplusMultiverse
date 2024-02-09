@@ -8,29 +8,30 @@ body {
 
 header {
     background-color: #33363B;
-    padding: 20px;
+    padding: 15px; /* Slightly reduce padding to give more space */
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
     display: flex;
-    justify-content: space-between; /* Align items to start and end */
-    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Keep elements on opposite ends */
+    align-items: center; /* Align items vertically */
 }
 
 header img {
-    width: 90px; /* Adjust logo size */
-    object-fit: cover; /* Ensure the image covers the area without distortion */
+    width: 75px; /* Further reduce logo size */
+    margin-right: auto; /* Push the logo to the left */
 }
 
 h1 {
     color: #01AB7A;
-    margin: 0; /* Adjust margin for alignment */
+    margin: 0;
     font-size: 12px;
     font-weight: 600;
+    display: none; /* Optionally hide the h1 if space is a concern */
 }
 
 #loginButton {
     background-color: #01AB7A;
     color: #FFFFFF;
-    padding: 5px 10px;
+    padding: 5px 15px; /* Adjust padding as needed */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -42,6 +43,9 @@ h1 {
     background-color: #018a5e;
 }
 
+main {
+    padding: 20px;
+}
 
 main {
     padding: 20px;

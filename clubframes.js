@@ -72,7 +72,7 @@ const editButton = document.createElement('button');
 editButton.innerText = 'Edit';
 editButton.className = 'btn btn-primary edit-btn';
 editButton.onclick = function() {
-    window.location.href = `https://ankitbele21.github.io/centurydewas/updateactiveframe.html?frameId=SPS${entry.rowNumber}`;
+    window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}`;
 };
 frameElement.appendChild(editButton);
 

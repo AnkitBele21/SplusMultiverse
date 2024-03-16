@@ -1,16 +1,19 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="clubframes.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta3/css/bootstrap.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.2/css/bootstrap.min.css">
     <title>Club Frames</title>
 </head>
 <body>
-    <header>
-        <img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="SnookerPlus Logo" id="logo">
-        <h1>Club Frames</h1>
+    <header class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="SnookerPlus Logo" id="logo">
+            <h1>Club Frames</h1>
+        </div>
+        <button id="addPlayersButton" class="btn btn-primary" onclick="window.location.href='https://ankitbele21.github.io/centurydewas/clubplayers'">Players</button>
     </header>
     <section id="filters" class="card">
         <input type="text" id="playerNameFilter" list="playerNames" placeholder="Filter by player name">
@@ -20,9 +23,39 @@
         <input type="date" id="dateFilter">
         <button onclick="applyFilters()">Apply Filters</button>
     </section>
+    <button id="frameOnButton" class="btn btn-success" onclick="markFrameOn()">Frame On</button>
     <section id="frameEntries">
         <!-- Frame entries will be dynamically added here via JavaScript -->
     </section>
+
+    <!-- Off Modal -->
+    <div class="modal fade" id="offModal" tabindex="-1" aria-labelledby="offModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="offModalLabel">Mark Frame Off</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="offForm">
+                        <div class="mb-3">
+                            <label for="payerName" class="form-label">Who is paying?</label>
+                            <input type="text" class="form-control" id="payerName" placeholder="Enter payer's name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmOff()">Confirm Off</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS (includes Popper) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
     <script src="clubframes.js"></script>
 </body>
 </html>

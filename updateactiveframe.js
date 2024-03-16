@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Extract the Frame ID from the URL and populate the form field
     const frameId = getQueryParam('frameId');
     if (frameId) {
-        document.getElementById('frameNo').value = frameId; // Set the Frame ID in the form
+        document.getElementById('frameNo').textContent = frameId; // Display the Frame ID
         fetchExistingData(frameId); // Fetch and pre-fill existing data for the frame
     }
 
@@ -44,15 +44,14 @@ async function fetchExistingData(frameId) {
 }
 
 async function updateFrameData() {
-    const frameId = document.getElementById('frameNo').value;
-    const rowNumber = frameId.replace('SPS', '');
+    const frameId = document.getElementById('frameNo').textContent; // Use textContent to get the displayed Frame ID
     const tableNo = document.getElementById('tableNo').value;
     const startTime = document.getElementById('startTime').value;
     const players = document.getElementById('players').value.split(',').map(player => player.trim());
 
     const payload = {
-        action: 'update', // Specify the action for clarity and future-proofing
-        rowNumber: rowNumber,
+        action: 'update',
+        frameId: frameId, // Use the displayed Frame ID for the update
         tableNo: tableNo,
         startTime: startTime,
         players: players

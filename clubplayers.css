@@ -1,0 +1,89 @@
+/* General styles */
+body {
+    background-color: #22252B;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+}
+
+.header {
+    background-color: #33363B;
+    padding: 20px;
+    text-align: center;
+}
+
+.header img {
+    width: 180px;
+}
+
+.header h1 {
+    color: #01AB7A;
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.table {
+    color: #FFFFFF;
+}
+
+/* Row background and text color styles */
+.high-balance {
+    background-color: #4CAF50; /* Green for high balance */
+    color: #FFFFFF; /* White text for contrast */
+}
+
+.medium-balance {
+    background-color: #FFEB3B; /* Yellow for medium balance */
+    color: #000000; /* Black text for contrast */
+}
+
+.low-balance {
+    background-color: #FFC107; /* Amber for low balance */
+    color: #000000; /* Black text for contrast */
+}
+
+.negative-balance {
+    background-color: #F44336; /* Red for negative balance */
+    color: #FFFFFF; /* White text for contrast */
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: #01AB7A;
+    border-color: #01AB7A;
+}
+
+.btn-success {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.btn-primary:hover, .btn-success:hover {
+    opacity: 0.85;
+}
+
+/* Input and button alignment */
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-control, .btn {
+    margin: 5px 0;
+}
+
+.ml-2 {
+    margin-left: 8px;
+}
+.balance-high td {
+    color: #F44336; /* Red text for high balance */
+}
+
+.balance-low td {
+    color: #4CAF50; /* Green text for low (negative) balance */
+}

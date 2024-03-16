@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Frame</title>
+    <link rel="stylesheet" href="updateactiveframe.css">
+</head>
+<body>
+    <header class="header">
+        <img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="SnookerPlus Logo">
+        <h1>Update Frame</h1>
+    </header>
+    <div class="form-container">
+        <form id="updateFrameForm">
+            <div class="frame-id-container">
+                <label for="frameNo">Frame ID:</label>
+                <span id="frameNo">SPS12</span> <!-- Example Frame ID -->
+            </div>
+
+            <label for="tableNo">Table No.:</label>
+            <select id="tableNo" name="tableNo">
+                <option value="T1">T1</option>
+                <option value="T2">T2</option>
+                <option value="T3">T3</option>
+                <option value="T4">T4</option>
+            </select><br>
+
+            <label for="startTime">Start Time:</label>
+            <input type="time" id="startTime" name="startTime"><br>
+
+            <label for="players">Players (up to 6, separated by comma):</label>
+            <input type="text" id="players" name="players" placeholder="Player1, Player2, ..."><br>
+
+            <div class="form-buttons">
+                <button type="button" class="back-button" onclick="window.location.href='https://ankitbele21.github.io/centurydewas/clubframes';">Back</button>
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <script src="updateactiveframe.js"></script>
+</body>
+</html>

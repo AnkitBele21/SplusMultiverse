@@ -1,5 +1,5 @@
 // Updated Web App URL
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyHFvuKZ3cg3E65jDfzvJM56d9qoD21DUP-re4uqH0pkPcKQdXGuNCDfsNV_zartWL5eQ/exec';
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxidFKEmKheHMmTi7BwCg_8-X2fF6jq3JFZIybY0AzUBCcs_19bDALC_e-l48OAR8Vk-A/exec';
 
 document.addEventListener('DOMContentLoaded', function() {
     // Function to parse URL parameters

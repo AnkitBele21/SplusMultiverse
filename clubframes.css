@@ -79,3 +79,39 @@ button:hover {
         flex-grow: 1;
     }
 }
+.active-frame {
+    border: 2px solid #01AB7A; /* Highlight active frames with a border color similar to the header */
+    background-color: #394045; /* Slightly lighter than the default frame card for distinction */
+}
+
+/* Assuming .frame-card is your card container */
+.frame-card {
+    position: relative;
+    padding: 15px; /* Adjust padding as needed */
+    /* Other styling for your card */
+}
+
+.edit-btn, .off-btn {
+    width: 100%; /* Make buttons full width of the card container */
+    margin-bottom: 5px; /* Adds space between the buttons */
+}
+
+/* Additional styling for the off button if needed */
+.off-btn {
+    background-color: #dc3545; /* Bootstrap's btn-danger color */
+    color: white;
+}
+#addPlayersButton {
+    background-color: #01AB7A;
+    color: #FFFFFF;
+    padding: 5px 15px; /* Adjust padding as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+}
+
+#addPlayersButton:hover {
+    background-color: #018a5e; /* Darker shade for hover effect */
+}

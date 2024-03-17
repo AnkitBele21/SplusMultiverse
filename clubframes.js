@@ -79,9 +79,10 @@ frameElement.appendChild(editButton);
 const offButton = document.createElement('button');
 offButton.innerText = 'Off';
 offButton.className = 'btn btn-danger off-btn';
-offButton.onclick = function() {
-    showOffPopup(entry.rowNumber, entry.playerNames);
-};
+//offButton.onclick = function() {
+    //showOffPopup(entry.rowNumber, entry.playerNames);
+//};
+    offButton.addEventListener('click', () => showOffPopup(rowNumber, playerName));
 frameElement.appendChild(offButton);
 
     
@@ -92,10 +93,13 @@ frameElement.appendChild(offButton);
     });
 }
 function showOffPopup(rowNumber, playerName) {
-    // Send the off information to the server or Google Apps Script
-    console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerName}`);
-    // Here you would typically make a fetch call to your server or Google Apps Script to update the sheet
+    const amount = prompt(`Enter top-up amount for ${playerName}:`);
+    if (amount) {
+        console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerName}`);
+        // Here, you would typically make a fetch call to your server or Google Apps Script to update the sheet accordingly.
+    }
 }
+
 function applyFilters() {
     const playerNameFilter = document.getElementById('playerNameFilter').value.toLowerCase();
     let dateFilter = document.getElementById('dateFilter').value;

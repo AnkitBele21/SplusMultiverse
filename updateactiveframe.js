@@ -61,8 +61,8 @@ async function updateFrameData() {
         players: players.split(',').map(player => player.trim()) // Ensure players are trimmed
     };
 
-    // Replace 'https://script.google.com/macros/s/...' with your actual Web App URL
-    const response = await fetch('https://script.google.com/macros/s/AKfycbw-Yh1jMDEd1fxMhQ_JMfZ9hcJCUwExhnDrn10E5X-IsvVwdj3bsEL0c3QnJlsstvO_yA/exec', {
+    // Replace 'YOUR_WEB_APP_URL_HERE' with your actual Web App URL
+    const response = await fetch('https://script.google.com/macros/s/AKfycby_9EXahpgMDdWjjs4aBxqlUqaoWP4rVYHUV-IrqEOeiHFHRu4hELpmssMv7DGDPYIkWg/exec', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

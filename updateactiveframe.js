@@ -15,40 +15,35 @@ function getFrameIdFromURL() {
 }
 
 async function fetchFrameData(frameId) {
-    const rowNumber = extractRowNumber(frameId);
+    // Directly using frameId as row number assuming 'SPS' prefix is followed by the row number
+    const rowNumber = frameId.replace('SPS', '');
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A${rowNumber}:Z${rowNumber}?key=${API_KEY}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
-        const rowData = data.values ? data.values[0] : null;
-        if (rowData) {
-            prefillForm(rowData, rowNumber);
+        if (data.values && data.values.length > 0) {
+            const rowData = data.values[0];
+            prefillForm(rowData, frameId);
         } else {
-            console.error('No data found for the specified frame ID.');
+            console.error('No data found for the given frame ID.');
         }
     } catch (error) {
         console.error('Error fetching frame data:', error);
     }
 }
 
-function extractRowNumber(frameId) {
-    // Assuming frameId is in the format "SPS<number>"
-    return parseInt(frameId.replace('SPS', '')) + 1; // Adjust based on your sheet's row indexing
-}
-
-function prefillForm(rowData, rowNumber) {
-    // Assuming specific columns for tableNo, startTime, and players
+function prefillForm(rowData, frameId) {
     // Adjust the indexes based on your sheet's structure
-    const tableNo = rowData[7]; // Example: column H has tableNo
-    const startTime = rowData[10]; // Example: column K has startTime
-    const players = rowData.slice(12, 18).filter(Boolean).join(', '); // Example: columns M to R have player names, filter(Boolean) removes empty strings
+    // Example: Assuming column H (index 7) has tableNo, column K (index 10) has startTime, and columns M to R (indexes 12 to 17) have player names
+    const tableNo = rowData[7];
+    const startTime = rowData[10];
+    const players = rowData.slice(12, 18).filter(Boolean).join(', '); // Join non-empty player names
 
-    document.getElementById('frameNo').textContent = `SPS${rowNumber - 1}`; // Display the Frame ID
-    document.getElementById('tableNo').value = tableNo || '';
+    document.getElementById('frameNo').textContent = frameId; // Display the Frame ID as is
+    document.getElementById('tableNo').value = tableNo || ''; // Fallback to empty string if undefined
     document.getElementById('startTime').value = startTime || '';
     document.getElementById('players').value = players || '';
 }
 
-// Implement the updateFrameData function if needed
-// This function would typically send updated data back to the sheet
+// Note: Ensure your HTML elements (e.g., 'frameNo', 'tableNo', 'startTime', 'players') match these IDs.

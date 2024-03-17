@@ -55,7 +55,7 @@ function displayFrameEntries(frameEntries) {
         paidByElement.innerText = `Paid by: ${entry.paidByNames.filter(name => name).join(', ') || 'N/A'}`;
         frameElement.appendChild(paidByElement);
         
-    // Status for active frames
+        // Status for active frames
         if (entry.isActive) {
             const statusElement = document.createElement('p');
             statusElement.innerText = `Status: ${entry.offStatus ? entry.offStatus : 'Active'}`;
@@ -64,34 +64,26 @@ function displayFrameEntries(frameEntries) {
         }
 
         // Edit Button for active frames
-        // Edit Button for active frames
-// Inside displayFrameEntries, for each active frame
-if (entry.isActive) {
-    // Assuming this is within the loop that generates each frame card
-const editButton = document.createElement('button');
-editButton.innerText = 'Edit';
-editButton.className = 'btn btn-primary edit-btn';
-editButton.onclick = function() {
-    window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}`;
-};
-frameElement.appendChild(editButton);
+        if (entry.isActive) {
+            const editButton = document.createElement('button');
+            editButton.innerText = 'Edit';
+            editButton.className = 'btn btn-primary edit-btn';
+            editButton.onclick = function() {
+                window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}`;
+            };
+            frameElement.appendChild(editButton);
 
-const offButton = document.createElement('button');
-offButton.innerText = 'Off';
-offButton.className = 'btn btn-danger off-btn';
-//offButton.onclick = function() {
-    //showOffPopup(entry.rowNumber, entry.playerNames);
-//};
-    offButton.addEventListener('click', () => showOffPopup(rowNumber, playerName));
-frameElement.appendChild(offButton);
-
-    
-}
-
+            const offButton = document.createElement('button');
+            offButton.innerText = 'Off';
+            offButton.className = 'btn btn-danger off-btn';
+            offButton.addEventListener('click', () => showOffPopup(entry.rowNumber, entry.playerNames));
+            frameElement.appendChild(offButton);
+        }
         
         frameEntriesContainer.appendChild(frameElement);
     });
 }
+
 function showOffPopup(rowNumber, playerName) {
     const amount = prompt(`Enter top-up amount for ${playerName}:`);
     if (amount) {
@@ -120,7 +112,8 @@ function applyFilters() {
             playerNames: row.slice(12, 18),
             paidByNames: row.slice(23, 29),
             isValid: row[6],
-            isActive: row[6] && !row[8]
+            isActive: row[6] && !row[8],
+            offStatus: row[8]
         })).filter(entry => entry.isValid).reverse();
         
         if (playerNameFilter) {
@@ -148,33 +141,6 @@ function populatePlayerNames() {
     });
 }
 
-function markFrameOn() {
-    fetch(WEB_APP_URL, {
-        method: 'POST',
-        // Google Apps Script does not use the Content-Type header, so we use a query string
-        body: 'action=frameOn',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
-    .then(response => response.json())
-.then(data => {
-    if (data.status === "success") {
-        alert("Frame marked as 'On' successfully.");
-        window.location.reload();
-    } else {
-        // If the status is not "success", log or alert the error message if available
-        console.error('Error marking frame as On:', data.message || 'Unknown error');
-        alert("There was an error marking the frame as 'On'. " + (data.message || ''));
-    }
-})
-.catch(error => {
-    console.error('Fetch error:', error);
-    alert("There was an error marking the frame as 'On'.");
-});
-
-}
-
 window.onload = function() {
     fetchData('Frames').then(data => {
         const frameEntries = data.map((row, index) => ({
@@ -196,3 +162,4 @@ window.onload = function() {
 
     populatePlayerNames();
 };
+

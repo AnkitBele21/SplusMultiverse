@@ -87,7 +87,7 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
-    const amount = prompt(`Enter top-up amount for ${playerName}:`);
+    const amount = prompt(`To be paid by ${playerName}:`);
     if (amount) {
         console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerName}`);
         // Here, you would typically make a fetch call to your server or Google Apps Script to update the sheet accordingly.

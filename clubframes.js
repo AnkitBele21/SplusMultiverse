@@ -7,7 +7,9 @@ async function fetchData(sheetName) {
     const data = await response.json();
     return data.values.slice(1);
 }
-
+function markFrameOn() {
+    window.location.href = 'https://leaderboard.snookerplus.in/updateactiveframe';
+}
 function displayFrameEntries(frameEntries) {
     const frameEntriesContainer = document.getElementById('frameEntries');
     frameEntriesContainer.innerHTML = ''; 

@@ -62,7 +62,7 @@ async function updateFrameData() {
     };
 
     // Replace 'https://script.google.com/macros/s/...' with your actual Web App URL
-    const response = await fetch('https://script.google.com/macros/s/AKfycbxidFKEmKheHMmTi7BwCg_8-X2fF6jq3JFZIybY0AzUBCcs_19bDALC_e-l48OAR8Vk-A/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbyh7Qt7TxhJt63eRcdBjVo_MVpNGgm3q9w3oU2_Kjuo1hRL0p2cOGtEnQSSG2eaAN3ZsQ/exec', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

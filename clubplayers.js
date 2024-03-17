@@ -38,29 +38,26 @@ function fetchPlayerData() {
                     const balance = parseFloat(row[6]); // Assuming balances are in column G
                     const rowElement = tableBody.insertRow();
 
-                    // Apply classes based on balance conditions
-                    if (balance > 5) {
+                          // Apply classes based on conditions, here you might need to adjust logic based on what 'balance' can be
+                    if (!isNaN(parseFloat(balance)) && parseFloat(balance) > 5) {
                         rowElement.classList.add('balance-high');
-                    } else if (balance < -5) {
+                    } else if (!isNaN(parseFloat(balance)) && parseFloat(balance) < -5) {
                         rowElement.classList.add('balance-low');
                     }
 
                     const playerNameCell = rowElement.insertCell(0);
                     playerNameCell.textContent = playerName;
-                    // Apply text color based on balance directly to playerNameCell and balanceCell
-                    if (balance > 5) {
-                        playerNameCell.style.color = '#F44336'; // Red for high balance
-                    } else if (balance < -5) {
-                        playerNameCell.style.color = '#4CAF50'; // Green for low balance
+
+                    // You might want to adjust these conditions if balance can be non-numeric
+                    if (!isNaN(parseFloat(balance)) && parseFloat(balance) > 5) {
+                        playerNameCell.style.color = '#F44336'; // Example color, adjust as needed
+                    } else if (!isNaN(parseFloat(balance)) && parseFloat(balance) < -5) {
+                        playerNameCell.style.color = '#4CAF50'; // Example color, adjust as needed
                     }
 
                     const balanceCell = rowElement.insertCell(1);
-                    balanceCell.textContent = balance.toFixed(2);
-                    if (balance > 5) {
-                        balanceCell.style.color = '#F44336'; // Red for high balance
-                    } else if (balance < -5) {
-                        balanceCell.style.color = '#4CAF50'; // Green for low balance
-                    }
+                    balanceCell.textContent = balance; // Directly display the balance without conversion
+
 
                     const actionsCell = rowElement.insertCell(2);
                     const topUpButton = document.createElement('button');

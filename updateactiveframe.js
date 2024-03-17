@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return urlParams.get(param);
     }
 
-    // Extract the Frame ID from the URL and populate the form field
+    // Extract the Frame ID from the URL and display it
     const frameId = getQueryParam('frameId');
     if (frameId) {
         document.getElementById('frameNo').textContent = frameId; // Display the Frame ID
@@ -68,7 +68,7 @@ async function updateFrameData() {
         const result = await response.json();
         if (result.success) {
             alert('Frame updated successfully!');
-            window.location.href = 'https://ankitbele21.github.io/centurydewas/clubframes';
+            window.location.href = 'https://leaderboard.snookerplus.in/clubframes';
         } else {
             alert('Failed to update the frame. Please try again.');
         }

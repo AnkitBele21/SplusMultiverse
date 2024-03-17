@@ -15,7 +15,6 @@ function getFrameIdFromURL() {
 }
 
 async function fetchFrameData(frameId) {
-    // Directly using frameId as row number assuming 'SPS' prefix is followed by the row number
     const rowNumber = frameId.replace('SPS', '');
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A${rowNumber}:Z${rowNumber}?key=${API_KEY}`;
 
@@ -34,19 +33,21 @@ async function fetchFrameData(frameId) {
 }
 
 function prefillForm(rowData, frameId) {
-    // Adjust the indexes based on your sheet's structure
-    // Example: Assuming column H (index 7) has tableNo, column K (index 10) has startTime, and columns M to R (indexes 12 to 17) have player names
     const tableNo = rowData[7];
     const startTime = rowData[10];
-    const players = rowData.slice(12, 18).filter(Boolean).join(', '); // Join non-empty player names
+    const players = rowData.slice(12, 18).filter(Boolean).join(', ');
 
-    document.getElementById('frameNo').textContent = frameId; // Display the Frame ID as is
-    document.getElementById('tableNo').value = tableNo || ''; // Fallback to empty string if undefined
+    document.getElementById('frameNo').textContent = frameId;
+    document.getElementById('tableNo').value = tableNo || '';
     document.getElementById('startTime').value = startTime || '';
     document.getElementById('players').value = players || '';
 }
 
-// Note: Ensure your HTML elements (e.g., 'frameNo', 'tableNo', 'startTime', 'players') match these IDs.
+document.getElementById('updateFrameForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    await updateFrameData();
+});
+
 async function updateFrameData() {
     const frameId = document.getElementById('frameNo').textContent;
     const tableNo = document.getElementById('tableNo').value;
@@ -57,24 +58,23 @@ async function updateFrameData() {
         frameId: frameId,
         tableNo: tableNo,
         startTime: startTime,
-        players: players
+        players: players.split(',').map(player => player.trim()) // Ensure players are trimmed
     };
 
-    try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbxidFKEmKheHMmTi7BwCg_8-X2fF6jq3JFZIybY0AzUBCcs_19bDALC_e-l48OAR8Vk-A/exec', { // Replace WEB_APP_URL with your deployed web app URL
-            method: 'POST',
-            contentType: 'application/json',
-            body: JSON.stringify(payload)
-        });
-        const result = await response.json();
-        if (result.status === 'success') {
-            alert('Frame updated successfully!');
-            // Redirect or update UI as needed
-        } else {
-            alert('Failed to update the frame. Please try again.');
-        }
-    } catch (error) {
-        console.error('Error updating frame:', error);
-        alert('An error occurred while updating the frame.');
+    // Replace 'https://script.google.com/macros/s/...' with your actual Web App URL
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxidFKEmKheHMmTi7BwCg_8-X2fF6jq3JFZIybY0AzUBCcs_19bDALC_e-l48OAR8Vk-A/exec', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+    if (result.success) {
+        alert('Frame updated successfully!');
+        window.location.href = 'https://leaderboard.snookerplus.in/clubframes'; // Redirect back to the frames page
+    } else {
+        alert('Failed to update the frame. Please try again.');
     }
 }

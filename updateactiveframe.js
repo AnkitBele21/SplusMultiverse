@@ -47,3 +47,34 @@ function prefillForm(rowData, frameId) {
 }
 
 // Note: Ensure your HTML elements (e.g., 'frameNo', 'tableNo', 'startTime', 'players') match these IDs.
+async function updateFrameData() {
+    const frameId = document.getElementById('frameNo').textContent;
+    const tableNo = document.getElementById('tableNo').value;
+    const startTime = document.getElementById('startTime').value;
+    const players = document.getElementById('players').value;
+
+    const payload = {
+        frameId: frameId,
+        tableNo: tableNo,
+        startTime: startTime,
+        players: players
+    };
+
+    try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxidFKEmKheHMmTi7BwCg_8-X2fF6jq3JFZIybY0AzUBCcs_19bDALC_e-l48OAR8Vk-A/exec', { // Replace WEB_APP_URL with your deployed web app URL
+            method: 'POST',
+            contentType: 'application/json',
+            body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (result.status === 'success') {
+            alert('Frame updated successfully!');
+            // Redirect or update UI as needed
+        } else {
+            alert('Failed to update the frame. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error updating frame:', error);
+        alert('An error occurred while updating the frame.');
+    }
+}

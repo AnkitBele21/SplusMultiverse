@@ -91,7 +91,7 @@ frameElement.appendChild(offButton);
         frameEntriesContainer.appendChild(frameElement);
     });
 }
-function markFrameOff(rowNumber, playerName) {
+function showOffPopup(rowNumber, playerName) {
     // Send the off information to the server or Google Apps Script
     console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerName}`);
     // Here you would typically make a fetch call to your server or Google Apps Script to update the sheet

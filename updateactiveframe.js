@@ -1,43 +1,36 @@
-async function updateFrameData() {
-    const frameId = document.getElementById('frameNo').textContent;
-    const tableNo = document.getElementById('tableNo').value;
-    const startTime = document.getElementById('startTime').value;
-    const players = document.getElementById('players').value.split(',').map(player => player.trim()); // Ensure players are trimmed
+const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
+const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
+const SHEET_NAME = 'Frames';
 
-    const payload = {
-        frameId: frameId,
-        tableNo: tableNo,
-        startTime: startTime,
-        players: players
-    };
-
-    try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycby_9EXahpgMDdWjjs4aBxqlUqaoWP4rVYHUV-IrqEOeiHFHRu4hELpmssMv7DGDPYIkWg/exec', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-            mode: 'no-cors' // This should generally be avoided unless necessary
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const result = await response.json();
-        if (result.success) {
-            alert('Frame updated successfully!');
-            window.location.href = 'https://leaderboard.snookerplus.in/clubframes'; // Redirect back to the frames page
-        } else {
-            alert('Failed to update the frame. Please try again.');
-        }
-    } catch (error) {
-        console.error('Error updating frame:', error);
-        alert('An error occurred while updating the frame. Please check the console for more details.');
+document.addEventListener('DOMContentLoaded', function() {
+    const frameId = getFrameIdFromURL();
+    if (frameId) {
+        fetchFrameData(frameId);
     }
+});
+
+function getFrameIdFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('frameId');
 }
 
+async function fetchFrameData(frameId) {
+    const rowNumber = frameId.replace('SPS', '');
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A${rowNumber}:Z${rowNumber}?key=${API_KEY}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.values && data.values.length > 0) {
+            const rowData = data.values[0];
+            prefillForm(rowData, frameId);
+        } else {
+            console.error('No data found for the given frame ID.');
+        }
+    } catch (error) {
+        console.error('Error fetching frame data:', error);
+    }
+}
 
 function prefillForm(rowData, frameId) {
     const tableNo = rowData[7];
@@ -68,7 +61,6 @@ async function updateFrameData() {
         players: players.split(',').map(player => player.trim()) // Ensure players are trimmed
     };
 
-    // Replace 'YOUR_WEB_APP_URL_HERE' with your actual Web App URL
     const response = await fetch('https://script.google.com/macros/s/AKfycby_9EXahpgMDdWjjs4aBxqlUqaoWP4rVYHUV-IrqEOeiHFHRu4hELpmssMv7DGDPYIkWg/exec', {
         method: 'POST',
         headers: {

@@ -63,7 +63,7 @@ async function updateFrameData() {
 
     const response = await fetch('https://script.google.com/macros/s/AKfycby_9EXahpgMDdWjjs4aBxqlUqaoWP4rVYHUV-IrqEOeiHFHRu4hELpmssMv7DGDPYIkWg/exec', {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'no-cors', // Add 'no-cors' mode
         headers: {
             'Content-Type': 'application/json',
         },

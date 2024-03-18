@@ -49,32 +49,41 @@ document.getElementById('updateFrameForm').addEventListener('submit', async func
 });
 
 async function updateFrameData() {
-    const frameId = document.getElementById('frameNo').textContent;
-    const tableNo = document.getElementById('tableNo').value;
-    const startTime = document.getElementById('startTime').value;
-    const players = document.getElementById('players').value;
+    try {
+        const frameId = document.getElementById('frameNo').textContent;
+        const tableNo = document.getElementById('tableNo').value;
+        const startTime = document.getElementById('startTime').value;
+        const players = document.getElementById('players').value;
 
-    const payload = {
-        frameId: frameId,
-        tableNo: tableNo,
-        startTime: startTime,
-        players: players.split(',').map(player => player.trim()) // Ensure players are trimmed
-    };
+        const payload = {
+            frameId: frameId,
+            tableNo: tableNo,
+            startTime: startTime,
+            players: players.split(',').map(player => player.trim()) // Ensure players are trimmed
+        };
 
-    const response = await fetch('https://script.google.com/macros/s/AKfycby_9EXahpgMDdWjjs4aBxqlUqaoWP4rVYHUV-IrqEOeiHFHRu4hELpmssMv7DGDPYIkWg/exec', {
-        method: 'POST',
-        mode: 'no-cors', // Add 'no-cors' mode
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-    });
+        const response = await fetch('https://script.google.com/macros/s/AKfycby_9EXahpgMDdWjjs4aBxqlUqaoWP4rVYHUV-IrqEOeiHFHRu4hELpmssMv7DGDPYIkWg/exec', {
+            method: 'POST',
+            mode: 'no-cors', // Add 'no-cors' mode
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
 
-    const result = await response.json();
-    if (result.success) {
-        alert('Frame updated successfully!');
-        window.location.href = 'https://leaderboard.snookerplus.in/clubframes'; // Redirect back to the frames page
-    } else {
-        alert('Failed to update the frame. Please try again.');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        if (result.success) {
+            alert('Frame updated successfully!');
+            window.location.href = 'https://leaderboard.snookerplus.in/clubframes'; // Redirect back to the frames page
+        } else {
+            alert('Failed to update the frame. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error updating frame:', error);
+        alert('An error occurred while updating the frame. Please try again later.');
     }
 }

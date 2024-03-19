@@ -239,7 +239,6 @@ function displayRankInfo(rankInfo) {
   document.getElementById("playerOffer").innerText = `Offer: ${offer}`;
 }
 
-
 function setupPayNowButton(playerName) {
   document
     .getElementById("payNowButton")

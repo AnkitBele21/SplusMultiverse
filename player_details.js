@@ -213,12 +213,32 @@ function displayFramesInfo(framesData, playerName) {
 function displayRankInfo(rankInfo) {
   document.getElementById("playerRank").innerText = `Rank: ${rankInfo[0]}`; // Rank in column A
   document.getElementById("winRate").innerText = `Win Rate: ${rankInfo[4]}%`; // Win rate in column E
-  document.getElementById("playerCard").style.backgroundColor = rankInfo[3]; // Color in column D
+
+  // Determine the background color based on the coins
+  let playercardColor = '';
+  const coins = parseInt(rankInfo[2]); // Assuming coins are in column C
+  if (coins >= 21 && coins <= 30) {
+    playercardColor = '#FFEB3B'; // Yellow
+  } else if (coins >= 31 && coins <= 40) {
+    playercardColor = '#4CAF50'; // Green
+  } else if (coins >= 41 && coins <= 50) {
+    playercardColor = '#795548'; // Brown
+  } else if (coins >= 51 && coins <= 60) {
+    playercardColor = '#2196F3'; // Blue
+  } else if (coins >= 61 && coins <= 70) {
+    playercardColor = '#E91E63'; // Pink
+  } else if (coins > 70) {
+    playercardColor = '#000000'; // Black
+  }
+
+  // Apply the background color to the player card
+  document.getElementById("playerCard").style.backgroundColor = playercardColor;
 
   // New code to display the Offer
   const offer = rankInfo[8]; // Assuming Offer is in column I
   document.getElementById("playerOffer").innerText = `Offer: ${offer}`;
 }
+
 
 function setupPayNowButton(playerName) {
   document

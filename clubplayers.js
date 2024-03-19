@@ -2,6 +2,8 @@ const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
 const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
 const PLAYER_SHEET_NAME = 'snookerplus';
 
+const loaderInstance = new FullScreenLoader();
+
 document.addEventListener('DOMContentLoaded', function() {
     fetchPlayerData();
 
@@ -81,16 +83,14 @@ function fetchPlayerData() {
 function topUpBalance(playerName) {
     const amount = prompt(`Enter top-up amount for ${playerName}:`);
     if (amount) {
-        console.log(`Top up ${amount} for ${playerName}`);
-        // Here, you would typically make a fetch call to your server or Google Apps Script to update the sheet accordingly.
-    }
+        recordTopUp(playerName, amount);
+      }
 }
 
 function makePurchase(playerName) {
     const amount = prompt(`Enter purchase amount for ${playerName}:`);
     if (amount) {
-        console.log(`Purchase ${amount} for ${playerName}`);
-        // Similar to top-up, handle the purchase amount update here.
+        recordAppPurchase(playerName, amount)
     }
 }
 
@@ -116,3 +116,73 @@ function addPlayer() {
 }
 
 // Removed the redundant window.onload function as it was causing issues with loading the player data correctly.
+
+
+function recordTopUp(playerName, amount,) {
+    try {
+      loaderInstance.showLoader();
+  
+      fetch("https://payment.snookerplus.in/record_top_up/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: playerName,
+          amount_paid: amount,
+        }),
+      })
+        .then((resp) => {
+          loaderInstance.hideLoader();
+          if (!resp.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return resp.json();
+        })
+        .then((_body) => {
+          // Just reload to get latest info
+          window.location.reload();
+        });
+    } catch (error) {
+      loaderInstance.hideLoader();
+      console.error("Fetch error:", error);
+      alert(
+        "Something went wrong while handling payment success. Contact support."
+      );
+    }
+  }
+
+
+  function recordAppPurchase(playerName, amount,) {
+    try {
+      loaderInstance.showLoader();
+  
+      fetch("https://payment.snookerplus.in/record_app_purchase/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: playerName,
+          amount_paid: amount,
+        }),
+      })
+        .then((resp) => {
+          loaderInstance.hideLoader();
+          if (!resp.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return resp.json();
+        })
+        .then((_body) => {
+          // Just reload to get latest info
+          window.location.reload();
+        });
+    } catch (error) {
+      loaderInstance.hideLoader();
+      console.error("Fetch error:", error);
+      alert(
+        "Something went wrong while handling payment success. Contact support."
+      );
+    }
+  }

@@ -4,7 +4,7 @@ const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 
 // UNSAFE
 let frameGlobalData = [];
-// const loaderInstance = new FullScreenLoader();
+const loaderInstance = new FullScreenLoader();
 
 async function fetchData(sheetName) {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}?key=${API_KEY}`;
@@ -121,7 +121,7 @@ function showOffPopup(rowNumber, playerName) {
       };
 
       try {
-        //   loaderInstance.showLoader();
+          loaderInstance.showLoader();
 
         fetch(url, {
           method: "POST",
@@ -131,7 +131,7 @@ function showOffPopup(rowNumber, playerName) {
           body: JSON.stringify(payload),
         })
           .then((resp) => {
-            //   loaderInstance.hideLoader();
+              loaderInstance.hideLoader();
             if (!resp.ok) {
               throw new Error("Network response was not ok");
             }
@@ -142,7 +142,7 @@ function showOffPopup(rowNumber, playerName) {
             window.location.reload();
           });
       } catch (error) {
-        //   loaderInstance.hideLoader();
+          loaderInstance.hideLoader();
         console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
       }

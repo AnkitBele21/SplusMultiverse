@@ -2,7 +2,7 @@ const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
 const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 const SHEET_NAME = "Frames";
 
-// const loaderInstance = new FullScreenLoader();
+const loaderInstance = new FullScreenLoader();
 
 document.addEventListener("DOMContentLoaded", function () {
   const frameId = getFrameIdFromURL();
@@ -75,7 +75,7 @@ async function updateFrameData() {
     };
 
     try {
-    //   loaderInstance.showLoader();
+      loaderInstance.showLoader();
 
       fetch(url, {
         method: "POST",
@@ -85,7 +85,7 @@ async function updateFrameData() {
         body: JSON.stringify(payload),
       })
         .then((resp) => {
-        //   loaderInstance.hideLoader();
+          loaderInstance.hideLoader();
           if (!resp.ok) {
             throw new Error("Network response was not ok");
           }
@@ -97,7 +97,7 @@ async function updateFrameData() {
             "https://leaderboard.snookerplus.in/clubframes"; // Redirect back to the frames page
         });
     } catch (error) {
-    //   loaderInstance.hideLoader();
+      loaderInstance.hideLoader();
       console.error("Fetch error:", error);
       alert("Failed to update the frame. Please try again.");
     }

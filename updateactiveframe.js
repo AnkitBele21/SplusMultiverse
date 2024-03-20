@@ -43,8 +43,17 @@ function prefillForm(rowData, frameId) {
     document.getElementById("tableNo").value = tableNo || "";
     document.getElementById("startTime").value = startTime || "";
 
+    // Populate player inputs
+    const playersArray = players.split(",").map(player => player.trim());
+    const playersContainer = document.getElementById("playersContainer");
+    playersContainer.innerHTML = ""; // Clear previous inputs
+    playersArray.forEach((player, index) => {
+        const playerInput = createPlayerInput(player, index);
+        playersContainer.appendChild(playerInput);
+    });
+
     // Populate player name suggestions
-    populatePlayerNames(players);
+    populatePlayerNames();
 }
 
 document
@@ -67,7 +76,8 @@ async function updateFrameData() {
         const frameId = document.getElementById("frameNo").textContent;
         const tableNo = document.getElementById("tableNo").value;
         const startTime = document.getElementById("startTime").value;
-        const players = getPlayerNames(); // Get player names from input boxes
+        const playersInputs = document.querySelectorAll(".player-input");
+        const players = Array.from(playersInputs).map(input => input.value).join(", ");
 
         const payload = {
             frameId: frameId,
@@ -118,27 +128,59 @@ async function fetchData(sheetName) {
     return data.values.slice(1);
 }
 
-function populatePlayerNames(players) {
-    const playersArray = players.split(",").map((player) => player.trim());
+// Listen for input changes in the players field and populate player names
+document.getElementById("playersContainer").addEventListener("input", function () {
+    populatePlayerNames();
+});
 
-    const playersContainer = document.getElementById("playersContainer");
-    playersContainer.innerHTML = ""; // Clear existing player input boxes
+function populatePlayerNames() {
+    const nameDatalist = document.getElementById("playerNames");
+    const playersInputs = document.querySelectorAll(".player-input");
 
-    for (let i = 0; i < playersArray.length; i++) {
-        const playerInput = document.createElement("input");
-        playerInput.type = "text";
-        playerInput.name = `player${i + 1}`;
-        playerInput.placeholder = `Player ${i + 1}`;
-        playerInput.value = playersArray[i] || "";
-        playersContainer.appendChild(playerInput);
+    if (!nameDatalist) {
+        console.error("Element with ID 'playerNames' not found in the document.");
+        return;
     }
+
+    // Clear existing options
+    nameDatalist.innerHTML = "";
+
+    // Fetch data from the spreadsheet
+    fetchData("snookerplus").then((data) => {
+        const existingOptions = new Set(Array.from(nameDatalist.childNodes)
+            .filter(node => node.tagName === 'OPTION')
+            .map(option => option.value));
+
+        // Get the list of player names from the input field
+        playersInputs.forEach(input => {
+            const playerName = input.value.trim();
+            // Check if the name is not empty and not already in the datalist, then add it
+            if (playerName !== "" && !existingOptions.has(playerName)) {
+                const optionElement = document.createElement("option");
+                optionElement.value = playerName;
+                nameDatalist.appendChild(optionElement);
+                existingOptions.add(playerName);
+            }
+        });
+    });
 }
 
-function getPlayerNames() {
-    const playerInputs = document.querySelectorAll("#playersContainer input");
-    const playerNames = [];
-    playerInputs.forEach((input) => {
-        playerNames.push(input.value.trim());
-    });
-    return playerNames.join(", ");
+function createPlayerInput(value, index) {
+    const playerInput = document.createElement("input");
+    playerInput.type = "text";
+    playerInput.name = `player${index + 1}`;
+    playerInput.value = value || "";
+    playerInput.placeholder = `Player ${index + 1}`;
+    playerInput.classList.add("player-input");
+    return playerInput;
+}
+
+document.getElementById("addPlayerButton").addEventListener("click", function () {
+    addPlayerInput();
+});
+
+function addPlayerInput() {
+    const playersContainer = document.getElementById("playersContainer");
+    const playerInput = createPlayerInput("", playersContainer.children.length);
+    playersContainer.appendChild(playerInput);
 }

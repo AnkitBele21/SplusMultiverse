@@ -29,8 +29,10 @@
             <label for="startTime">Start Time:</label>
             <input type="time" id="startTime" name="startTime"><br>
 
-            <label for="players">Players (up to 6, separated by comma):</label>
-            <input type="text" id="players" name="players" placeholder="Player1, Player2, ..."><br>
+           <label for="players">Players (up to 6, separated by comma):</label>
+<input type="text" id="players" name="players" placeholder="Enter player names separated by commas" list="playerNames"><br>
+<datalist id="playerNames"></datalist>
+
 
             <div class="form-buttons">
                 <button type="button" class="back-button" onclick="window.location.href='https://leaderboard.snookerplus.in/clubframes';">Back</button>

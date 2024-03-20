@@ -137,7 +137,7 @@ function populatePlayerNames() {
   nameDatalist.innerHTML = "";
 
   // Fetch data from the spreadsheet
-  fetchData("SnookerPlus").then((data) => {
+  fetchData("snookerplus").then((data) => {
     const existingOptions = new Set(Array.from(nameDatalist.childNodes)
       .filter(node => node.tagName === 'OPTION')
       .map(option => option.value));

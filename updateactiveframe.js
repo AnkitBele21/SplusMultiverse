@@ -1,10 +1,7 @@
 const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
 const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 const SHEET_NAME = "Frames";
-const playersInput = document.getElementById("players");
-playersInput.addEventListener("input", function () {
-  populatePlayerNames();
-});
+
 const loaderInstance = new FullScreenLoader();
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -122,6 +119,11 @@ async function fetchData(sheetName) {
   return data.values.slice(1);
 }
 
+// Listen for input changes in the players field and populate player names
+document.getElementById("players").addEventListener("input", function () {
+  populatePlayerNames();
+});
+
 function populatePlayerNames() {
   const nameDatalist = document.getElementById("playerNames");
   const playersInput = document.getElementById("players");
@@ -134,13 +136,16 @@ function populatePlayerNames() {
   // Clear existing options
   nameDatalist.innerHTML = "";
 
+  // Fetch data from the spreadsheet
   fetchData("SnookerPlus").then((data) => {
     const existingOptions = new Set(Array.from(nameDatalist.childNodes)
-                                  .filter(node => node.tagName === 'OPTION')
-                                  .map(option => option.value));
+      .filter(node => node.tagName === 'OPTION')
+      .map(option => option.value));
 
+    // Get the list of player names from the input field
     const playerName = playersInput.value.trim().split(",").map(name => name.trim());
     playerName.forEach((name) => {
+      // Check if the name is not already in the datalist, then add it
       if (!existingOptions.has(name)) {
         const optionElement = document.createElement("option");
         optionElement.value = name;
@@ -150,4 +155,3 @@ function populatePlayerNames() {
     });
   });
 }
-

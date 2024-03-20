@@ -120,8 +120,13 @@ async function fetchData(sheetName) {
 }
 
 function populatePlayerNames() {
+  const nameDatalist = document.getElementById("playerNames");
+  if (!nameDatalist) {
+    console.error("Element with ID 'playerNames' not found in the document.");
+    return;
+  }
+
   fetchData("SnookerPlus").then((data) => {
-    const nameDatalist = document.getElementById("playerNames");
     const existingOptions = Array.from(nameDatalist.childNodes)
                                   .filter(node => node.tagName === 'OPTION')
                                   .map(option => option.value);

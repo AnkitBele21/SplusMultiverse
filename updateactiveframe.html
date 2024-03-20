@@ -5,63 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Frame</title>
     <link rel="stylesheet" href="updateactiveframe.css">
-    <style>
-        /* Add custom styles for form elements */
-        .form-container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f2f2f2;
-            border-radius: 8px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="time"],
-        select {
-            width: calc(100% - 22px); /* Adjust width for better alignment */
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .player-input {
-            display: block;
-        }
-
-        input[type="submit"] {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        .back-button {
-            background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .back-button:hover {
-            background-color: #d32f2f;
-        }
-    </style>
 </head>
 <body>
     <header class="header">
@@ -81,13 +24,14 @@
                 <option value="T2">T2</option>
                 <option value="T3">T3</option>
                 <option value="T4">T4</option>
-            </select>
+            </select><br>
 
             <label for="startTime">Start Time:</label>
-            <input type="time" id="startTime" name="startTime">
+            <input type="time" id="startTime" name="startTime"><br>
 
-            <label for="players">Players (up to 6):</label>
-            <div id="playerInputs"></div> <!-- Container for player inputs -->
+            <div id="playersContainer">
+                <!-- Player input boxes will be dynamically added here -->
+            </div>
 
             <div class="form-buttons">
                 <button type="button" class="back-button" onclick="window.location.href='https://leaderboard.snookerplus.in/clubframes';">Back</button>
@@ -98,31 +42,5 @@
 
     <script src="loader.js" defer></script>
     <script src="updateactiveframe.js" defer></script>
-    <script>
-        // Function to add player input boxes
-        function addPlayerInput() {
-            const playerInputsContainer = document.getElementById("playerInputs");
-            const playerInput = document.createElement("input");
-            playerInput.type = "text";
-            playerInput.className = "player-input";
-            playerInput.placeholder = "Player Name";
-            playerInputsContainer.appendChild(playerInput);
-        }
-
-        // Add initial player input on page load
-        document.addEventListener("DOMContentLoaded", function () {
-            addPlayerInput();
-        });
-
-        // Listen for input changes in the last player input
-        document.getElementById("updateFrameForm").addEventListener("input", function (event) {
-            const playerInputs = document.querySelectorAll(".player-input");
-            const lastPlayerInput = playerInputs[playerInputs.length - 1];
-
-            if (event.target === lastPlayerInput && lastPlayerInput.value.trim() !== "") {
-                addPlayerInput(); // Add a new player input if the last one is filled
-            }
-        });
-    </script>
 </body>
 </html>

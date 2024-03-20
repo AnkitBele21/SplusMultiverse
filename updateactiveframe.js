@@ -147,19 +147,21 @@ function populatePlayerNames() {
 
     // Fetch data from the spreadsheet
     fetchData("snookerplus").then((data) => {
+        const playerNames = data.map(row => row[3]).filter(Boolean); // Extract names from column D
         const existingOptions = new Set(Array.from(nameDatalist.childNodes)
             .filter(node => node.tagName === 'OPTION')
             .map(option => option.value));
 
-        // Get the list of player names from the input field
-        playersInputs.forEach(input => {
-            const playerName = input.value.trim();
+        // Get the list of player names from the input fields
+        const playerNameInputs = Array.from(playersInputs).map(input => input.value.trim());
+        playerNames.forEach((name) => {
+            const trimmedName = name.trim();
             // Check if the name is not empty and not already in the datalist, then add it
-            if (playerName !== "" && !existingOptions.has(playerName)) {
+            if (trimmedName !== "" && !existingOptions.has(trimmedName) && !playerNameInputs.includes(trimmedName)) {
                 const optionElement = document.createElement("option");
-                optionElement.value = playerName;
+                optionElement.value = trimmedName;
                 nameDatalist.appendChild(optionElement);
-                existingOptions.add(playerName);
+                existingOptions.add(trimmedName);
             }
         });
     });
@@ -168,19 +170,17 @@ function populatePlayerNames() {
 function createPlayerInput(value, index) {
     const playerInput = document.createElement("input");
     playerInput.type = "text";
-    playerInput.name = `player${index + 1}`;
+    playerInput.id = `player${index + 1}`;
+    playerInput.className = "player-input";
     playerInput.value = value || "";
-    playerInput.placeholder = `Player ${index + 1}`;
-    playerInput.classList.add("player-input");
+    playerInput.placeholder = "Enter player name";
+    playerInput.setAttribute("list", "playerNames");
     return playerInput;
 }
 
 document.getElementById("addPlayerButton").addEventListener("click", function () {
-    addPlayerInput();
-});
-
-function addPlayerInput() {
     const playersContainer = document.getElementById("playersContainer");
     const playerInput = createPlayerInput("", playersContainer.children.length);
     playersContainer.appendChild(playerInput);
-}
+    populatePlayerNames();
+});

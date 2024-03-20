@@ -112,6 +112,13 @@ async function updateFrameData() {
   }
 }
 
+async function fetchData(sheetName) {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}?key=${API_KEY}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.values.slice(1);
+}
+
 function populatePlayerNames() {
   fetchData("SnookerPlus").then((data) => {
     const nameDatalist = document.getElementById("playerNames");

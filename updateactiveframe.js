@@ -137,7 +137,7 @@ document.getElementById("playersContainer").addEventListener("input", function (
 
 function populatePlayerNames() {
   const nameDatalist = document.getElementById("playerNames");
-  const playersInput = document.getElementById("playersContainer");
+  const playersInputs = document.querySelectorAll(".player-input");
 
   if (!nameDatalist) {
     console.error("Element with ID 'playerNames' not found in the document.");
@@ -161,8 +161,7 @@ function populatePlayerNames() {
     });
 
     // Get the list of player names from the input fields
-    const playerInputs = playersInput.querySelectorAll("input");
-    playerInputs.forEach((input) => {
+    playersInputs.forEach((input) => {
       const playerName = input.value.trim();
       // Check if the name is not empty and not already in the datalist, then add it
       if (playerName !== "" && !existingOptions.has(playerName)) {
@@ -174,4 +173,3 @@ function populatePlayerNames() {
     });
   });
 }
-

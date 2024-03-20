@@ -111,6 +111,7 @@ async function updateFrameData() {
     );
   }
 }
+import { fetchData } from './clubframes.js'; // Path to the file where fetchData is defined
 
 function populatePlayerNames() {
   fetchData("SnookerPlus").then((data) => {

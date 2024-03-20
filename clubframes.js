@@ -105,55 +105,111 @@ function displayFrameEntries(frameEntries) {
   });
 }
 
-function showOffPopup(rowNumber, playerName) {
-  const playerListString = prompt(`To be paid by ${playerName}:`);
+function showOffPopup(rowNumber, playerNames) {
+  // Create the popup container
+  const popupContainer = document.createElement("div");
+  popupContainer.id = "offPopup";
+  popupContainer.style.position = "fixed";
+  popupContainer.style.top = "50%";
+  popupContainer.style.left = "50%";
+  popupContainer.style.transform = "translate(-50%, -50%)";
+  popupContainer.style.backgroundColor = "#fff";
+  popupContainer.style.padding = "20px";
+  popupContainer.style.zIndex = "1000";
+  popupContainer.style.borderRadius = "10px";
+  popupContainer.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
 
+  // Heading
+  const heading = document.createElement("h3");
+  heading.innerText = "Select Players to Pay";
+  popupContainer.appendChild(heading);
+
+  // Input for selected players
+  const selectedPlayersInput = document.createElement("input");
+  selectedPlayersInput.type = "text";
+  selectedPlayersInput.id = "selectedPlayers";
+  selectedPlayersInput.style.marginBottom = "10px";
+  selectedPlayersInput.style.display = "block";
+  selectedPlayersInput.style.width = "100%";
+  popupContainer.appendChild(selectedPlayersInput);
+
+  // Function to add player name to input
+  function addToSelectedPlayers(name) {
+    const input = document.getElementById("selectedPlayers");
+    input.value = input.value ? `${input.value}, ${name}` : name;
+  }
+
+  // Generate list of players with "+" buttons
+  playerNames.forEach(name => {
+    const playerEntry = document.createElement("div");
+    const playerName = document.createElement("span");
+    playerName.innerText = name;
+
+    const addButton = document.createElement("button");
+    addButton.innerText = "+";
+    addButton.onclick = () => addToSelectedPlayers(name);
+    addButton.style.marginLeft = "10px";
+
+    playerEntry.appendChild(playerName);
+    playerEntry.appendChild(addButton);
+
+    popupContainer.appendChild(playerEntry);
+  });
+
+  // Submit button
+  const submitButton = document.createElement("button");
+  submitButton.innerText = "Submit";
+  submitButton.onclick = () => {
+    const selectedPlayers = document.getElementById("selectedPlayers").value;
+    // Close popup
+    document.body.removeChild(popupContainer);
+    // Continue with existing off functionality using selectedPlayers
+    processOffFrame(rowNumber, selectedPlayers);
+  };
+  popupContainer.appendChild(submitButton);
+
+  // Append the popup to the body
+  document.body.appendChild(popupContainer);
+}
+
+// This function encapsulates the existing logic to mark a frame as "off", now with the added players parameter
+function processOffFrame(rowNumber, playerListString) {
   if (playerListString) {
-    console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
-    );
-    try {
-      const url = "https://payment.snookerplus.in/update/frame/off/";
+    console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`);
+    const url = "https://payment.snookerplus.in/update/frame/off/";
 
-      const payload = {
-        frameId: `SPS${rowNumber}`,
-        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
-      };
+    const payload = {
+      frameId: `SPS${rowNumber}`,
+      players: playerListString.split(",").map(player => player.trim()),
+    };
 
-      try {
-          loaderInstance.showLoader();
-
-        fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        })
-          .then((resp) => {
-              loaderInstance.hideLoader();
-            if (!resp.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return resp.json();
-          })
-          .then((_body) => {
-            alert("Frame turned off successfully!");
-            window.location.reload();
-          });
-      } catch (error) {
-          loaderInstance.hideLoader();
+    loaderInstance.showLoader();
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(resp => {
+        loaderInstance.hideLoader();
+        if (!resp.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return resp.json();
+      })
+      .then(_body => {
+        alert("Frame turned off successfully!");
+        window.location.reload();
+      })
+      .catch(error => {
+        loaderInstance.hideLoader();
         console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error turning off the frame:", error);
-      alert(
-        "An error occurred while turning off the frame. Please try again later."
-      );
-    }
+      });
   }
 }
+
 
 function applyFilters() {
   const playerNameFilter = document

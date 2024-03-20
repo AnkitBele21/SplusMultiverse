@@ -29,9 +29,15 @@
         <label for="startTime">Start Time:</label>
         <input type="time" id="startTime" name="startTime"><br>
 
-        <div id="playersContainer">
-            <!-- Player input boxes will be dynamically added here -->
+        <div class="players-section">
+            <label for="players">Players:</label>
+            <div id="playersContainer">
+                <!-- Player input boxes will be dynamically added here -->
+            </div>
+            <button type="button" id="addPlayerButton">+</button>
         </div>
+
+        <datalist id="playerNames"></datalist>
 
         <div class="form-buttons">
             <button type="button" class="back-button" onclick="window.location.href='https://leaderboard.snookerplus.in/clubframes';">Back</button>

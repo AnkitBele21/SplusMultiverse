@@ -1,6 +1,8 @@
 const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
 const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 
+
+// UNSAFE
 let frameGlobalData = [];
 const loaderInstance = new FullScreenLoader();
 
@@ -10,7 +12,6 @@ async function fetchData(sheetName) {
   const data = await response.json();
   return data.values.slice(1);
 }
-
 function markFrameOn() {
     let frameId = 1;
     if (frameGlobalData.length > 0) {
@@ -19,7 +20,6 @@ function markFrameOn() {
     window.location.href =
       `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
 }
-
 function displayFrameEntries(frameEntries) {
   const frameEntriesContainer = document.getElementById("frameEntries");
   frameEntriesContainer.innerHTML = "";
@@ -84,6 +84,14 @@ function displayFrameEntries(frameEntries) {
 
     // Edit Button for active frames
     if (entry.isActive) {
+      const editButton = document.createElement("button");
+      editButton.innerText = "Edit";
+      editButton.className = "btn btn-primary edit-btn";
+      editButton.onclick = function () {
+        window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}`;
+      };
+      frameElement.appendChild(editButton);
+
       const offButton = document.createElement("button");
       offButton.innerText = "Off";
       offButton.className = "btn btn-danger off-btn";
@@ -221,7 +229,7 @@ window.onload = function () {
       }))
       .filter((entry) => entry.isValid)
       .reverse();
-    frameGlobalData = frameEntries;
+    frameGlobalData = frameEntries
     displayFrameEntries(frameEntries);
   });
 

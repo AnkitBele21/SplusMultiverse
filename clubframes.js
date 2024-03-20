@@ -173,12 +173,13 @@ function showOffPopup(rowNumber, playerNames) {
   submitButton.textContent = 'Submit';
   submitButton.style.marginTop = '20px';
   submitButton.onclick = () => {
-    const playerListString = inputField.value;
+    let playerListString = inputField.value.split(',')
+                          .map(name => name.trim())
+                          .filter(name => name) // Keep only non-empty names
+                          .join(', ');
+
     if (playerListString) {
-      // Call your function to handle the submission
-      console.log(
-        `Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`
-      );
+      console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`);
       // Implement the submission logic here
       document.body.removeChild(modal); // Close modal after submission
     }

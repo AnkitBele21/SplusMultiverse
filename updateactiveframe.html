@@ -24,12 +24,16 @@
         input[type="text"],
         input[type="time"],
         select {
-            width: 100%;
+            width: calc(100% - 22px); /* Adjust width for better alignment */
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+        }
+
+        .player-input {
+            display: block;
         }
 
         input[type="submit"] {
@@ -82,9 +86,8 @@
             <label for="startTime">Start Time:</label>
             <input type="time" id="startTime" name="startTime">
 
-            <label for="players">Players (up to 6, separated by comma):</label>
-            <input type="text" id="players" name="players" placeholder="Enter player names separated by commas" list="playerNames">
-            <datalist id="playerNames"></datalist>
+            <label for="players">Players (up to 6):</label>
+            <div id="playerInputs"></div> <!-- Container for player inputs -->
 
             <div class="form-buttons">
                 <button type="button" class="back-button" onclick="window.location.href='https://leaderboard.snookerplus.in/clubframes';">Back</button>
@@ -95,5 +98,31 @@
 
     <script src="loader.js" defer></script>
     <script src="updateactiveframe.js" defer></script>
+    <script>
+        // Function to add player input boxes
+        function addPlayerInput() {
+            const playerInputsContainer = document.getElementById("playerInputs");
+            const playerInput = document.createElement("input");
+            playerInput.type = "text";
+            playerInput.className = "player-input";
+            playerInput.placeholder = "Player Name";
+            playerInputsContainer.appendChild(playerInput);
+        }
+
+        // Add initial player input on page load
+        document.addEventListener("DOMContentLoaded", function () {
+            addPlayerInput();
+        });
+
+        // Listen for input changes in the last player input
+        document.getElementById("updateFrameForm").addEventListener("input", function (event) {
+            const playerInputs = document.querySelectorAll(".player-input");
+            const lastPlayerInput = playerInputs[playerInputs.length - 1];
+
+            if (event.target === lastPlayerInput && lastPlayerInput.value.trim() !== "") {
+                addPlayerInput(); // Add a new player input if the last one is filled
+            }
+        });
+    </script>
 </body>
 </html>

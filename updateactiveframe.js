@@ -1,6 +1,7 @@
 const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
 const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 const SHEET_NAME = "Frames";
+const playersInput = document.getElementById("players");
 
 const loaderInstance = new FullScreenLoader();
 
@@ -118,6 +119,10 @@ async function fetchData(sheetName) {
   const data = await response.json();
   return data.values.slice(1);
 }
+
+playersInput.addEventListener("input", function () {
+  populatePlayerNames();
+});
 
 function populatePlayerNames() {
   const nameDatalist = document.getElementById("playerNames");

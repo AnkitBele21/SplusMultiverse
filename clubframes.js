@@ -1,8 +1,6 @@
 const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
 const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 
-
-// UNSAFE
 let frameGlobalData = [];
 const loaderInstance = new FullScreenLoader();
 
@@ -12,6 +10,7 @@ async function fetchData(sheetName) {
   const data = await response.json();
   return data.values.slice(1);
 }
+
 function markFrameOn() {
     let frameId = 1;
     if (frameGlobalData.length > 0) {
@@ -20,6 +19,7 @@ function markFrameOn() {
     window.location.href =
       `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
 }
+
 function displayFrameEntries(frameEntries) {
   const frameEntriesContainer = document.getElementById("frameEntries");
   frameEntriesContainer.innerHTML = "";
@@ -84,14 +84,6 @@ function displayFrameEntries(frameEntries) {
 
     // Edit Button for active frames
     if (entry.isActive) {
-      const editButton = document.createElement("button");
-      editButton.innerText = "Edit";
-      editButton.className = "btn btn-primary edit-btn";
-      editButton.onclick = function () {
-        window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}`;
-      };
-      frameElement.appendChild(editButton);
-
       const offButton = document.createElement("button");
       offButton.innerText = "Off";
       offButton.className = "btn btn-danger off-btn";
@@ -105,97 +97,55 @@ function displayFrameEntries(frameEntries) {
   });
 }
 
-function showOffPopup(rowNumber, playerNames) {
-  // Create a modal container
-  const modal = document.createElement('div');
-  modal.style.position = 'fixed';
-  modal.style.left = '0';
-  modal.style.top = '0';
-  modal.style.width = '100%';
-  modal.style.height = '100%';
-  modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-  modal.style.display = 'flex';
-  modal.style.alignItems = 'center';
-  modal.style.justifyContent = 'center';
+function showOffPopup(rowNumber, playerName) {
+  const playerListString = prompt(`To be paid by ${playerName}:`);
 
-  // Modal content
-  const modalContent = document.createElement('div');
-  modalContent.style.backgroundColor = '#fff';
-  modalContent.style.padding = '20px';
-  modalContent.style.borderRadius = '5px';
-  modalContent.style.maxHeight = '90vh';
-  modalContent.style.overflowY = 'auto';
-  modal.appendChild(modalContent);
+  if (playerListString) {
+    console.log(
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+    );
+    try {
+      const url = "https://payment.snookerplus.in/update/frame/off/";
 
-  // Title
-  const title = document.createElement('h3');
-  title.textContent = `Select players and number of contributions`;
-  modalContent.appendChild(title);
+      const payload = {
+        frameId: `SPS${rowNumber}`,
+        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
+      };
 
-  // Player selection section
-  const selectionSection = document.createElement('div');
-  playerNames.forEach((name) => {
-    const playerRow = document.createElement('div');
-    playerRow.style.marginBottom = '10px';
+      try {
+          loaderInstance.showLoader();
 
-    const playerName = document.createElement('span');
-    playerName.textContent = name;
-    playerRow.appendChild(playerName);
-
-    const addButton = document.createElement('button');
-    addButton.textContent = '+';
-    addButton.onclick = () => addPlayerName(name);
-    addButton.style.marginLeft = '10px';
-    playerRow.appendChild(addButton);
-
-    selectionSection.appendChild(playerRow);
-  });
-  modalContent.appendChild(selectionSection);
-
-  // Input for displaying selected players
-  const inputField = document.createElement('input');
-  inputField.type = 'text';
-  inputField.style.width = '100%';
-  inputField.style.marginTop = '20px';
-  modalContent.appendChild(inputField);
-
-  // Add player name to input field
-  function addPlayerName(name) {
-    if (inputField.value) {
-      inputField.value += `, ${name}`;
-    } else {
-      inputField.value = name;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((resp) => {
+              loaderInstance.hideLoader();
+            if (!resp.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return resp.json();
+          })
+          .then((_body) => {
+            alert("Frame turned off successfully!");
+            window.location.reload();
+          });
+      } catch (error) {
+          loaderInstance.hideLoader();
+        console.error("Fetch error:", error);
+        alert("Failed to turn off the frame. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error turning off the frame:", error);
+      alert(
+        "An error occurred while turning off the frame. Please try again later."
+      );
     }
   }
-
-  // Submit button
-  const submitButton = document.createElement('button');
-  submitButton.textContent = 'Submit';
-  submitButton.style.marginTop = '20px';
-  submitButton.onclick = () => {
-    let playerListString = inputField.value.split(',')
-                          .map(name => name.trim())
-                          .filter(name => name) // Keep only non-empty names
-                          .join(', ');
-
-    if (playerListString) {
-      console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`);
-      // Implement the submission logic here
-      document.body.removeChild(modal); // Close modal after submission
-    }
-  };
-  modalContent.appendChild(submitButton);
-
-  // Close button
-  const closeButton = document.createElement('button');
-  closeButton.textContent = 'Close';
-  closeButton.style.marginTop = '10px';
-  closeButton.onclick = () => document.body.removeChild(modal);
-  modalContent.appendChild(closeButton);
-
-  document.body.appendChild(modal);
 }
-
 
 function applyFilters() {
   const playerNameFilter = document
@@ -271,7 +221,7 @@ window.onload = function () {
       }))
       .filter((entry) => entry.isValid)
       .reverse();
-    frameGlobalData = frameEntries
+    frameGlobalData = frameEntries;
     displayFrameEntries(frameEntries);
   });
 

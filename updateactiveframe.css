@@ -88,3 +88,39 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #018a5e;
 }
+/* Add custom styling for the add button */
+#addPlayerButton {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#addPlayerButton:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+/* Limit the number of player inputs to 6 */
+#playersContainer {
+    max-width: 500px;
+}
+
+.player-input {
+    width: calc(100% - 40px);
+    margin-bottom: 10px;
+}
+
+/* Ensure form container width does not exceed screen width */
+.form-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+

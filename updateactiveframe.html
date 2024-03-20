@@ -14,14 +14,15 @@
         <h1>Update Frame</h1>
     </header>
     <div class="form-container">
-        <form id="updateFrameForm">
+        <form id="updateFrameForm" onsubmit="return validateForm()">
             <div class="frame-id-container">
                 <label for="frameNo">Frame ID:</label>
                 <span id="frameNo"></span> <!-- Frame ID will be displayed here -->
             </div>
 
             <label for="tableNo">Table No.:</label>
-            <select id="tableNo" name="tableNo">
+            <select id="tableNo" name="tableNo" required>
+                <option value="" disabled selected>Select Table No.</option>
                 <option value="T1">T1</option>
                 <option value="T2">T2</option>
                 <option value="T3">T3</option>
@@ -29,7 +30,7 @@
             </select><br>
 
             <label for="startTime">Start Time:</label>
-            <input type="time" id="startTime" name="startTime"><br>
+            <input type="time" id="startTime" name="startTime" required><br>
 
             <div class="players-section">
                 <label for="players">Players:</label>
@@ -50,6 +51,17 @@
 
     <script src="loader.js" defer></script>
     <script src="updateactiveframe.js" defer></script>
+
+    <script>
+        function validateForm() {
+            const tableNo = document.getElementById('tableNo').value;
+            if (tableNo === "") {
+                alert("Please select a Table No.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 
 </html>

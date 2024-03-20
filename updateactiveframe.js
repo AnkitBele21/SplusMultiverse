@@ -111,16 +111,21 @@ async function updateFrameData() {
     );
   }
 }
-import { fetchData } from './clubframes.js'; // Path to the file where fetchData is defined
 
 function populatePlayerNames() {
   fetchData("SnookerPlus").then((data) => {
     const nameDatalist = document.getElementById("playerNames");
-    // nameDatalist.innerHTML = ""; // Don't clear previous suggestions
+    const existingOptions = Array.from(nameDatalist.childNodes)
+                                  .filter(node => node.tagName === 'OPTION')
+                                  .map(option => option.value);
+
     data.forEach((row) => {
-      const optionElement = document.createElement("option");
-      optionElement.value = row[2];
-      nameDatalist.appendChild(optionElement);
+      const playerName = row[3]; // Assuming player names are in column D (index 3)
+      if (!existingOptions.includes(playerName)) {
+        const optionElement = document.createElement("option");
+        optionElement.value = playerName;
+        nameDatalist.appendChild(optionElement);
+      }
     });
   });
 }

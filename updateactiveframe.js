@@ -37,22 +37,12 @@ async function fetchFrameData(frameId) {
 function prefillForm(rowData, frameId) {
   const tableNo = rowData[7];
   const startTime = rowData[10];
-  const players = rowData.slice(12, 18).filter(Boolean);
+  const players = rowData.slice(12, 18).filter(Boolean).join(", ");
 
   document.getElementById("frameNo").textContent = frameId;
   document.getElementById("tableNo").value = tableNo || "";
   document.getElementById("startTime").value = startTime || "";
-
-  const playersContainer = document.getElementById("playersContainer");
-  players.forEach((player, index) => {
-    const playerInput = document.createElement("input");
-    playerInput.type = "text";
-    playerInput.id = `player${index + 1}`;
-    playerInput.classList.add("player-input");
-    playerInput.placeholder = `Player ${index + 1}`;
-    playerInput.value = player.trim() || "";
-    playersContainer.appendChild(playerInput);
-  });
+  document.getElementById("players").value = players || "";
 
   // Populate player name suggestions
   populatePlayerNames();
@@ -78,51 +68,55 @@ async function updateFrameData() {
     const frameId = document.getElementById("frameNo").textContent;
     const tableNo = document.getElementById("tableNo").value;
     const startTime = document.getElementById("startTime").value;
-    const playersInputs = document.querySelectorAll(".player-input");
-    let players = Array.from(playersInputs)
-      .map((input) => input.value.trim())
-      .filter((name) => name !== "")
-      .join(",");
+    const players = document.getElementById("players").value;
 
     const payload = {
       frameId: frameId,
       tableNo: tableNo,
       startTime: startTime,
-      players: players.split(",").map((player) => player.trim()),
+      players: players.split(",").map((player) => player.trim()), // Ensure players are trimmed
     };
 
-    loaderInstance.showLoader();
+    try {
+      loaderInstance.showLoader();
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((resp) => {
-        loaderInstance.hideLoader();
-        if (!resp.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return resp.json();
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       })
-      .then((_body) => {
-        alert("Frame updated successfully!");
-        window.location.href =
-          "https://leaderboard.snookerplus.in/clubframes";
-      })
-      .catch((error) => {
-        loaderInstance.hideLoader();
-        console.error("Fetch error:", error);
-        alert("Failed to update the frame. Please try again.");
-      });
+        .then((resp) => {
+          loaderInstance.hideLoader();
+          if (!resp.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return resp.json();
+        })
+        .then((_body) => {
+          alert("Frame updated successfully!");
+          window.location.href =
+            "https://leaderboard.snookerplus.in/clubframes"; // Redirect back to the frames page
+        });
+    } catch (error) {
+      loaderInstance.hideLoader();
+      console.error("Fetch error:", error);
+      alert("Failed to update the frame. Please try again.");
+    }
   } catch (error) {
     console.error("Error updating frame:", error);
     alert(
       "An error occurred while updating the frame. Please try again later."
     );
   }
+}
+
+async function fetchData(sheetName) {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}?key=${API_KEY}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.values.slice(1);
 }
 
 // Listen for input changes in the players field and populate player names
@@ -144,11 +138,9 @@ function populatePlayerNames() {
 
   // Fetch data from the spreadsheet
   fetchData("snookerplus").then((data) => {
-    const existingOptions = new Set(
-      Array.from(nameDatalist.childNodes)
-        .filter((node) => node.tagName === "OPTION")
-        .map((option) => option.value)
-    );
+    const existingOptions = new Set(Array.from(nameDatalist.childNodes)
+      .filter(node => node.tagName === 'OPTION')
+      .map(option => option.value));
 
     // Get the list of player names from the input field
     const playerName = playersInput.value.trim().split(",");

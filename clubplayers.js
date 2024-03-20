@@ -20,6 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Add event listener to the Back button
+    const backButton = document.getElementById("backButton");
+    if (backButton) {
+        backButton.addEventListener("click", function () {
+            window.location.href = "https://leaderboard.snookerplus.in/clubframes";
+        });
+    }
 });
 
 document.addEventListener('DOMContentLoaded', function() {

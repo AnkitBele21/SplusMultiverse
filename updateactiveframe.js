@@ -121,22 +121,28 @@ async function fetchData(sheetName) {
 
 function populatePlayerNames() {
   const nameDatalist = document.getElementById("playerNames");
+  const playersInput = document.getElementById("players");
+
   if (!nameDatalist) {
     console.error("Element with ID 'playerNames' not found in the document.");
     return;
   }
 
-  fetchData("SnookerPlus").then((data) => {
-    const existingOptions = Array.from(nameDatalist.childNodes)
-                                  .filter(node => node.tagName === 'OPTION')
-                                  .map(option => option.value);
+  // Clear existing options
+  nameDatalist.innerHTML = "";
 
-    data.forEach((row) => {
-      const playerName = row[3]; // Assuming player names are in column D (index 3)
-      if (!existingOptions.includes(playerName)) {
+  fetchData("SnookerPlus").then((data) => {
+    const existingOptions = new Set(Array.from(nameDatalist.childNodes)
+                                  .filter(node => node.tagName === 'OPTION')
+                                  .map(option => option.value));
+
+    const playerName = playersInput.value.trim().split(",").map(name => name.trim());
+    playerName.forEach((name) => {
+      if (!existingOptions.has(name)) {
         const optionElement = document.createElement("option");
-        optionElement.value = playerName;
+        optionElement.value = name;
         nameDatalist.appendChild(optionElement);
+        existingOptions.add(name);
       }
     });
   });

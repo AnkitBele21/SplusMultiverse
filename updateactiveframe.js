@@ -168,3 +168,25 @@ function populatePlayerNames() {
     });
   });
 }
+
+// Add player input field dynamically
+let playerCount = 1;
+const maxPlayers = 6; // Maximum number of players allowed
+
+function addPlayerField() {
+  if (playerCount < maxPlayers) {
+    const playersContainer = document.getElementById("playersContainer");
+    const newPlayerInput = document.createElement("input");
+    newPlayerInput.type = "text";
+    newPlayerInput.placeholder = "Player " + (playerCount + 1);
+    newPlayerInput.name = "player" + (playerCount + 1);
+    newPlayerInput.className = "player-input";
+    newPlayerInput.autocomplete = "off";
+    playersContainer.appendChild(newPlayerInput);
+
+    playerCount++;
+
+    // Populate player name suggestions for the new input field
+    populatePlayerNames();
+  }
+}

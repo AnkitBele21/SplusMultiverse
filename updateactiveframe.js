@@ -143,14 +143,15 @@ function populatePlayerNames() {
       .map(option => option.value));
 
     // Get the list of player names from the input field
-    const playerName = playersInput.value.trim().split(",").map(name => name.trim());
+    const playerName = playersInput.value.trim().split(",");
     playerName.forEach((name) => {
-      // Check if the name is not already in the datalist, then add it
-      if (!existingOptions.has(name)) {
+      const trimmedName = name.trim();
+      // Check if the name is not empty and not already in the datalist, then add it
+      if (trimmedName !== "" && !existingOptions.has(trimmedName)) {
         const optionElement = document.createElement("option");
-        optionElement.value = name;
+        optionElement.value = trimmedName;
         nameDatalist.appendChild(optionElement);
-        existingOptions.add(name);
+        existingOptions.add(trimmedName);
       }
     });
   });

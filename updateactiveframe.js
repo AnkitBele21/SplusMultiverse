@@ -43,6 +43,9 @@ function prefillForm(rowData, frameId) {
   document.getElementById("tableNo").value = tableNo || "";
   document.getElementById("startTime").value = startTime || "";
   document.getElementById("players").value = players || "";
+
+  // Populate player name suggestions
+  populatePlayerNames();
 }
 
 document
@@ -107,4 +110,16 @@ async function updateFrameData() {
       "An error occurred while updating the frame. Please try again later."
     );
   }
+}
+
+function populatePlayerNames() {
+  fetchData("SnookerPlus").then((data) => {
+    const nameDatalist = document.getElementById("playerNames");
+    // nameDatalist.innerHTML = ""; // Don't clear previous suggestions
+    data.forEach((row) => {
+      const optionElement = document.createElement("option");
+      optionElement.value = row[2];
+      nameDatalist.appendChild(optionElement);
+    });
+  });
 }

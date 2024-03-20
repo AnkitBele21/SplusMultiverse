@@ -106,108 +106,93 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerNames) {
-  // Create the popup container
-  const popupContainer = document.createElement("div");
-  popupContainer.id = "offPopup";
-  popupContainer.style.position = "fixed";
-  popupContainer.style.top = "50%";
-  popupContainer.style.left = "50%";
-  popupContainer.style.transform = "translate(-50%, -50%)";
-  popupContainer.style.backgroundColor = "#fff";
-  popupContainer.style.padding = "20px";
-  popupContainer.style.zIndex = "1000";
-  popupContainer.style.borderRadius = "10px";
-  popupContainer.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
+  // Create a modal container
+  const modal = document.createElement('div');
+  modal.style.position = 'fixed';
+  modal.style.left = '0';
+  modal.style.top = '0';
+  modal.style.width = '100%';
+  modal.style.height = '100%';
+  modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  modal.style.display = 'flex';
+  modal.style.alignItems = 'center';
+  modal.style.justifyContent = 'center';
 
-  // Heading
-  const heading = document.createElement("h3");
-  heading.innerText = "Select Players to Pay";
-  popupContainer.appendChild(heading);
+  // Modal content
+  const modalContent = document.createElement('div');
+  modalContent.style.backgroundColor = '#fff';
+  modalContent.style.padding = '20px';
+  modalContent.style.borderRadius = '5px';
+  modalContent.style.maxHeight = '90vh';
+  modalContent.style.overflowY = 'auto';
+  modal.appendChild(modalContent);
 
-  // Input for selected players
-  const selectedPlayersInput = document.createElement("input");
-  selectedPlayersInput.type = "text";
-  selectedPlayersInput.id = "selectedPlayers";
-  selectedPlayersInput.style.marginBottom = "10px";
-  selectedPlayersInput.style.display = "block";
-  selectedPlayersInput.style.width = "100%";
-  popupContainer.appendChild(selectedPlayersInput);
+  // Title
+  const title = document.createElement('h3');
+  title.textContent = `Select players and number of contributions`;
+  modalContent.appendChild(title);
 
-  // Function to add player name to input
-  function addToSelectedPlayers(name) {
-    const input = document.getElementById("selectedPlayers");
-    input.value = input.value ? `${input.value}, ${name}` : name;
-  }
+  // Player selection section
+  const selectionSection = document.createElement('div');
+  playerNames.forEach((name) => {
+    const playerRow = document.createElement('div');
+    playerRow.style.marginBottom = '10px';
 
-  // Generate list of players with "+" buttons
-  playerNames.forEach(name => {
-    const playerEntry = document.createElement("div");
-    const playerName = document.createElement("span");
-    playerName.innerText = name;
+    const playerName = document.createElement('span');
+    playerName.textContent = name;
+    playerRow.appendChild(playerName);
 
-    const addButton = document.createElement("button");
-    addButton.innerText = "+";
-    addButton.onclick = () => addToSelectedPlayers(name);
-    addButton.style.marginLeft = "10px";
+    const addButton = document.createElement('button');
+    addButton.textContent = '+';
+    addButton.onclick = () => addPlayerName(name);
+    addButton.style.marginLeft = '10px';
+    playerRow.appendChild(addButton);
 
-    playerEntry.appendChild(playerName);
-    playerEntry.appendChild(addButton);
-
-    popupContainer.appendChild(playerEntry);
+    selectionSection.appendChild(playerRow);
   });
+  modalContent.appendChild(selectionSection);
+
+  // Input for displaying selected players
+  const inputField = document.createElement('input');
+  inputField.type = 'text';
+  inputField.style.width = '100%';
+  inputField.style.marginTop = '20px';
+  modalContent.appendChild(inputField);
+
+  // Add player name to input field
+  function addPlayerName(name) {
+    if (inputField.value) {
+      inputField.value += `, ${name}`;
+    } else {
+      inputField.value = name;
+    }
+  }
 
   // Submit button
-  const submitButton = document.createElement("button");
-  submitButton.innerText = "Submit";
+  const submitButton = document.createElement('button');
+  submitButton.textContent = 'Submit';
+  submitButton.style.marginTop = '20px';
   submitButton.onclick = () => {
-    const selectedPlayers = document.getElementById("selectedPlayers").value;
-    // Close popup
-    document.body.removeChild(popupContainer);
-    // Continue with existing off functionality using selectedPlayers
-    processOffFrame(rowNumber, selectedPlayers);
+    const playerListString = inputField.value;
+    if (playerListString) {
+      // Call your function to handle the submission
+      console.log(
+        `Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`
+      );
+      // Implement the submission logic here
+      document.body.removeChild(modal); // Close modal after submission
+    }
   };
-  popupContainer.appendChild(submitButton);
+  modalContent.appendChild(submitButton);
 
-  // Append the popup to the body
-  document.body.appendChild(popupContainer);
-}
+  // Close button
+  const closeButton = document.createElement('button');
+  closeButton.textContent = 'Close';
+  closeButton.style.marginTop = '10px';
+  closeButton.onclick = () => document.body.removeChild(modal);
+  modalContent.appendChild(closeButton);
 
-// This function encapsulates the existing logic to mark a frame as "off", now with the added players parameter
-function processOffFrame(rowNumber, playerListString) {
-  if (playerListString) {
-    console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`);
-    const url = "https://payment.snookerplus.in/update/frame/off/";
-
-    const payload = {
-      frameId: `SPS${rowNumber}`,
-      players: playerListString.split(",").map(player => player.trim()),
-    };
-
-    loaderInstance.showLoader();
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then(resp => {
-        loaderInstance.hideLoader();
-        if (!resp.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return resp.json();
-      })
-      .then(_body => {
-        alert("Frame turned off successfully!");
-        window.location.reload();
-      })
-      .catch(error => {
-        loaderInstance.hideLoader();
-        console.error("Fetch error:", error);
-        alert("Failed to turn off the frame. Please try again.");
-      });
-  }
+  document.body.appendChild(modal);
 }
 
 

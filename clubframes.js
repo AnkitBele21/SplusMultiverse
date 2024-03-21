@@ -109,8 +109,9 @@ function showOffPopup(rowNumber, playerName) {
   // Convert playerName to string if it's not already a string
   playerName = typeof playerName === 'string' ? playerName : String(playerName);
 
-  const playerListString = promptWithClickableButtons(`To be paid by ${playerName}:`, playerName);
-  
+  // Call the promptWithClickableButtons function to display the prompt message with clickable buttons
+  const playerListString = promptWithClickableButtons(`To be paid by:`, playerName);
+
   if (playerListString) {
     console.log(
       `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`

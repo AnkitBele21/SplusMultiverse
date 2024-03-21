@@ -122,9 +122,16 @@ function showOffPopup(rowNumber, playerName) {
     return button;
   });
 
-  // Insert player buttons above the input box
+  // Get the prompt container element
   const promptContainer = document.getElementById('promptContainer');
-  playerButtons.forEach(button => promptContainer.insertBefore(button, promptContainer.firstChild));
+
+  // Check if the promptContainer element exists
+  if (promptContainer) {
+    // Insert player buttons above the input box
+    playerButtons.forEach(button => promptContainer.insertBefore(button, promptContainer.firstChild));
+  } else {
+    console.error("Prompt container element not found");
+  }
 
   // Function to add player name to the input box
   const addPlayer = (playerName) => {

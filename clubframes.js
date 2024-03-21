@@ -114,12 +114,7 @@ function showOffPopup(rowNumber, playerName) {
     button.textContent = playerName;
     button.classList.add('player-button');
     button.addEventListener('click', () => {
-      if (playerListString) {
-        playerListString += `, ${playerName}`;
-      } else {
-        playerListString = playerName;
-      }
-      updatePromptMessage();
+      addPlayer(playerName);
     });
     return button;
   };
@@ -144,7 +139,14 @@ function showOffPopup(rowNumber, playerName) {
     buttons.forEach(button => promptContainer.appendChild(button));
   };
 
-  updatePromptMessage();
+  const addPlayer = (playerName) => {
+    if (playerListString) {
+      playerListString += `, ${playerName}`;
+    } else {
+      playerListString = playerName;
+    }
+    updatePromptMessage();
+  };
 
   const proceedOff = () => {
     if (playerListString) {
@@ -186,44 +188,13 @@ function showOffPopup(rowNumber, playerName) {
 
   const confirmation = confirm('Are you sure you want to mark this frame as off?');
   if (confirmation) {
-    proceedOff();
-  }
-}
-
-
-
-function promptWithClickableButtons(message, playerName) {
-  let playerListString = '';
-
-  const addPlayer = (playerName) => {
-    playerListString += (playerListString ? ', ' : '') + playerName;
     updatePromptMessage();
-  };
-
-  const updatePromptMessage = () => {
-    playerListString = prompt(`${message} ${playerListString}:`);
-  };
-
-  const createClickablePlayerButton = (playerName) => {
-    const button = document.createElement('button');
-    button.textContent = playerName;
-    button.classList.add('player-button');
-    button.addEventListener('click', () => {
-      addPlayer(playerName);
-    });
-    return button;
-  };
-
-  const players = playerName.split(',');
-
-  players.forEach(player => {
-    const playerButton = createClickablePlayerButton(player.trim());
-    document.body.appendChild(playerButton);
-  });
-
-  updatePromptMessage();
-
-  return playerListString;
+    const proceedButton = document.createElement('button');
+    proceedButton.textContent = 'Proceed';
+    proceedButton.classList.add('proceed-button');
+    proceedButton.addEventListener('click', proceedOff);
+    document.body.appendChild(proceedButton);
+  }
 }
 
 

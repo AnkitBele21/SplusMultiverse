@@ -1,4 +1,4 @@
-/ Your API Key and Sheet ID
+// Your API Key and Sheet ID
 const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
 const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
 const SHEET_NAME = 'Rank';
@@ -54,31 +54,12 @@ function createPlayerCard(player) {
     playerName.className = 'player-name';
     playerName.textContent = `${rank}. ${name}`;
 
-    // Check if player is a champion and add a gold medal icon
+    // Check if player is a champion and add a medal icon
     if (["Arpit", "Saurav Johari"].includes(name)) {
         const championIcon = document.createElement('span');
-        championIcon.textContent = '🎖️'; // Using a gold medal emoji
+        championIcon.textContent = '🎖️'; // Using a medal emoji
         championIcon.className = 'champion-icon';
         playerName.appendChild(championIcon);
-    }
-
-    // Check if the player is a runner-up
-    const isRunnerUp = (name === "Arpit" && /* condition to check if Arpit is a runner-up */);
-
-    // Check if player is a runner-up and add a silver medal icon
-    if (isRunnerUp) {
-        const runnerUpIcon = document.createElement('span');
-        runnerUpIcon.textContent = '🥈'; // Using a silver medal emoji
-        runnerUpIcon.className = 'runner-up-icon';
-        playerName.appendChild(runnerUpIcon);
-    }
-
-    // Check if the player is both a champion and a runner-up and add another medal icon
-    if (["Arpit", "Saurav Johari"].includes(name) && isRunnerUp) {
-        const extraMedalIcon = document.createElement('span');
-        extraMedalIcon.textContent = '🎖️'; // Using a medal emoji
-        extraMedalIcon.className = 'extra-medal-icon';
-        playerName.appendChild(extraMedalIcon);
     }
 
     playerInfo.appendChild(playerName);
@@ -159,7 +140,6 @@ function createPlayerCard(player) {
 
     return playerCard;
 }
-
 
 // Function to display players
 function displayPlayers(players) {

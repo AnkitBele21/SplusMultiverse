@@ -106,6 +106,8 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
+  // Check if playerName is not a string, and provide a default value if needed
+  playerName = typeof playerName === 'string' ? playerName : '';
   // Split player names and trim whitespace
   const playerNames = playerName.split(',').map(name => name.trim());
 

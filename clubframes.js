@@ -106,62 +106,22 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
-  const promptMessage = `To be paid by:`;
+  const playerListString = prompt(`To be paid by ${playerName}:`);
 
-  // Function to create a clickable button for each player
-  const createPlayerButton = (playerName) => {
-    const button = document.createElement('button');
-    button.textContent = playerName;
-    button.classList.add('player-button');
-    button.addEventListener('click', () => {
-      addPlayer(playerName);
-    });
-    return button;
-  };
-
-  // Convert playerName array to string
-  const playerNameString = Array.isArray(playerName) ? playerName.join(', ') : playerName;
-
-  // Fetch player names from columns M to R of the same row
-  const playerNames = playerNameString.split(',');
-
-  // Prompt message with clickable buttons for each player
-  let playerListString = '';
-  const buttons = playerNames.map(playerName => {
-    const button = createPlayerButton(playerName.trim());
-    return button;
-  });
-
-  // Function to update prompt message
-  const updatePromptMessage = () => {
-    const promptContainer = document.getElementById('promptContainer');
-    promptContainer.innerHTML = '';
-    const promptText = document.createElement('p');
-    promptText.textContent = `${promptMessage} ${playerListString}:`;
-    promptContainer.appendChild(promptText);
-    buttons.forEach(button => promptContainer.appendChild(button));
-  };
-
-  const addPlayer = (playerName) => {
-    if (playerListString) {
-      playerListString += `, ${playerName}`;
-    } else {
-      playerListString = playerName;
-    }
-    updatePromptMessage();
-  };
-
-  const proceedOff = () => {
-    if (playerListString) {
-      console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`);
+  if (playerListString) {
+    console.log(
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+    );
+    try {
       const url = "https://payment.snookerplus.in/update/frame/off/";
+
       const payload = {
         frameId: `SPS${rowNumber}`,
-        players: playerListString.split(",").map((player) => player.trim()),
+        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
       };
 
       try {
-        loaderInstance.showLoader();
+          loaderInstance.showLoader();
 
         fetch(url, {
           method: "POST",
@@ -171,7 +131,7 @@ function showOffPopup(rowNumber, playerName) {
           body: JSON.stringify(payload),
         })
           .then((resp) => {
-            loaderInstance.hideLoader();
+              loaderInstance.hideLoader();
             if (!resp.ok) {
               throw new Error("Network response was not ok");
             }
@@ -182,24 +142,18 @@ function showOffPopup(rowNumber, playerName) {
             window.location.reload();
           });
       } catch (error) {
-        loaderInstance.hideLoader();
+          loaderInstance.hideLoader();
         console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
       }
+    } catch (error) {
+      console.error("Error turning off the frame:", error);
+      alert(
+        "An error occurred while turning off the frame. Please try again later."
+      );
     }
-  };
-
-  const confirmation = confirm('Are you sure you want to mark this frame as off?');
-  if (confirmation) {
-    updatePromptMessage();
-    const proceedButton = document.createElement('button');
-    proceedButton.textContent = 'Proceed';
-    proceedButton.classList.add('proceed-button');
-    proceedButton.addEventListener('click', proceedOff);
-    document.body.appendChild(proceedButton);
   }
 }
-
 
 function applyFilters() {
   const playerNameFilter = document

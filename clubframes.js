@@ -106,15 +106,54 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
-  // Convert playerName to string if it's not already a string
-  playerName = typeof playerName === 'string' ? playerName : String(playerName);
+  // Function to create a clickable button for each player
+  const createPlayerButton = (playerName) => {
+    const button = document.createElement('button');
+    button.textContent = playerName;
+    button.classList.add('player-button');
+    button.addEventListener('click', () => {
+      addPlayer(playerName);
+    });
+    return button;
+  };
 
-  // Call the promptWithClickableButtons function to display the prompt message with clickable buttons
-  const playerListString = promptWithClickableButtons(`To be paid by:`, playerName);
+  // Fetch player names from columns M to R of the same row
+  const playerNames = [
+    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-m`).textContent.split(','),
+    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-n`).textContent.split(','),
+    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-o`).textContent.split(','),
+    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-p`).textContent.split(','),
+    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-q`).textContent.split(','),
+    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-r`).textContent.split(',')
+  ];
+
+  // Prompt message with clickable buttons for each player
+  let playerListString = '';
+  const buttons = playerNames.map(playerName => {
+    const button = createPlayerButton(playerName.trim());
+    button.addEventListener('click', () => {
+      if (playerListString) {
+        playerListString += `, ${playerName.trim()}`;
+      } else {
+        playerListString = playerName.trim();
+      }
+    });
+    return button;
+  });
+
+  // Display the prompt message with clickable buttons
+  const message = `To be paid by:`;
+  const promptContainer = document.createElement('div');
+  promptContainer.innerHTML = `<p>${message}</p>`;
+  buttons.forEach(button => promptContainer.appendChild(button));
+  document.body.appendChild(promptContainer);
+
+  // Show the prompt
+  playerListString = promptContainer.textContent;
 
   if (playerListString) {
     console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`
     );
     
     try {

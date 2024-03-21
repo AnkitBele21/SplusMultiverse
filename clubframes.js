@@ -106,12 +106,13 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
-  const playerListString = prompt(`To be paid by ${playerName}:`);
-
+  const playerListString = promptWithClickableButtons(`To be paid by ${playerName}:`, playerName);
+  
   if (playerListString) {
     console.log(
       `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
     );
+    
     try {
       const url = "https://payment.snookerplus.in/update/frame/off/";
 
@@ -154,6 +155,41 @@ function showOffPopup(rowNumber, playerName) {
     }
   }
 }
+
+function promptWithClickableButtons(message, playerName) {
+  let playerListString = '';
+
+  const addPlayer = (playerName) => {
+    playerListString += (playerListString ? ', ' : '') + playerName;
+    updatePromptMessage();
+  };
+
+  const updatePromptMessage = () => {
+    playerListString = prompt(`${message} ${playerListString}:`);
+  };
+
+  const createClickablePlayerButton = (playerName) => {
+    const button = document.createElement('button');
+    button.textContent = playerName;
+    button.classList.add('player-button');
+    button.addEventListener('click', () => {
+      addPlayer(playerName);
+    });
+    return button;
+  };
+
+  const players = playerName.split(',');
+
+  players.forEach(player => {
+    const playerButton = createClickablePlayerButton(player.trim());
+    document.body.appendChild(playerButton);
+  });
+
+  updatePromptMessage();
+
+  return playerListString;
+}
+
 
 function applyFilters() {
   const playerNameFilter = document

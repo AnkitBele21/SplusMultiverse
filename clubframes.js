@@ -106,71 +106,32 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
-  // Check if playerName is not a string, and provide a default value if needed
-  playerName = typeof playerName === 'string' ? playerName : '';
-  // Split player names and trim whitespace
-  const playerNames = playerName.split(',').map(name => name.trim());
+  const playerListString = prompt(`To be paid by ${playerName}:`);
 
-  // Create clickable buttons for each player's name
-  const playerButtons = playerNames.map(name => {
-    const button = document.createElement('button');
-    button.textContent = name;
-    button.classList.add('player-button');
-    button.addEventListener('click', () => {
-      addPlayer(name); // Call addPlayer function when button is clicked
-    });
-    return button;
-  });
+  if (playerListString) {
+    console.log(
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+    );
+    try {
+      const url = "https://payment.snookerplus.in/update/frame/off/";
 
-  // Get the prompt container element
-  const promptContainer = document.getElementById('promptContainer');
+      const payload = {
+        frameId: `SPS${rowNumber}`,
+        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
+      };
 
-  // Check if the promptContainer element exists
-  if (promptContainer) {
-    // Insert player buttons above the input box
-    playerButtons.forEach(button => promptContainer.insertBefore(button, promptContainer.firstChild));
-  } else {
-    console.error("Prompt container element not found");
-  }
-
-  // Function to add player name to the input box
-  const addPlayer = (playerName) => {
-    const inputBox = document.getElementById('playerInput');
-    inputBox.value += (inputBox.value ? ', ' : '') + playerName; // Append player name to input box value
-  };
-
-  // Get the okButton and cancelButton elements
-  const okButton = document.getElementById('okButton');
-  const cancelButton = document.getElementById('cancelButton');
-
-  // Check if okButton and cancelButton elements exist
-  if (okButton && cancelButton) {
-    // Add event listener to the okButton
-    okButton.addEventListener('click', () => {
-      const playerListString = document.getElementById('playerInput').value;
-      if (playerListString) {
-        console.log(
-          `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
-        );
-        try {
-          const url = "https://payment.snookerplus.in/update/frame/off/";
-
-          const payload = {
-            frameId: `SPS${rowNumber}`,
-            players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
-          };
-
+      try {
           loaderInstance.showLoader();
 
-          fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          })
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        })
           .then((resp) => {
-            loaderInstance.hideLoader();
+              loaderInstance.hideLoader();
             if (!resp.ok) {
               throw new Error("Network response was not ok");
             }
@@ -179,34 +140,20 @@ function showOffPopup(rowNumber, playerName) {
           .then((_body) => {
             alert("Frame turned off successfully!");
             window.location.reload();
-          })
-          .catch((error) => {
-            loaderInstance.hideLoader();
-            console.error("Fetch error:", error);
-            alert("Failed to turn off the frame. Please try again.");
           });
-        } catch (error) {
+      } catch (error) {
           loaderInstance.hideLoader();
-          console.error("Error turning off the frame:", error);
-          alert(
-            "An error occurred while turning off the frame. Please try again later."
-          );
-        }
+        console.error("Fetch error:", error);
+        alert("Failed to turn off the frame. Please try again.");
       }
-    });
-
-    // Add event listener to the cancelButton
-    cancelButton.addEventListener('click', () => {
-      // Close the popup or perform any other necessary action
-    });
-  } else {
-    console.error("Ok button or Cancel button element not found");
+    } catch (error) {
+      console.error("Error turning off the frame:", error);
+      alert(
+        "An error occurred while turning off the frame. Please try again later."
+      );
+    }
   }
-
-  // Optionally, you can show the popup at this point
 }
-
-
 
 function applyFilters() {
   const playerNameFilter = document

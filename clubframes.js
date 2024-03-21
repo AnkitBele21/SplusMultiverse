@@ -106,6 +106,9 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
+  // Convert playerName to string if it's not already a string
+  playerName = typeof playerName === 'string' ? playerName : String(playerName);
+
   const playerListString = promptWithClickableButtons(`To be paid by ${playerName}:`, playerName);
   
   if (playerListString) {
@@ -155,6 +158,7 @@ function showOffPopup(rowNumber, playerName) {
     }
   }
 }
+
 
 function promptWithClickableButtons(message, playerName) {
   let playerListString = '';

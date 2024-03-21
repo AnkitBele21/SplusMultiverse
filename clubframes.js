@@ -119,8 +119,11 @@ function showOffPopup(rowNumber, playerName) {
     return button;
   };
 
+  // Convert playerName array to string
+  const playerNameString = Array.isArray(playerName) ? playerName.join(', ') : playerName;
+
   // Fetch player names from columns M to R of the same row
-  const playerNames = playerName.split(',');
+  const playerNames = playerNameString.split(',');
 
   // Prompt message with clickable buttons for each player
   let playerListString = '';

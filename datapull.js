@@ -54,13 +54,22 @@ function createPlayerCard(player) {
     playerName.className = 'player-name';
     playerName.textContent = `${rank}. ${name}`;
 
-    // Check if player is a champion and add a medal icon
-    if (["Arpit", "Saurav Johari"].includes(name)) {
-        const championIcon = document.createElement('span');
-        championIcon.textContent = '🎖️'; // Using a medal emoji
-        championIcon.className = 'champion-icon';
-        playerName.appendChild(championIcon);
-    }
+    // Check if player is a champion and add a gold medal icon
+if (["Arpit", "Saurav Johari"].includes(name)) {
+    const championIcon = document.createElement('span');
+    championIcon.textContent = '🎖️'; // Using a gold medal emoji
+    championIcon.className = 'champion-icon';
+    playerName.appendChild(championIcon);
+}
+
+// Check if player is a runner-up and add a silver medal icon
+if (name === "Arpit" && isRunnerUp) {
+    const runnerUpIcon = document.createElement('span');
+    runnerUpIcon.textContent = '🥈'; // Using a silver medal emoji
+    runnerUpIcon.className = 'runner-up-icon';
+    playerName.appendChild(runnerUpIcon);
+}
+
 
     playerInfo.appendChild(playerName);
 

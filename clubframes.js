@@ -106,22 +106,48 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
-  const playerListString = prompt(`To be paid by ${playerName}:`);
+  // Split player names and trim whitespace
+  const playerNames = playerName.split(',').map(name => name.trim());
 
-  if (playerListString) {
-    console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
-    );
-    try {
-      const url = "https://payment.snookerplus.in/update/frame/off/";
+  // Create clickable buttons for each player's name
+  const playerButtons = playerNames.map(name => {
+    const button = document.createElement('button');
+    button.textContent = name;
+    button.classList.add('player-button');
+    button.addEventListener('click', () => {
+      addPlayer(name); // Call addPlayer function when button is clicked
+    });
+    return button;
+  });
 
-      const payload = {
-        frameId: `SPS${rowNumber}`,
-        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
-      };
+  // Insert player buttons above the input box
+  const promptContainer = document.getElementById('promptContainer');
+  playerButtons.forEach(button => promptContainer.insertBefore(button, promptContainer.firstChild));
 
+  // Function to add player name to the input box
+  const addPlayer = (playerName) => {
+    const inputBox = document.getElementById('playerInput');
+    inputBox.value += (inputBox.value ? ', ' : '') + playerName; // Append player name to input box value
+  };
+
+  const okButton = document.getElementById('okButton');
+  const cancelButton = document.getElementById('cancelButton');
+
+  okButton.addEventListener('click', () => {
+    const playerListString = document.getElementById('playerInput').value;
+    if (playerListString) {
+      console.log(
+        `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+      );
       try {
-          loaderInstance.showLoader();
+        const url = "https://payment.snookerplus.in/update/frame/off/";
+
+        const payload = {
+          frameId: `SPS${rowNumber}`,
+          players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
+        };
+
+        loaderInstance.showLoader();
 
         fetch(url, {
           method: "POST",
@@ -130,30 +156,40 @@ function showOffPopup(rowNumber, playerName) {
           },
           body: JSON.stringify(payload),
         })
-          .then((resp) => {
-              loaderInstance.hideLoader();
-            if (!resp.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return resp.json();
-          })
-          .then((_body) => {
-            alert("Frame turned off successfully!");
-            window.location.reload();
-          });
-      } catch (error) {
+        .then((resp) => {
           loaderInstance.hideLoader();
-        console.error("Fetch error:", error);
-        alert("Failed to turn off the frame. Please try again.");
+          if (!resp.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return resp.json();
+        })
+        .then((_body) => {
+          alert("Frame turned off successfully!");
+          window.location.reload();
+        })
+        .catch((error) => {
+          loaderInstance.hideLoader();
+          console.error("Fetch error:", error);
+          alert("Failed to turn off the frame. Please try again.");
+        });
+      } catch (error) {
+        loaderInstance.hideLoader();
+        console.error("Error turning off the frame:", error);
+        alert(
+          "An error occurred while turning off the frame. Please try again later."
+        );
       }
-    } catch (error) {
-      console.error("Error turning off the frame:", error);
-      alert(
-        "An error occurred while turning off the frame. Please try again later."
-      );
     }
-  }
+  });
+
+  // Function to handle the "Cancel" button click event
+  cancelButton.addEventListener('click', () => {
+    // Close the popup or perform any other necessary action
+  });
+
+  // Optionally, you can show the popup at this point
 }
+
 
 function applyFilters() {
   const playerNameFilter = document

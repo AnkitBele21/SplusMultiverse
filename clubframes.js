@@ -139,65 +139,73 @@ function showOffPopup(rowNumber, playerName) {
     inputBox.value += (inputBox.value ? ', ' : '') + playerName; // Append player name to input box value
   };
 
+  // Get the okButton and cancelButton elements
   const okButton = document.getElementById('okButton');
   const cancelButton = document.getElementById('cancelButton');
 
-  okButton.addEventListener('click', () => {
-    const playerListString = document.getElementById('playerInput').value;
-    if (playerListString) {
-      console.log(
-        `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
-      );
-      try {
-        const url = "https://payment.snookerplus.in/update/frame/off/";
-
-        const payload = {
-          frameId: `SPS${rowNumber}`,
-          players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
-        };
-
-        loaderInstance.showLoader();
-
-        fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        })
-        .then((resp) => {
-          loaderInstance.hideLoader();
-          if (!resp.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return resp.json();
-        })
-        .then((_body) => {
-          alert("Frame turned off successfully!");
-          window.location.reload();
-        })
-        .catch((error) => {
-          loaderInstance.hideLoader();
-          console.error("Fetch error:", error);
-          alert("Failed to turn off the frame. Please try again.");
-        });
-      } catch (error) {
-        loaderInstance.hideLoader();
-        console.error("Error turning off the frame:", error);
-        alert(
-          "An error occurred while turning off the frame. Please try again later."
+  // Check if okButton and cancelButton elements exist
+  if (okButton && cancelButton) {
+    // Add event listener to the okButton
+    okButton.addEventListener('click', () => {
+      const playerListString = document.getElementById('playerInput').value;
+      if (playerListString) {
+        console.log(
+          `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
         );
-      }
-    }
-  });
+        try {
+          const url = "https://payment.snookerplus.in/update/frame/off/";
 
-  // Function to handle the "Cancel" button click event
-  cancelButton.addEventListener('click', () => {
-    // Close the popup or perform any other necessary action
-  });
+          const payload = {
+            frameId: `SPS${rowNumber}`,
+            players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
+          };
+
+          loaderInstance.showLoader();
+
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          })
+          .then((resp) => {
+            loaderInstance.hideLoader();
+            if (!resp.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return resp.json();
+          })
+          .then((_body) => {
+            alert("Frame turned off successfully!");
+            window.location.reload();
+          })
+          .catch((error) => {
+            loaderInstance.hideLoader();
+            console.error("Fetch error:", error);
+            alert("Failed to turn off the frame. Please try again.");
+          });
+        } catch (error) {
+          loaderInstance.hideLoader();
+          console.error("Error turning off the frame:", error);
+          alert(
+            "An error occurred while turning off the frame. Please try again later."
+          );
+        }
+      }
+    });
+
+    // Add event listener to the cancelButton
+    cancelButton.addEventListener('click', () => {
+      // Close the popup or perform any other necessary action
+    });
+  } else {
+    console.error("Ok button or Cancel button element not found");
+  }
 
   // Optionally, you can show the popup at this point
 }
+
 
 
 function applyFilters() {

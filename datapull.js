@@ -1,4 +1,4 @@
-// Your API Key and Sheet ID
+/ Your API Key and Sheet ID
 const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
 const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
 const SHEET_NAME = 'Rank';
@@ -159,6 +159,7 @@ function createPlayerCard(player) {
 
     return playerCard;
 }
+
 
 // Function to display players
 function displayPlayers(players) {

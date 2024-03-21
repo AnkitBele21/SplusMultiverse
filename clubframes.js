@@ -106,66 +106,57 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
+  const promptMessage = `To be paid by:`;
+
   // Function to create a clickable button for each player
   const createPlayerButton = (playerName) => {
     const button = document.createElement('button');
     button.textContent = playerName;
     button.classList.add('player-button');
     button.addEventListener('click', () => {
-      addPlayer(playerName);
+      if (playerListString) {
+        playerListString += `, ${playerName}`;
+      } else {
+        playerListString = playerName;
+      }
+      updatePromptMessage();
     });
     return button;
   };
 
   // Fetch player names from columns M to R of the same row
-  const playerNames = [
-    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-m`).textContent.split(','),
-    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-n`).textContent.split(','),
-    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-o`).textContent.split(','),
-    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-p`).textContent.split(','),
-    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-q`).textContent.split(','),
-    ...document.querySelector(`#frameEntry-${rowNumber} .player-name-r`).textContent.split(',')
-  ];
+  const playerNames = playerName.split(',');
 
   // Prompt message with clickable buttons for each player
   let playerListString = '';
   const buttons = playerNames.map(playerName => {
     const button = createPlayerButton(playerName.trim());
-    button.addEventListener('click', () => {
-      if (playerListString) {
-        playerListString += `, ${playerName.trim()}`;
-      } else {
-        playerListString = playerName.trim();
-      }
-    });
     return button;
   });
 
-  // Display the prompt message with clickable buttons
-  const message = `To be paid by:`;
-  const promptContainer = document.createElement('div');
-  promptContainer.innerHTML = `<p>${message}</p>`;
-  buttons.forEach(button => promptContainer.appendChild(button));
-  document.body.appendChild(promptContainer);
+  // Function to update prompt message
+  const updatePromptMessage = () => {
+    const promptContainer = document.getElementById('promptContainer');
+    promptContainer.innerHTML = '';
+    const promptText = document.createElement('p');
+    promptText.textContent = `${promptMessage} ${playerListString}:`;
+    promptContainer.appendChild(promptText);
+    buttons.forEach(button => promptContainer.appendChild(button));
+  };
 
-  // Show the prompt
-  playerListString = promptContainer.textContent;
+  updatePromptMessage();
 
-  if (playerListString) {
-    console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`
-    );
-    
-    try {
+  const proceedOff = () => {
+    if (playerListString) {
+      console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`);
       const url = "https://payment.snookerplus.in/update/frame/off/";
-
       const payload = {
         frameId: `SPS${rowNumber}`,
-        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
+        players: playerListString.split(",").map((player) => player.trim()),
       };
 
       try {
-          loaderInstance.showLoader();
+        loaderInstance.showLoader();
 
         fetch(url, {
           method: "POST",
@@ -175,7 +166,7 @@ function showOffPopup(rowNumber, playerName) {
           body: JSON.stringify(payload),
         })
           .then((resp) => {
-              loaderInstance.hideLoader();
+            loaderInstance.hideLoader();
             if (!resp.ok) {
               throw new Error("Network response was not ok");
             }
@@ -186,18 +177,19 @@ function showOffPopup(rowNumber, playerName) {
             window.location.reload();
           });
       } catch (error) {
-          loaderInstance.hideLoader();
+        loaderInstance.hideLoader();
         console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
       }
-    } catch (error) {
-      console.error("Error turning off the frame:", error);
-      alert(
-        "An error occurred while turning off the frame. Please try again later."
-      );
     }
+  };
+
+  const confirmation = confirm('Are you sure you want to mark this frame as off?');
+  if (confirmation) {
+    proceedOff();
   }
 }
+
 
 
 function promptWithClickableButtons(message, playerName) {

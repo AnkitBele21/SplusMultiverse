@@ -62,13 +62,17 @@ if (["Arpit", "Saurav Johari"].includes(name)) {
     playerName.appendChild(championIcon);
 }
 
+// Check if the player is a runner-up
+const isRunnerUp = (name === "Arpit" && /* condition to check if Arpit is a runner-up */);
+
 // Check if player is a runner-up and add a silver medal icon
-if (name === "Arpit" && isRunnerUp) {
+if (isRunnerUp) {
     const runnerUpIcon = document.createElement('span');
     runnerUpIcon.textContent = '🥈'; // Using a silver medal emoji
     runnerUpIcon.className = 'runner-up-icon';
     playerName.appendChild(runnerUpIcon);
 }
+
 
 
     playerInfo.appendChild(playerName);

@@ -87,7 +87,7 @@ function createPlayerCard(player) {
 
     const playerCoins = document.createElement('span');
     playerCoins.className = 'player-coins';
-    playerCoins.textContent = `S+ Coins: ${coins}`;
+    playerCoins.textContent = `S+: ${coins}`;
     playerInfo.appendChild(playerCoins);
 
     const progressBar = document.createElement('div');

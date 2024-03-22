@@ -124,7 +124,7 @@ button:hover {
     align-items: center; /* Align items vertically */
     justify-content: flex-end; /* Align items to the right */
     margin-bottom: 10px; /* Add margin to create space */
-    margin-right: 20px; /* Add margin to create space between the text and checkbox */
+    margin-right: 5px; /* Add margin to create space between the text and checkbox */
 }
 
 /* Style for the custom checkbox */

@@ -138,6 +138,7 @@ button:hover {
 #activeFramesContainer label {
     color: #FFFFFF; /* Text color for the label */
     cursor: pointer; /* Change cursor to pointer on hover */
+    white-space: nowrap; /* Prevent text from wrapping */
 }
 
 /* Style for the custom checkbox when checked */

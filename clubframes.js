@@ -107,21 +107,64 @@ function displayFrameEntries(frameEntries) {
 
 function showOffPopup(rowNumber, playerNames) {
   let playerNameString = playerNames.join(", ");
-  let playerListString = prompt(`To be paid by ${playerNameString}:`, playerNameString);
+  const offPopup = document.createElement("div");
+  offPopup.className = "off-popup";
 
-  if (playerListString) {
-    console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerNameString} and amount: ${playerListString}`
-    );
-    try {
-      const url = "https://payment.snookerplus.in/update/frame/off/";
+  const inputLabel = document.createElement("label");
+  inputLabel.innerText = `To be paid by:`;
+  offPopup.appendChild(inputLabel);
 
-      const payload = {
-        frameId: `SPS${rowNumber}`,
-        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
-      };
+  const playerListContainer = document.createElement("div");
 
+  // Function to handle adding a player to the playerNameString
+  function addPlayerToNameString(playerName) {
+    playerNameString += `, ${playerName}`;
+    updatePlayerInputValue();
+  }
+
+  // Function to update the value of the player input field
+  function updatePlayerInputValue() {
+    playerInput.value = playerNameString;
+  }
+
+  playerNames.forEach((player) => {
+    const playerSpan = document.createElement("span");
+    playerSpan.innerText = player;
+    
+    // Add "+" button to add the player to the list
+    const addButton = document.createElement("button");
+    addButton.innerText = "+";
+    addButton.onclick = function () {
+      addPlayerToNameString(player);
+    };
+    playerSpan.appendChild(addButton);
+
+    playerListContainer.appendChild(playerSpan);
+  });
+
+  offPopup.appendChild(playerListContainer);
+
+  const playerInput = document.createElement("input");
+  playerInput.type = "text";
+  playerInput.value = playerNameString;
+  offPopup.appendChild(playerInput);
+
+  const okButton = document.createElement("button");
+  okButton.innerText = "OK";
+  okButton.onclick = function () {
+    const editedPlayerList = playerInput.value.trim();
+    if (editedPlayerList) {
+      console.log(
+        `Marking frame at row ${rowNumber} as off. Paid by: ${editedPlayerList}`
+      );
       try {
+        const url = "https://payment.snookerplus.in/update/frame/off/";
+
+        const payload = {
+          frameId: `SPS${rowNumber}`,
+          players: editedPlayerList.split(",").map((player) => player.trim()), // Ensure players are trimmed
+        };
+
         loaderInstance.showLoader();
 
         fetch(url, {
@@ -141,19 +184,27 @@ function showOffPopup(rowNumber, playerNames) {
           .then((_body) => {
             alert("Frame turned off successfully!");
             window.location.reload();
+          })
+          .catch((error) => {
+            loaderInstance.hideLoader();
+            console.error("Fetch error:", error);
+            alert("Failed to turn off the frame. Please try again.");
           });
       } catch (error) {
-        loaderInstance.hideLoader();
-        console.error("Fetch error:", error);
-        alert("Failed to turn off the frame. Please try again.");
+        console.error("Error turning off the frame:", error);
+        alert(
+          "An error occurred while turning off the frame. Please try again later."
+        );
+      } finally {
+        document.body.removeChild(offPopup);
       }
-    } catch (error) {
-      console.error("Error turning off the frame:", error);
-      alert(
-        "An error occurred while turning off the frame. Please try again later."
-      );
     }
-  }
+  };
+
+  offPopup.appendChild(okButton);
+
+  // Append the popup to the body
+  document.body.appendChild(offPopup);
 }
 
 function applyFilters() {

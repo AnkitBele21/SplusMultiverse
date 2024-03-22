@@ -1,6 +1,7 @@
 const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
 const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 
+
 // UNSAFE
 let frameGlobalData = [];
 const loaderInstance = new FullScreenLoader();
@@ -11,16 +12,14 @@ async function fetchData(sheetName) {
   const data = await response.json();
   return data.values.slice(1);
 }
-
 function markFrameOn() {
-  let frameId = 1;
-  if (frameGlobalData.length > 0) {
-    frameId += parseInt(frameGlobalData[0].rowNumber);
-  }
-  window.location.href =
-    `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
+    let frameId = 1;
+    if (frameGlobalData.length > 0) {
+        frameId += parseInt(frameGlobalData[0].rowNumber);
+    }
+    window.location.href =
+      `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
 }
-
 function displayFrameEntries(frameEntries) {
   const frameEntriesContainer = document.getElementById("frameEntries");
   frameEntriesContainer.innerHTML = "";
@@ -100,19 +99,18 @@ function displayFrameEntries(frameEntries) {
         showOffPopup(entry.rowNumber, entry.playerNames)
       );
       frameElement.appendChild(offButton);
-
-      frameEntriesContainer.appendChild(frameElement);
     }
+
+    frameEntriesContainer.appendChild(frameElement);
   });
 }
 
-function showOffPopup(rowNumber, playerNames) {
-  let playerNameString = playerNames.join(", ");
-  let playerListString = prompt(`To be paid by ${playerNameString}:`);
+function showOffPopup(rowNumber, playerName) {
+  const playerListString = prompt(`To be paid by ${playerName}:`);
 
   if (playerListString) {
     console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerNameString} and amount: ${playerListString}`
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
     );
     try {
       const url = "https://payment.snookerplus.in/update/frame/off/";
@@ -123,7 +121,7 @@ function showOffPopup(rowNumber, playerNames) {
       };
 
       try {
-        loaderInstance.showLoader();
+          loaderInstance.showLoader();
 
         fetch(url, {
           method: "POST",
@@ -133,7 +131,7 @@ function showOffPopup(rowNumber, playerNames) {
           body: JSON.stringify(payload),
         })
           .then((resp) => {
-            loaderInstance.hideLoader();
+              loaderInstance.hideLoader();
             if (!resp.ok) {
               throw new Error("Network response was not ok");
             }
@@ -144,7 +142,7 @@ function showOffPopup(rowNumber, playerNames) {
             window.location.reload();
           });
       } catch (error) {
-        loaderInstance.hideLoader();
+          loaderInstance.hideLoader();
         console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
       }
@@ -195,8 +193,7 @@ function applyFilters() {
     }
 
     if (dateFilter) {
-      frameEntries = frameEntries.filter((entry) => entry.date === dateFilter 
-      );
+      frameEntries = frameEntries.filter((entry) => entry.date === dateFilter);
     }
 
     displayFrameEntries(frameEntries);
@@ -232,10 +229,9 @@ window.onload = function () {
       }))
       .filter((entry) => entry.isValid)
       .reverse();
-    frameGlobalData = frameEntries;
+    frameGlobalData = frameEntries
     displayFrameEntries(frameEntries);
   });
 
   populatePlayerNames();
 };
-

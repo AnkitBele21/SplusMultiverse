@@ -115,10 +115,10 @@ button:hover {
 #addPlayersButton:hover {
     background-color: #018a5e; /* Darker shade for hover effect */
 }
-/* Hide the checkbox */
+/* Hide the checkbox 
 #activeFramesFilter {
     display: none;
-}
+} */
 
 /* Style for the custom checkbox container */
 #activeFramesFilter::before {
@@ -134,7 +134,7 @@ button:hover {
     display: inline-block;
     width: 15px; /* Adjust width and height as needed for the checkbox */
     height: 15px;
-    border: 2px solid #FFFFFF; /* Border color for the checkbox */
+    border: 2px solid #018a5e; /* Border color for the checkbox */
     border-radius: 3px; /* Border radius for the checkbox */
     background-color: transparent; /* Background color for the checkbox */
     vertical-align: middle; /* Align the checkbox vertically with the text */

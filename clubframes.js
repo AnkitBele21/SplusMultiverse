@@ -119,53 +119,8 @@ function showOffPopup(rowNumber, playerName) {
       addPlayerName(player);
       // Close the popup after adding the player name
       document.body.removeChild(popupContainer);
-      // Continue with the rest of the function logic
-      const playerListString = player; // Using the selected player's name directly
-      if (playerListString) {
-        console.log(
-          `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
-        );
-        try {
-          const url = "https://payment.snookerplus.in/update/frame/off/";
-
-          const payload = {
-            frameId: `SPS${rowNumber}`,
-            players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
-          };
-
-          try {
-            loaderInstance.showLoader();
-
-            fetch(url, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            })
-              .then((resp) => {
-                loaderInstance.hideLoader();
-                if (!resp.ok) {
-                  throw new Error("Network response was not ok");
-                }
-                return resp.json();
-              })
-              .then((_body) => {
-                alert("Frame turned off successfully!");
-                window.location.reload();
-              });
-          } catch (error) {
-            loaderInstance.hideLoader();
-            console.error("Fetch error:", error);
-            alert("Failed to turn off the frame. Please try again.");
-          }
-        } catch (error) {
-          console.error("Error turning off the frame:", error);
-          alert(
-            "An error occurred while turning off the frame. Please try again later."
-          );
-        }
-      }
+      // Mark the frame as off
+      markFrameOff(rowNumber, player);
     };
     popupContainer.appendChild(playerButton);
   });
@@ -173,6 +128,53 @@ function showOffPopup(rowNumber, playerName) {
   document.body.appendChild(popupContainer);
 }
 
+function markFrameOff(rowNumber, playerName) {
+  const playerListString = playerName;
+
+  if (playerListString) {
+    console.log(
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+    );
+    try {
+      const url = "https://payment.snookerplus.in/update/frame/off/";
+
+      const payload = {
+        frameId: `SPS${rowNumber}`,
+        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
+      };
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return resp.json();
+      })
+      .then((_body) => {
+        alert("Frame turned off successfully!");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+        alert("Failed to turn off the frame. Please try again.");
+      });
+    } catch (error) {
+      console.error("Error turning off the frame:", error);
+      alert("An error occurred while turning off the frame. Please try again later.");
+    }
+  }
+}
+
+// Update the event listener for Off button
+offButton.addEventListener("click", () =>
+  showOffPopup(entry.rowNumber, entry.playerNames)
+);
 
 function applyFilters() {
   const playerNameFilter = document

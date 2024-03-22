@@ -95,15 +95,16 @@ function displayFrameEntries(frameEntries) {
       const offButton = document.createElement("button");
       offButton.innerText = "Off";
       offButton.className = "btn btn-danger off-btn";
-      offButton.addEventListener("click", () =>
-        showOffPopup(entry.rowNumber, entry.playerNames)
-      );
+      offButton.addEventListener("click", function() {
+        showOffPopup(entry.rowNumber, entry.playerNames);
+      });
       frameElement.appendChild(offButton);
     }
 
     frameEntriesContainer.appendChild(frameElement);
   });
 }
+
 
 function showOffPopup(rowNumber, playerNames) {
   let playerNameString = playerNames.join(", ");

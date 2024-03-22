@@ -154,7 +154,6 @@ function showOffPopup(rowNumber, playerNames) {
   }
 }
 
-
 function applyFilters() {
   const playerNameFilter = document
     .getElementById("playerNameFilter")

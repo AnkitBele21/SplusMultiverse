@@ -141,7 +141,7 @@ button:hover {
     border: 2px solid #018a5e; /* Border color for the checkbox */
     border-radius: 3px; /* Border radius for the checkbox */
     background-color: transparent; /* Background color for the checkbox */
-    vertical-align: middle; /* Align the checkbox vertically with the text */
+    vertical-align: right; /* Align the checkbox vertically with the text */
     margin-right: 5px; /* Add margin to create space */
     cursor: pointer; /* Change cursor to pointer on hover */
 }

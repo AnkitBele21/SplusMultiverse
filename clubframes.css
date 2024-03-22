@@ -129,10 +129,21 @@ button:hover {
 /* Style for the custom checkbox */
 #activeFramesFilter {
     display: inline-block; /* Ensure checkbox is visible */
-    opacity: 0; /* Hide the actual checkbox */
+    opacity: 1; /* Show the checkbox */
+    margin-left: 5px; /* Add margin to create space */
 }
 
 /* Style for the custom checkbox label */
+#activeFramesContainer label {
+    color: #FFFFFF; /* Text color for the label */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Style for the custom checkbox when checked */
+#activeFramesFilter:checked + label::before {
+    background-color: #00FF00; /* Background color for the checked state */
+}
+
 #activeFramesFilter + label::before {
     content: "";
     display: inline-block;
@@ -144,9 +155,4 @@ button:hover {
     vertical-align: middle; /* Align the checkbox vertically with the text */
     margin-right: 5px; /* Add margin to create space */
     cursor: pointer; /* Change cursor to pointer on hover */
-}
-
-/* Style for the custom checkbox when checked */
-#activeFramesFilter:checked + label::before {
-    background-color: #00FF00; /* Background color for the checked state */
 }

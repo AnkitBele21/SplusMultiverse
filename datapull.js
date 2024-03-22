@@ -77,7 +77,7 @@ function createPlayerCard(player) {
     // Add "Playing at Club" above S+ Coins if the status is "Playing Now"
     if (status && status.toLowerCase() === 'playing now') {
         const playingAtClub = document.createElement('span');
-        playingAtClub.textContent = 'Playing now  ';
+        playingAtClub.textContent = 'Playing now‎ ';
         playingAtClub.className = 'playing-at-club';
         playerInfo.appendChild(playingAtClub);
 

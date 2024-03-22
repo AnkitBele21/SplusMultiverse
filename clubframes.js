@@ -92,44 +92,21 @@ function displayFrameEntries(frameEntries) {
       };
       frameElement.appendChild(editButton);
 
-      // Inside the displayFrameEntries function, where Off button creation is happening
-const offButton = document.createElement("button");
-offButton.innerText = "Off";
-offButton.className = "btn btn-danger off-btn";
-offButton.addEventListener("click", () =>
-  showOffPopup(entry.rowNumber, entry.playerNames)
-);
-frameElement.appendChild(offButton); // Append the Off button to the frame element
+      const offButton = document.createElement("button");
+      offButton.innerText = "Off";
+      offButton.className = "btn btn-danger off-btn";
+      offButton.addEventListener("click", () =>
+        showOffPopup(entry.rowNumber, entry.playerNames)
+      );
+      frameElement.appendChild(offButton);
+    }
 
     frameEntriesContainer.appendChild(frameElement);
   });
 }
 
-
 function showOffPopup(rowNumber, playerName) {
-  const popupContainer = document.createElement("div");
-  popupContainer.className = "popup-container";
-
-  // Create a button for each player name
-  playerName.forEach(player => {
-    const playerButton = document.createElement("button");
-    playerButton.innerText = player;
-    playerButton.className = "player-button";
-    playerButton.onclick = function () {
-      addPlayerName(player);
-      // Close the popup after adding the player name
-      document.body.removeChild(popupContainer);
-      // Mark the frame as off
-      markFrameOff(rowNumber, player);
-    };
-    popupContainer.appendChild(playerButton);
-  });
-
-  document.body.appendChild(popupContainer);
-}
-
-function markFrameOff(rowNumber, playerName) {
-  const playerListString = playerName;
+  const playerListString = prompt(`To be paid by ${playerName}:`);
 
   if (playerListString) {
     console.log(
@@ -143,38 +120,40 @@ function markFrameOff(rowNumber, playerName) {
         players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
       };
 
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      })
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return resp.json();
-      })
-      .then((_body) => {
-        alert("Frame turned off successfully!");
-        window.location.reload();
-      })
-      .catch((error) => {
+      try {
+          loaderInstance.showLoader();
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((resp) => {
+              loaderInstance.hideLoader();
+            if (!resp.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return resp.json();
+          })
+          .then((_body) => {
+            alert("Frame turned off successfully!");
+            window.location.reload();
+          });
+      } catch (error) {
+          loaderInstance.hideLoader();
         console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
-      });
+      }
     } catch (error) {
       console.error("Error turning off the frame:", error);
-      alert("An error occurred while turning off the frame. Please try again later.");
+      alert(
+        "An error occurred while turning off the frame. Please try again later."
+      );
     }
   }
 }
-
-// Update the event listener for Off button
-offButton.addEventListener("click", () =>
-  showOffPopup(entry.rowNumber, entry.playerNames)
-);
 
 function applyFilters() {
   const playerNameFilter = document

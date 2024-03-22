@@ -8,45 +8,29 @@
     <link rel="stylesheet" href="clubplayers.css">
 </head>
 <body>
-    <header class="header bg-dark py-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6 text-md-start text-center">
-                    <img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="SnookerPlus Logo" class="img-fluid" style="max-width: 180px;">
-                </div>
-                <div class="col-md-6 text-md-end text-center">
-                    <h1 class="text-light mb-0">Club Players</h1>
-                </div>
-            </div>
-        </div>
+    <header class="header">
+        <img src="https://img1.wsimg.com/isteam/ip/9e11a5db-9940-4d56-b773-7f8426617dc8/Frame%2012995%20(1).png/:/cr=t:0%25,l:0%25,w:100%25,h:100%25" alt="SnookerPlus Logo">
+        <h1>Club Players</h1>
+<button id="backButton" class="btn btn-primary">Back</button>
+
     </header>
     <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <input type="search" id="playerSearch" class="form-control" placeholder="Search player">
-                    <button id="addPlayerButton" class="btn btn-success">Add Player</button>
-                </div>
-            </div>
+        <div class="d-flex justify-content-between mb-3">
+            <input type="search" id="playerSearch" class="form-control" placeholder="Search player">
+            <button id="addPlayerButton" class="btn btn-success ml-2">Add Player</button>
         </div>
-        <div class="row mt-3">
-            <div class="col">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Player Name</th>
-                                <th>Balance</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Players data will be inserted here by clubplayers.js -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <table class="table table-dark table-striped" id="playersTable">
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>Balance</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Players data will be inserted here by clubplayers.js -->
+            </tbody>
+        </table>
     </div>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>

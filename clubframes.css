@@ -115,7 +115,7 @@ button:hover {
 #addPlayersButton:hover {
     background-color: #018a5e; /* Darker shade for hover effect */
 }
-Hide the checkbox 
+/* Hide the checkbox */
 #activeFramesFilter {
     display: none;
 }

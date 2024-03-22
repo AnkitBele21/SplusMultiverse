@@ -107,109 +107,52 @@ function displayFrameEntries(frameEntries) {
 }
 
 function showOffPopup(rowNumber, playerName) {
-  let playerListString = prompt(`To be paid by ${playerName}:`);
-  
+  const playerListString = prompt(`To be paid by ${playerName}:`);
+
   if (playerListString) {
-    const container = document.createElement("div");
-    
-    // Function to add player dynamically
-    function addPlayer(name) {
-      const playerBtn = document.createElement("button");
-      playerBtn.innerText = "+";
-      playerBtn.className = "btn btn-primary";
-      playerBtn.onclick = () => {
-        playerListString += `,${name}`;
-        updatePrompt();
+    console.log(
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+    );
+    try {
+      const url = "https://payment.snookerplus.in/update/frame/off/";
+
+      const payload = {
+        frameId: `SPS${rowNumber}`,
+        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
       };
-      container.appendChild(playerBtn);
-    }
 
-    // Function to update the prompt with the updated player list
-    function updatePrompt() {
-      const newPrompt = `To be paid by ${playerName}:${playerListString}`;
-      playerListInput.value = playerListString;
-      playerListInput.focus();
-      playerListInput.setSelectionRange(playerListString.length, playerListString.length);
-    }
+      try {
+          loaderInstance.showLoader();
 
-    // Split player names and add buttons
-    playerListString.split(",").forEach(player => {
-      addPlayer(player.trim());
-    });
-
-    // Prompt input
-    const playerListInput = document.createElement("input");
-    playerListInput.type = "text";
-    playerListInput.style.display = "none";
-    container.appendChild(playerListInput);
-
-    // Show prompt
-    container.style.display = "none";
-    document.body.appendChild(container);
-    
-    // Trigger prompt
-    playerListInput.value = playerListString;
-    playerListInput.focus();
-    playerListInput.setSelectionRange(playerListString.length, playerListString.length);
-
-    // Handler for "OK" button
-    const okBtn = document.createElement("button");
-    okBtn.innerText = "OK";
-    okBtn.className = "btn btn-primary";
-    okBtn.onclick = () => {
-      playerListString = playerListInput.value.trim();
-      if (playerListString) {
-        console.log(
-          `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
-        );
-        try {
-          const url = "https://payment.snookerplus.in/update/frame/off/";
-    
-          const payload = {
-            frameId: `SPS${rowNumber}`,
-            players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
-          };
-    
-          try {
-              loaderInstance.showLoader();
-    
-            fetch(url, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            })
-              .then((resp) => {
-                  loaderInstance.hideLoader();
-                if (!resp.ok) {
-                  throw new Error("Network response was not ok");
-                }
-                return resp.json();
-              })
-              .then((_body) => {
-                alert("Frame turned off successfully!");
-                window.location.reload();
-              });
-          } catch (error) {
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((resp) => {
               loaderInstance.hideLoader();
-            console.error("Fetch error:", error);
-            alert("Failed to turn off the frame. Please try again.");
-          }
-        } catch (error) {
-          console.error("Error turning off the frame:", error);
-          alert(
-            "An error occurred while turning off the frame. Please try again later."
-          );
-        }
+            if (!resp.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return resp.json();
+          })
+          .then((_body) => {
+            alert("Frame turned off successfully!");
+            window.location.reload();
+          });
+      } catch (error) {
+          loaderInstance.hideLoader();
+        console.error("Fetch error:", error);
+        alert("Failed to turn off the frame. Please try again.");
       }
-    };
-
-    // Add elements to the container
-    container.appendChild(okBtn);
-
-    // Show container
-    container.style.display = "block";
+    } catch (error) {
+      console.error("Error turning off the frame:", error);
+      alert(
+        "An error occurred while turning off the frame. Please try again later."
+      );
+    }
   }
 }
 

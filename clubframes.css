@@ -128,7 +128,8 @@ button:hover {
 
 /* Style for the custom checkbox */
 #activeFramesFilter {
-    display: none; /* Hide the actual checkbox */
+    display: inline-block; /* Ensure checkbox is visible */
+    opacity: 0; /* Hide the actual checkbox */
 }
 
 /* Style for the custom checkbox label */

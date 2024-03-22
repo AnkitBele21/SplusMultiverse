@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const playerNameParam = getQueryParam('player');
     if (playerNameParam) {
         const decodedName = decodeURIComponent(playerNameParam);
-        const playerName = decodedName.replace(/[\uD800-\uDFFF]./g, ''); // Removes emojis
+        const playerName = decodedName.replace(/[\uD800-\uDFFF]+(?=\s*$)/g, ''); // Removes emojis and trailing whitespace
         document.getElementById('name').value = playerName;
     }
 
@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function fetchPlayerInfo() {
-        const name = document.getElementById('name').value;
-        const pin = document.getElementById('pin').value;
+        const name = document.getElementById('name').value.trim(); // Trim any leading or trailing whitespace
+        const pin = document.getElementById('pin').value.trim(); // Trim any leading or trailing whitespace
 
         if (!name || !pin) {
             alert('Please enter name and pin');
@@ -51,3 +51,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 });
+/* */

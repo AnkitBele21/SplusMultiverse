@@ -115,12 +115,15 @@ button:hover {
 #addPlayersButton:hover {
     background-color: #018a5e; /* Darker shade for hover effect */
 }
-.active-frame {
-    border: 2px solid #01AB7A; /* Highlight active frames with a border color similar to the header */
-    background-color: #394045; /* Slightly lighter than the default frame card for distinction */
-}
 /* Style for the label */
 label {
     margin-right: 10px; /* Adjust as needed for spacing */
+    color: #FFFFFF; /* Text color for the label */
 }
+
+/* Style for the checkbox */
+#activeFramesFilter {
+    margin-left: 5px; /* Adjust the margin as needed to place the checkbox closer to the label */
+}
+
 

@@ -121,15 +121,20 @@ button:hover {
 }
 
 /* Style for the custom checkbox container */
-#activeFramesFilter::before {
-    content: "Active Frames: ";
+#activeFramesContainer {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 10px; /* Add margin to create space */
+}
+
+/* Style for the custom checkbox label */
+#activeFramesContainer label {
     color: #FFFFFF; /* Text color for the label */
-    margin-right: 5px; /* Adjust as needed for spacing */
     cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 /* Style for the custom checkbox */
-#activeFramesFilter::after {
+#activeFramesContainer::before {
     content: "";
     display: inline-block;
     width: 15px; /* Adjust width and height as needed for the checkbox */
@@ -138,10 +143,11 @@ button:hover {
     border-radius: 3px; /* Border radius for the checkbox */
     background-color: transparent; /* Background color for the checkbox */
     vertical-align: middle; /* Align the checkbox vertically with the text */
+    margin-right: 5px; /* Add margin to create space */
     cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 /* Style for the custom checkbox when checked */
-#activeFramesFilter:checked::after {
-    background-color: #018a5e; /* Background color for the checked state */
+#activeFramesFilter:checked + label::before {
+    background-color: #00FF00; /* Background color for the checked state */
 }

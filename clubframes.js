@@ -93,24 +93,23 @@ function displayFrameEntries(frameEntries) {
       frameElement.appendChild(editButton);
 
       const offButton = document.createElement("button");
-      offButton.innerText = "Off";
-      offButton.className = "btn btn-danger off-btn";
-      offButton.addEventListener("click", () =>
-        showOffPopup(entry.rowNumber, entry.playerNames)
-      );
-      frameElement.appendChild(offButton);
-    }
+offButton.innerText = "Off";
+offButton.className = "btn btn-danger off-btn";
+offButton.addEventListener("click", () =>
+  showOffPopup(entry.rowNumber, entry.playerNames)
+);
+frameElement.appendChild(offButton);
 
-    frameEntriesContainer.appendChild(frameElement);
-  });
-}
+frameEntriesContainer.appendChild(frameElement);
+});
 
-function showOffPopup(rowNumber, playerName) {
-  const playerListString = prompt(`To be paid by ${playerName}:`);
+function showOffPopup(rowNumber, playerNames) {
+  let playerNameString = playerNames.join(", ");
+  let playerListString = prompt(`To be paid by ${playerNameString}:`);
 
   if (playerListString) {
     console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerNameString} and amount: ${playerListString}`
     );
     try {
       const url = "https://payment.snookerplus.in/update/frame/off/";
@@ -121,7 +120,7 @@ function showOffPopup(rowNumber, playerName) {
       };
 
       try {
-          loaderInstance.showLoader();
+        loaderInstance.showLoader();
 
         fetch(url, {
           method: "POST",
@@ -131,7 +130,7 @@ function showOffPopup(rowNumber, playerName) {
           body: JSON.stringify(payload),
         })
           .then((resp) => {
-              loaderInstance.hideLoader();
+            loaderInstance.hideLoader();
             if (!resp.ok) {
               throw new Error("Network response was not ok");
             }
@@ -142,7 +141,7 @@ function showOffPopup(rowNumber, playerName) {
             window.location.reload();
           });
       } catch (error) {
-          loaderInstance.hideLoader();
+        loaderInstance.hideLoader();
         console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
       }
@@ -154,6 +153,7 @@ function showOffPopup(rowNumber, playerName) {
     }
   }
 }
+
 
 function applyFilters() {
   const playerNameFilter = document

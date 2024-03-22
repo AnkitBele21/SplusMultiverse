@@ -1,3 +1,4 @@
+
 const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
 const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 
@@ -105,13 +106,12 @@ function displayFrameEntries(frameEntries) {
   });
 }
 
-function showOffPopup(rowNumber, playerNames) {
-  let playerNameString = playerNames.join(", ");
-  let playerListString = prompt(`To be paid by ${playerNameString}:`, playerNameString);
+function showOffPopup(rowNumber, playerName) {
+  const playerListString = prompt(`To be paid by ${playerName}:`);
 
   if (playerListString) {
     console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerNameString} and amount: ${playerListString}`
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
     );
     try {
       const url = "https://payment.snookerplus.in/update/frame/off/";
@@ -122,7 +122,7 @@ function showOffPopup(rowNumber, playerNames) {
       };
 
       try {
-        loaderInstance.showLoader();
+          loaderInstance.showLoader();
 
         fetch(url, {
           method: "POST",
@@ -132,7 +132,7 @@ function showOffPopup(rowNumber, playerNames) {
           body: JSON.stringify(payload),
         })
           .then((resp) => {
-            loaderInstance.hideLoader();
+              loaderInstance.hideLoader();
             if (!resp.ok) {
               throw new Error("Network response was not ok");
             }
@@ -143,7 +143,7 @@ function showOffPopup(rowNumber, playerNames) {
             window.location.reload();
           });
       } catch (error) {
-        loaderInstance.hideLoader();
+          loaderInstance.hideLoader();
         console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
       }

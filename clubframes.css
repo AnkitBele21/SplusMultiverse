@@ -114,7 +114,6 @@ button:hover {
 
 #addPlayersButton:hover {
     background-color: #018a5e; /* Darker shade for hover effect */
-}
 /* Hide the checkbox */
 #activeFramesFilter {
     display: none;
@@ -134,7 +133,7 @@ button:hover {
 }
 
 /* Style for the custom checkbox */
-#activeFramesContainer::before {
+#activeFramesFilter + label::before {
     content: "";
     display: inline-block;
     width: 15px; /* Adjust width and height as needed for the checkbox */

@@ -1,7 +1,6 @@
 const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
 const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
 
-
 // UNSAFE
 let frameGlobalData = [];
 const loaderInstance = new FullScreenLoader();
@@ -12,14 +11,16 @@ async function fetchData(sheetName) {
   const data = await response.json();
   return data.values.slice(1);
 }
+
 function markFrameOn() {
-    let frameId = 1;
-    if (frameGlobalData.length > 0) {
-        frameId += parseInt(frameGlobalData[0].rowNumber);
-    }
-    window.location.href =
-      `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
+  let frameId = 1;
+  if (frameGlobalData.length > 0) {
+    frameId += parseInt(frameGlobalData[0].rowNumber);
+  }
+  window.location.href =
+    `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
 }
+
 function displayFrameEntries(frameEntries) {
   const frameEntriesContainer = document.getElementById("frameEntries");
   frameEntriesContainer.innerHTML = "";
@@ -92,16 +93,18 @@ function displayFrameEntries(frameEntries) {
       };
       frameElement.appendChild(editButton);
 
-     const offButton = document.createElement("button");
-offButton.innerText = "Off";
-offButton.className = "btn btn-danger off-btn";
-offButton.addEventListener("click", () =>
-  showOffPopup(entry.rowNumber, entry.playerNames)
-);
-frameElement.appendChild(offButton);
+      const offButton = document.createElement("button");
+      offButton.innerText = "Off";
+      offButton.className = "btn btn-danger off-btn";
+      offButton.addEventListener("click", () =>
+        showOffPopup(entry.rowNumber, entry.playerNames)
+      );
+      frameElement.appendChild(offButton);
 
-frameEntriesContainer.appendChild(frameElement);
-
+      frameEntriesContainer.appendChild(frameElement);
+    }
+  });
+}
 
 function showOffPopup(rowNumber, playerNames) {
   let playerNameString = playerNames.join(", ");
@@ -192,7 +195,8 @@ function applyFilters() {
     }
 
     if (dateFilter) {
-      frameEntries = frameEntries.filter((entry) => entry.date === dateFilter);
+      frameEntries = frameEntries.filter((entry) => entry.date === dateFilter 
+      );
     }
 
     displayFrameEntries(frameEntries);
@@ -228,9 +232,10 @@ window.onload = function () {
       }))
       .filter((entry) => entry.isValid)
       .reverse();
-    frameGlobalData = frameEntries
+    frameGlobalData = frameEntries;
     displayFrameEntries(frameEntries);
   });
 
   populatePlayerNames();
 };
+

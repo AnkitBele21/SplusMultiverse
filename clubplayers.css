@@ -1,6 +1,7 @@
 /* General styles */
 body {
     background-color: #f8f9fa;
+    color: #343a40;
 }
 
 .header {
@@ -25,15 +26,17 @@ body {
 
 /* Table styles */
 .table {
-    background-color: #343a40;
+    background-color: #FFFFFF;
+    border: 1px solid #dee2e6;
 }
 
 .table th, .table td {
-    border-color: #454d55;
+    border: 1px solid #dee2e6;
 }
 
 .table th {
-    color: #FFFFFF;
+    background-color: #f8f9fa;
+    color: #212529;
     font-weight: 600;
 }
 

@@ -92,14 +92,14 @@ function displayFrameEntries(frameEntries) {
       };
       frameElement.appendChild(editButton);
 
-      const offButton = document.createElement("button");
-      offButton.innerText = "Off";
-      offButton.className = "btn btn-danger off-btn";
-      offButton.addEventListener("click", () =>
-        showOffPopup(entry.rowNumber, entry.playerNames)
-      );
-      frameElement.appendChild(offButton);
-    }
+      // Inside the displayFrameEntries function, where Off button creation is happening
+const offButton = document.createElement("button");
+offButton.innerText = "Off";
+offButton.className = "btn btn-danger off-btn";
+offButton.addEventListener("click", () =>
+  showOffPopup(entry.rowNumber, entry.playerNames)
+);
+frameElement.appendChild(offButton); // Append the Off button to the frame element
 
     frameEntriesContainer.appendChild(frameElement);
   });

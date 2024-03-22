@@ -79,6 +79,7 @@ button:hover {
         flex-grow: 1;
     }
 }
+
 .active-frame {
     border: 2px solid #01AB7A; /* Highlight active frames with a border color similar to the header */
     background-color: #394045; /* Slightly lighter than the default frame card for distinction */
@@ -101,6 +102,7 @@ button:hover {
     background-color: #dc3545; /* Bootstrap's btn-danger color */
     color: white;
 }
+
 #addPlayersButton {
     background-color: #01AB7A;
     color: #FFFFFF;
@@ -114,6 +116,8 @@ button:hover {
 
 #addPlayersButton:hover {
     background-color: #018a5e; /* Darker shade for hover effect */
+}
+
 /* Hide the checkbox */
 #activeFramesFilter {
     display: none;
@@ -122,7 +126,8 @@ button:hover {
 /* Style for the custom checkbox container */
 #activeFramesContainer {
     display: flex;
-    align-items: right; /* Align items vertically */
+    align-items: center; /* Align items vertically */
+    justify-content: flex-end; /* Align items to the right */
     margin-bottom: 10px; /* Add margin to create space */
 }
 
@@ -141,7 +146,7 @@ button:hover {
     border: 2px solid #018a5e; /* Border color for the checkbox */
     border-radius: 3px; /* Border radius for the checkbox */
     background-color: transparent; /* Background color for the checkbox */
-    vertical-align: right; /* Align the checkbox vertically with the text */
+    vertical-align: middle; /* Align the checkbox vertically with the text */
     margin-right: 5px; /* Add margin to create space */
     cursor: pointer; /* Change cursor to pointer on hover */
 }

@@ -25,6 +25,9 @@
         </datalist>
         <input type="date" id="dateFilter">
         <button onclick="applyFilters()">Apply Filters</button>
+        <label for="activeFramesFilter">Show Active Frames:</label>
+        <input type="checkbox" id="activeFramesFilter" onchange="applyFilters()">
+
     </section>
     <button id="frameOnButton" class="btn btn-success" onclick="markFrameOn()">Frame On</button>
     <section id="frameEntries">

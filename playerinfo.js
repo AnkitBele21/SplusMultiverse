@@ -11,9 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Pre-fill the name input if 'player' param is in the URL
     const playerNameParam = getQueryParam('player');
     if (playerNameParam) {
-        const decodedName = decodeURIComponent(playerNameParam);
-        const playerName = decodedName.replace(/[\uD800-\uDFFF]+(?=\s*$)/g, ''); // Removes emojis and trailing whitespace
-        document.getElementById('name').value = playerName;
+        document.getElementById('name').value = decodeURIComponent(playerNameParam);
     }
 
     document.getElementById('playerInfoForm').addEventListener('submit', function(e) {
@@ -22,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function fetchPlayerInfo() {
-        const name = document.getElementById('name').value.trim(); // Trim any leading or trailing whitespace
-        const pin = document.getElementById('pin').value.trim(); // Trim any leading or trailing whitespace
+        const name = document.getElementById('name').value;
+        const pin = document.getElementById('pin').value;
 
         if (!name || !pin) {
             alert('Please enter name and pin');
@@ -51,4 +49,3 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 });
-/* */

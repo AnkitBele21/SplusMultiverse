@@ -145,11 +145,4 @@ button:hover {
 }
 
 /* Style for the custom checkbox when checked */
-#activeFramesFilter:checked::after {
-    background-color: #00FF00; /* Background color for the checked state (green) */
-}
-
-/* Style for the text when checkbox is checked */
-#activeFramesFilter:checked::before {
-    color: #00FF00; /* Change text color to green when checkbox is checked */
-}
+#activeFramesFilter:checked

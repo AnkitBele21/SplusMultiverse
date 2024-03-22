@@ -118,7 +118,6 @@ button:hover {
     background-color: #018a5e; /* Darker shade for hover effect */
 }
 
-/* Style for the custom checkbox container */
 #activeFramesContainer {
     display: flex;
     align-items: center; /* Align items vertically */
@@ -158,10 +157,9 @@ button:hover {
     margin-right: 5px; /* Add margin to create space */
     cursor: pointer; /* Change cursor to pointer on hover */
 }
-/* Style for the custom checkbox label */
 #activeFramesContainer label {
     color: #FFFFFF; /* Text color for the label */
     cursor: pointer; /* Change cursor to pointer on hover */
-    margin-right: 5px; /* Add margin to create space between the checkbox and label */
-    white-space
-
+    margin-right: 5px; /* Add margin to create space between the text and checkbox */
+    white-space: nowrap; /* Prevent text from wrapping */
+}

@@ -166,6 +166,7 @@ function applyFilters() {
     const [year, month, day] = dateFilter.split("-");
     dateFilter = `${day}/${month}/${year}`;
   }
+  const showActiveFrames = document.getElementById("activeFramesFilter").checked;
 
   fetchData("Frames").then((data) => {
     let frameEntries = data
@@ -184,6 +185,10 @@ function applyFilters() {
       }))
       .filter((entry) => entry.isValid)
       .reverse();
+     
+    if (showActiveFrames) {
+      frameEntries = frameEntries.filter((entry) => entry.isActive);
+    }
 
     if (playerNameFilter) {
       frameEntries = frameEntries.filter((entry) =>

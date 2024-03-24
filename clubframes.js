@@ -8,8 +8,16 @@ async function fetchData(sheetName) {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}?key=${API_KEY}`;
   const response = await fetch(url);
   const data = await response.json();
-  return data.values.slice(1); // Exclude header row
+  return data.values.slice(1);
 }
+function markFrameOn() {
+    let frameId = 1;
+    if (frameGlobalData.length > 0) {
+        frameId += parseInt(frameGlobalData[0].rowNumber);
+    }
+    window.location.href =
+      `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
+
 
 // Function to display frame entries on the webpage
 function displayFrameEntries(frameEntries) {
@@ -95,36 +103,47 @@ function showOffPopup(rowNumber, playerName) {
     console.log(
       `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
     );
-    const url = "https://payment.snookerplus.in/update/frame/off/";
+    try {
+      const url = "https://payment.snookerplus.in/update/frame/off/";
 
-    const payload = {
-      frameId: `SPS${rowNumber}`,
-      players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
-    };
+      const payload = {
+        frameId: `SPS${rowNumber}`,
+        players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
+      };
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new
-                    Error("Network response was not ok");
-        }
-        return resp.json();
-      })
-      .then((_body) => {
-        alert("Frame turned off successfully!");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
+      try {
+          loaderInstance.showLoader();
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((resp) => {
+              loaderInstance.hideLoader();
+            if (!resp.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return resp.json();
+          })
+          .then((_body) => {
+            alert("Frame turned off successfully!");
+            window.location.reload();
+          });
+      } catch (error) {
+          loaderInstance.hideLoader();
+       console.error("Fetch error:", error);
         alert("Failed to turn off the frame. Please try again.");
-      });
-  }
+      }
+    } catch (error) {
+      console.error("Error turning off the frame:", error);
+      alert(
+        "An error occurred while turning off the frame. Please try again later."
+      );
+    }
+ }
 }
 
 // Function to apply filters to frame entries
@@ -230,4 +249,3 @@ window.onload = function () {
   // Populate player names in the playerNames dropdown
   populatePlayerNames();
 };
-

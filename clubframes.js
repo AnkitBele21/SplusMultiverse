@@ -1,7 +1,5 @@
-
 const API_KEY = "AIzaSyC8Vuysinrwm5ww5WPM5W-GxBnGm1pOUr8";
 const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
-
 
 // UNSAFE
 let frameGlobalData = [];
@@ -19,7 +17,8 @@ function markFrameOn() {
   if (frameGlobalData.length > 0) {
     frameId += parseInt(frameGlobalData[0].rowNumber);
   }
-  window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
+  window.location.href =
+    `https://leaderboard.snookerplus.in/updateactiveframe?frameId=${frameId}&markOn=true`;
 }
 
 function displayFrameEntries(frameEntries) {
@@ -89,7 +88,9 @@ function displayFrameEntries(frameEntries) {
       const offButton = document.createElement("button");
       offButton.innerText = "Off";
       offButton.className = "btn btn-danger off-btn";
-      offButton.addEventListener("click", () => showOffPopup(entry.rowNumber, entry.playerNames));
+      offButton.addEventListener("click", () =>
+        showOffPopup(entry.rowNumber, entry.playerNames)
+      );
       frameElement.appendChild(offButton);
     }
 
@@ -101,7 +102,9 @@ function showOffPopup(rowNumber, playerName) {
   const playerListString = prompt(`To be paid by ${playerName}:`);
 
   if (playerListString) {
-    console.log(`Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`);
+    console.log(
+      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
+    );
     try {
       const url = "https://payment.snookerplus.in/update/frame/off/";
 
@@ -138,70 +141,107 @@ function showOffPopup(rowNumber, playerName) {
       }
     } catch (error) {
       console.error("Error turning off the frame:", error);
-      alert("An error occurred while turning off the frame. Please try again later.");
+      alert(
+        "An error occurred while turning off the frame. Please try again later."
+      );
     }
   }
 }
 
-async function getUserStudio() {
-  const securityText = getSecurityTextFromURL();
-  const studiosData = await fetchStudiosData();
+function applyFilters() {
+  const playerNameFilter = document
+    .getElementById("playerNameFilter")
+    .value.toLowerCase();
+  let dateFilter = document.getElementById("dateFilter").value;
 
-  const studioRow = studiosData.find((row) => row[4] === securityText);
-
-  if (studioRow) {
-    return studioRow[0];
-  } else {
-    return null;
+  if (dateFilter) {
+    const [year, month, day] = dateFilter.split("-");
+    dateFilter = `${day}/${month}/${year}`;
   }
+  const showActiveFrames = document.getElementById("activeFramesFilter").checked;
+  
+  // Extracting studio name and security key from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const studioName = urlParams.get('studio');
+  const securityKey = urlParams.get('security');
+
+  // Fetch data based on studio name
+  fetchData(studioName).then((data) => {
+    let frameEntries = data
+      .map((row, index) => ({
+        rowNumber: index + 2, // Correctly scoped index
+        date: row[2],
+        duration: row[3],
+        startTime: row[10],
+        tableMoney: row[20],
+        tableNo: row[7],
+        playerNames: row.slice(12, 18),
+        paidByNames: row.slice(23, 29),
+        isValid: row[6],
+        isActive: row[6] && !row[8],
+        offStatus: row[8],
+      }))
+      .filter((entry) => entry.isValid)
+      .reverse();
+
+    if (showActiveFrames) {
+      frameEntries = frameEntries.filter((entry) => entry.isActive);
+    }
+
+    if (playerNameFilter) {
+      frameEntries = frameEntries.filter((entry) =>
+        entry.playerNames.some((name) =>
+          name.toLowerCase().includes(playerNameFilter)
+        )
+      );
+    }
+
+    if (dateFilter) {
+      frameEntries = frameEntries.filter((entry) => entry.date === dateFilter);
+    }
+
+    displayFrameEntries(frameEntries);
+  });
 }
 
-function getSecurityTextFromURL() {
-  // Implement your logic to extract the security text from the URL
-  // For example, you can use window.location.search to get the query string
-  // and parse it to extract the security text parameter
-  // For now, let's return a dummy security text
-  return "YOUR_SECURITY_TEXT";
-}
-
-async function fetchStudiosData() {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Studios?key=${API_KEY}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return data.values;
-}
-
-window.onload = async function () {
-  const userStudio = await getUserStudio();
-
-  if (userStudio) {
-    fetchData(userStudio).then((data) => {
-      const frameEntries = data
-        .map((row, index) => ({
-          rowNumber: index + 2, // Correctly scoped index
-          date: row[2],
-          duration: row[3],
-          startTime: row[10],
-          tableMoney: row[20],
-          tableNo: row[7],
-          playerNames: row.slice(12, 18),
-          paidByNames: row.slice(23, 29),
-          offStatus: row[8],
-          isValid: row[6],
-          isActive: row[6] && !row[8],
-        }))
-        .filter((entry) => entry.isValid)
-        .reverse();
-      frameGlobalData = frameEntries;
-      displayFrameEntries(frameEntries);
+function populatePlayerNames() {
+  fetchData("SnookerPlus").then((data) => {
+    const nameDatalist = document.getElementById("playerNames");
+    data.forEach((row) => {
+      const optionElement = document.createElement("option");
+      optionElement.value = row[2];
+      nameDatalist.appendChild(optionElement);
     });
-  } else {
-    // Handle the case where the user's studio data is not found
-    console.error("User's studio data not found.");
-    alert("User's studio data not found. Please contact support.");
-  }
+  });
+}
+
+window.onload = function () {
+  // Extracting studio name and security key from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const studioName = urlParams.get('studio');
+  const securityKey = urlParams.get('security');
+
+  // Fetch data based on studio name
+  fetchData(studioName).then((data) => {
+    const frameEntries = data
+      .map((row, index) => ({
+        rowNumber: index + 2, // Correctly scoped index
+        date: row[2],
+        duration: row[3],
+        startTime: row[10],
+        tableMoney: row[20],
+        tableNo: row[7],
+        playerNames: row.slice(12, 18),
+        paidByNames: row.slice(23, 29),
+        offStatus: row[8],
+        isValid: row[6],
+        isActive: row[6] && !row[8],
+      }))
+      .filter((entry) => entry.isValid)
+      .reverse();
+    frameGlobalData = frameEntries;
+    displayFrameEntries(frameEntries);
+  });
 
   populatePlayerNames();
 };
-
-

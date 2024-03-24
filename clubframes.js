@@ -1,5 +1,7 @@
 const API_KEY = "AIzaSyC8Vuysinrwm5ww5WPM5W-GxBnGm1pOUr8";
 const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
+let frameGlobalData = []; // Global variable to store frame data
+const loaderInstance = new FullScreenLoader(); // Assuming FullScreenLoader is defined elsewhere
 
 // Function to fetch data based on the provided sheet name
 async function fetchData(sheetName) {
@@ -109,7 +111,8 @@ function showOffPopup(rowNumber, playerName) {
     })
       .then((resp) => {
         if (!resp.ok) {
-          throw new Error("Network response was not ok");
+          throw new
+                    Error("Network response was not ok");
         }
         return resp.json();
       })
@@ -171,7 +174,7 @@ function applyFilters() {
     }
 
     if (dateFilter) {
-      frameEntries = frameEntries.filter((entry) => entry.filter((entry) => entry.date === dateFilter);
+      frameEntries = frameEntries.filter((entry) => entry.date === dateFilter);
     }
 
     // Display the filtered frame entries
@@ -227,7 +230,4 @@ window.onload = function () {
   // Populate player names in the playerNames dropdown
   populatePlayerNames();
 };
-
-                                         
-                                         
 

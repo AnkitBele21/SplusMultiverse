@@ -1,6 +1,6 @@
 
-const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
-const SHEET_ID = "1rf6d4jhc-OuINl7XooKhVophKlEyXOoyA7n2nZCzSbU";
+const API_KEY = "AIzaSyC8Vuysinrwm5ww5WPM5W-GxBnGm1pOUr8";
+const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
 
 
 // UNSAFE
@@ -219,7 +219,7 @@ function populatePlayerNames() {
 }
 
 window.onload = function () {
-  fetchData("Frames").then((data) => {
+  fetchData("Studio 1").then((data) => {
     const frameEntries = data
       .map((row, index) => ({
         rowNumber: index + 2, // Correctly scoped index

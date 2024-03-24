@@ -29,7 +29,7 @@ function handleSubmit(event) {
     if (studio) {
       // Redirect to next page with security key
       const securityKey = studio[4];
-      window.location.href = `nextpage.html?security=${securityKey}`;
+      window.location.href = `clubframes.html?security=${securityKey}`;
     } else {
       // Display error message for invalid credentials
       alert("Invalid studio name or pin.");

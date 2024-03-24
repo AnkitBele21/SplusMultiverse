@@ -15,8 +15,8 @@ function markFrameOn() {
     if (frameGlobalData.length > 0) {
         frameId += parseInt(frameGlobalData[0].rowNumber);
     }
-    window.location.href =
-      `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe?frameId=${frameId}&markOn=true`;
+   window.location.href = `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe?frameId=${frameId}&markOn=true&sheetName=${SHEET_NAME}&security=${SECURITY_KEY}`;
+
 }
 // Function to display frame entries on the webpage
 function displayFrameEntries(frameEntries) {
@@ -76,7 +76,8 @@ function displayFrameEntries(frameEntries) {
       editButton.innerText = "Edit";
       editButton.className = "btn btn-primary edit-btn";
       editButton.onclick = function () {
-        window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}`;
+        window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}&sheetName=${SHEET_NAME}&security=${SECURITY_KEY}`;
+
       };
       frameElement.appendChild(editButton);
 

@@ -1,79 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Studio Manager Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Manager Login</title>
 </head>
 <body>
+  <h2>Studio Manager Login</h2>
+  <form>
+    <label for="studioName">Studio Name:</label>
+    <input type="text" id="studioName" name="studioName" required><br><br>
+  
+    <label for="pin">PIN:</label>
+    <input type="password" id="pin" name="pin" required><br><br>
+  
+    <button type="button" onclick="login()">Login</button>
+  </form>
 
-<h2>Studio Manager Login</h2>
-
-<div>
-  <label for="studioName">Studio Name:</label>
-  <input type="text" id="studioName" required>
-</div>
-<div>
-  <label for="pin">PIN:</label>
-  <input type="password" id="pin" required>
-</div>
-<div>
-  <button onclick="login()">Login</button>
-</div>
-
-<script>
-function login() {
-  // Get input values
-  const studioName = document.getElementById("studioName").value;
-  const pin = document.getElementById("pin").value;
-
-  // Example of validation, replace this with your validation logic
-  if (studioName.trim() === "") {
-    alert("Please enter Studio Name.");
-    return;
-  }
-  if (pin.trim() === "") {
-    alert("Please enter PIN.");
-    return;
-  }
-
-  // Simulated login logic (replace with your actual logic)
-  // Here, we're just checking if the PIN is a number and greater than 0
-  if (!isNaN(pin) && parseInt(pin) > 0) {
-    // Redirect to another page or perform further actions
-    const securityKey = getSecurityKey(studioName, pin);
-    if (securityKey) {
-      // Redirect to another page with parameters
-      window.location.href = `https://ankitbele21.github.io/SplusMultiverse/clubframes?studio=${studioName}&security=${securityKey}`;
-    } else {
-      alert("Invalid Studio Name or PIN.");
-    }
-  } else {
-    alert("Invalid PIN. Please enter a numeric PIN.");
-  }
-}
-
-// Function to simulate retrieving the security key based on studio name and PIN
-function getSecurityKey(studioName, pin) {
-  // Replace this with your actual logic to retrieve the security key
-  // For this example, we'll use a hardcoded mapping of studio name to security key
-  const studioToKey = {
-    "Studio 1": "qwertyuiop",
-    // Add other studios and their keys here
-  };
-
-  // Check if the studio name exists in the mapping
-  if (studioToKey.hasOwnProperty(studioName)) {
-    // Check if the PIN matches the expected PIN for the studio
-    if (studioToKey[studioName] === pin) {
-      // Return the security key associated with the studio
-      return studioToKey[studioName];
-    }
-  }
-  // Return null if studio name or PIN is invalid
-  return null;
-}
-</script>
-
+  <script src="studiomanagerlogin.js"></script>
 </body>
 </html>

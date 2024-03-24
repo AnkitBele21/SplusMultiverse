@@ -5,37 +5,33 @@ const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
 // Sheet name
 const SHEET_NAME = "Studios";
 
-// Function to fetch data from Google Sheets
-async function fetchData(sheetName) {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}?key=${API_KEY}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return data.values.slice(1);
+function login() {
+  const studioName = document.getElementById('studioName').value;
+  const pin = document.getElementById('pin').value;
+
+  const url = `${API_URL}${SHEET_ID}/values/Studios?key=${API_KEY}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const studioRow = data.values.find(row => row[5] === studioName);
+      
+      if (studioRow) {
+        const storedPin = studioRow[3]; // Pin is in column D (index 3)
+
+        if (pin === storedPin) {
+          const securityKey = studioRow[4]; // Security key is in column E (index 4)
+          window.location.href = `nextpage.html?security=${securityKey}`;
+        } else {
+          alert('Invalid PIN. Please try again.');
+        }
+      } else {
+        alert('Studio name not found. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      alert('An error occurred. Please try again later.');
+    });
 }
 
-// Function to handle form submission
-function handleSubmit(event) {
-  event.preventDefault();
-
-  // Get input values
-  const studioName = document.getElementById("studioName").value.trim();
-  const pin = document.getElementById("pin").value.trim();
-
-  // Fetch data from Google Sheets
-  fetchData(SHEET_NAME).then((data) => {
-    // Find matching studio name and pin
-    const studio = data.find((row) => row[5] === studioName && row[3] === pin);
-
-    if (studio) {
-      // Redirect to next page with security key
-      const securityKey = studio[4];
-      window.location.href = `clubframes.html?security=${securityKey}`;
-    } else {
-      // Display error message for invalid credentials
-      alert("Invalid studio name or pin.");
-    }
-  });
-}
-
-// Event listener for form submission
-document.getElementById("loginForm").addEventListener("submit", handleSubmit);

@@ -1,22 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studio Manager Login</title>
-</head>
-<body>
-  <h2>Studio Manager Login</h2>
-  <form>
-    <label for="studioName">Studio Name:</label>
-    <input type="text" id="studioName" name="studioName" required><br><br>
-  
-    <label for="pin">PIN:</label>
-    <input type="password" id="pin" name="pin" required><br><br>
-  
-    <button type="button" onclick="login()">Login</button>
-  </form>
+// Define the URL of the Google Sheets API endpoint
+const API_URL = 'https://sheets.googleapis.com/v4/spreadsheets/';
+const API_KEY = 'YOUR_API_KEY'; // Replace 'YOUR_API_KEY' with your actual API key
+const SHEET_ID = 'YOUR_SHEET_ID'; // Replace 'YOUR_SHEET_ID' with your actual sheet ID
 
-  <script src="studiomanagerlogin.js"></script>
-</body>
-</html>
+// Function to handle the login process
+function login() {
+  // Get the input values for studio name and PIN
+  const studioName = document.getElementById('studioName').value;
+  const pin = document.getElementById('pin').value;
+
+  // Construct the URL for fetching data from the 'Studios' sheet
+  const url = `${API_URL}${SHEET_ID}/values/Studios?key=${API_KEY}`;
+
+  // Fetch data from the 'Studios' sheet
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      // Find the row in the 'Studios' sheet that matches the entered studio name
+      const studioRow = data.values.find(row => row[5] === studioName);
+      
+      if (studioRow) {
+        // If the studio name is found, check if the PIN matches
+        const storedPin = studioRow[3]; // Pin is in column D (index 3)
+
+        if (pin === storedPin) {
+          // If the PIN matches, redirect to the next page with the security key
+          const securityKey = studioRow[4]; // Security key is in column E (index 4)
+          window.location.href = `nextpage.html?security=${securityKey}`;
+        } else {
+          alert('Invalid PIN. Please try again.');
+        }
+      } else {
+        alert('Studio name not found. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      alert('An error occurred. Please try again later.');
+    });
+}

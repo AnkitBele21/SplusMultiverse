@@ -10,7 +10,14 @@ async function fetchData(sheetName) {
   const data = await response.json();
   return data.values.slice(1); // Exclude header row
 }
-
+function markFrameOn() {
+    let frameId = 1;
+    if (frameGlobalData.length > 0) {
+        frameId += parseInt(frameGlobalData[0].rowNumber);
+    }
+    window.location.href =
+      `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe?frameId=${frameId}&markOn=true`;
+}
 // Function to display frame entries on the webpage
 function displayFrameEntries(frameEntries) {
   const frameEntriesContainer = document.getElementById("frameEntries");

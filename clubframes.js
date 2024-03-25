@@ -15,8 +15,9 @@ function markFrameOn() {
     if (frameGlobalData.length > 0) {
         frameId += parseInt(frameGlobalData[0].rowNumber);
     }
+    const securityKey = getSecurityKeyFromURL(); // Assuming you have a function to retrieve the security key from the URL
     window.location.href =
-      `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe?frameId=${frameId}&markOn=true`;
+      `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe?frameId=${frameId}&markOn=true&security=${securityKey}`;
 }
 // Function to display frame entries on the webpage
 function displayFrameEntries(frameEntries) {
@@ -72,13 +73,14 @@ function displayFrameEntries(frameEntries) {
       frameElement.appendChild(statusElement);
 
       // Edit Button
-      const editButton = document.createElement("button");
-      editButton.innerText = "Edit";
-      editButton.className = "btn btn-primary edit-btn";
-      editButton.onclick = function () {
-        window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}`;
-      };
-      frameElement.appendChild(editButton);
+const editButton = document.createElement("button");
+editButton.innerText = "Edit";
+editButton.className = "btn btn-primary edit-btn";
+editButton.onclick = function () {
+    const securityKey = getSecurityKeyFromURL(); // Assuming you have a function to retrieve the security key from the URL
+    window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}&security=${securityKey}`;
+};
+frameElement.appendChild(editButton);
 
       // Off Button
       const offButton = document.createElement("button");

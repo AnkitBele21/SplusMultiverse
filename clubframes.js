@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const urlParams = new URLSearchParams(window.location.search);
       const securityKey = urlParams.get('security');
       const studio = urlParams.get('studio');
-      window.location.href = `https://leaderboard.snookerplus.in/clubplayers?security=${securityKey}&studio=${studio}`;
+      window.location.href = `https://ankitbele21.github.io/SplusMultiverse/clubplayers?security=${securityKey}&studio=${studio}`;
     });
   }
 });

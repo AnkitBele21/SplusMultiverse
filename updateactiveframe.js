@@ -204,5 +204,17 @@ function formatTime(time) {
     }
     return time;
 }
+function goBack() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const security = urlParams.get("security");
+    const studio = urlParams.get("studio");
+    
+    let backUrl = "https://leaderboard.snookerplus.in/clubframes";
+    if (security && studio) {
+        backUrl += `?security=${security}&studio=${studio}`;
+    }
+    
+    window.location.href = backUrl;
+}
 
 /* */

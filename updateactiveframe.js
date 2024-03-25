@@ -189,18 +189,20 @@ document.getElementById("addPlayerButton").addEventListener("click", function ()
     const playersContainer = document.getElementById("playersContainer");
     const playerInputs = playersContainer.getElementsByClassName("player-input");
     if (playerInputs.length < 6) {
-        const playerInput = createPlayerInput("",playerInputs.length);
-playersContainer.appendChild(playerInput);
-populatePlayerNames();
-} else {
-alert("You can add up to 6 players.");
-}
+        const playerInput = createPlayerInput("", playerInputs.length);
+        playersContainer.appendChild(playerInput);
+        populatePlayerNames();
+    } else {
+        alert("You can add up to 6 players.");
+    }
 });
 
 function formatTime(time) {
-// If seconds are not present, append ":00"
-if (time && time.split(":").length === 2) {
-return ${time}:00;
+    // If seconds are not present, append ":00"
+    if (time && time.split(":").length === 2) {
+        return `${time}:00`;
+    }
+    return time;
 }
-return time;
-}
+
+/* */

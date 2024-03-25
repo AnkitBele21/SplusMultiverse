@@ -241,4 +241,22 @@ window.onload = function () {
 
   // Populate player names in the playerNames dropdown
   populatePlayerNames();
+  
+document.addEventListener('DOMContentLoaded', function() {
+    fetchPlayerData();
+
+    // Other event listeners...
+
+    // Add event listener to the "Add Players" button
+    const addPlayersButton = document.getElementById("addPlayersButton");
+    if (addPlayersButton) {
+        addPlayersButton.addEventListener("click", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const securityKey = urlParams.get('security');
+            const studio = urlParams.get('studio');
+            window.location.href = `https://leaderboard.snookerplus.in/clubplayers?security=${securityKey}&studio=${studio}`;
+        });
+    }
+});
+
 };

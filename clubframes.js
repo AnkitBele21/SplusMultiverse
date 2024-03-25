@@ -197,42 +197,37 @@ function applyFilters() {
 }
 
 
-// Function to populate player names in the playerNames dropdown
-function populatePlayerNames() {
+// Function to populate player names in the playerNameFilter dropdown
+function populatePlayerNamesFilter() {
   // Fetch player names from the 'SnookerPlus' sheet
   fetchData("SnookerPlus").then((data) => {
-    const nameDatalist = document.getElementById("playerNames");
+    const playerNameFilterDropdown = document.getElementById("playerNameFilter");
     data.forEach((row) => {
-      const optionElement = document.createElement("option");
-      optionElement.value = row[2];
-      nameDatalist.appendChild(optionElement);
+      row.slice(12, 18).forEach((name) => { // Assuming player names are in columns M to R
+        if (name.trim() !== '') { // Exclude empty player names
+          const optionElement = document.createElement("option");
+          optionElement.value = name;
+          playerNameFilterDropdown.appendChild(optionElement);
+        }
+      });
     });
   });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Fetch player data
-  populatePlayerNames();
+  // Fetch player data and populate filter dropdown
+  populatePlayerNamesFilter();
 
-  // Add event listener to the "Add Players" button
-  const addPlayersButton = document.getElementById("addPlayersButton");
-  if (addPlayersButton) {
-    addPlayersButton.addEventListener("click", function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const securityKey = urlParams.get('security');
-      const studio = urlParams.get('studio');
-      window.location.href = `https://ankitbele21.github.io/SplusMultiverse/clubplayers?security=${securityKey}&studio=${studio}`;
-    });
+  // Add event listener to the "Apply Filters" button
+  const applyFiltersButton = document.getElementById("applyFiltersButton");
+  if (applyFiltersButton) {
+    applyFiltersButton.addEventListener("click", applyFilters);
   }
-});
 
-// Perform initial operations after the window has loaded
-window.onload = function () {
-  // Extract studio name and security key from URL
+  // Fetch frame entries and display them
   const urlParams = new URLSearchParams(window.location.search);
   const studioName = urlParams.get('studio');
 
-  // Fetch frame entries based on the studio name
   fetchData(studioName).then((data) => {
     const frameEntries = data
       .map((row, index) => ({
@@ -257,5 +252,60 @@ window.onload = function () {
     // Display the frame entries
     displayFrameEntries(frameEntries);
   });
-};
+});
+
+// Function to apply filters to frame entries
+function applyFilters() {
+  const playerNameFilter = document.getElementById("playerNameFilter").value.toLowerCase();
+  let dateFilter = document.getElementById("dateFilter").value;
+
+  if (dateFilter) {
+    const [year, month, day] = dateFilter.split("-");
+    dateFilter = `${day}/${month}/${year}`;
+  }
+  const showActiveFrames = document.getElementById("activeFramesFilter").checked;
+  
+  // Extract studio name from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const studioName = urlParams.get('studio');
+
+  // Fetch data based on studio name
+  fetchData(studioName).then((data) => {
+    let frameEntries = data
+      .map((row, index) => ({
+        rowNumber: index + 2, // Correctly scoped index
+        date: row[2],
+        duration: row[3],
+        startTime: row[10],
+        tableMoney: row[20],
+        tableNo: row[7],
+        playerNames: row.slice(12, 18),
+        paidByNames: row.slice(23, 29),
+        isValid: row[6],
+        isActive: row[6] && !row[8],
+        offStatus: row[8],
+      }))
+      .filter((entry) => entry.isValid);
+
+    if (showActiveFrames) {
+      frameEntries = frameEntries.filter((entry) => entry.isActive);
+    }
+
+    if (playerNameFilter) {
+      frameEntries = frameEntries.filter((entry) =>
+        entry.playerNames.some((name) =>
+          name.toLowerCase().includes(playerNameFilter)
+        )
+      );
+    }
+
+    if (dateFilter) {
+      frameEntries = frameEntries.filter((entry) => entry.date === dateFilter);
+    }
+
+    // Display the filtered frame entries
+    displayFrameEntries(frameEntries);
+  });
+}
+
 

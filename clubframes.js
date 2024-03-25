@@ -10,6 +10,7 @@ async function fetchData(sheetName) {
   const data = await response.json();
   return data.values.slice(1); // Exclude header row
 }
+
 function markFrameOn() {
     let frameId = 1;
     if (frameGlobalData.length > 0) {
@@ -21,6 +22,7 @@ function markFrameOn() {
     window.location.href =
       `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe?frameId=${frameId}&markOn=true&security=${securityKey}&studio=${studio}`;
 }
+
 // Function to display frame entries on the webpage
 function displayFrameEntries(frameEntries) {
   const frameEntriesContainer = document.getElementById("frameEntries");
@@ -163,6 +165,12 @@ function applyFilters() {
         duration: row[3],
         startTime: row[10],
         tableMoney: row[20],
+        tableNo: row[      .map((row, index) => ({
+        rowNumber: index + 2, // Correctly scoped index
+        date: row[2],
+        duration: row[3],
+        startTime: row[10],
+        tableMoney: row[20],
         tableNo: row[7],
         playerNames: row.slice(12, 18),
         paidByNames: row.slice(23, 29),
@@ -207,7 +215,23 @@ function populatePlayerNames() {
   });
 }
 
-// Perform operations after the window has loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Fetch player data
+  populatePlayerNames();
+
+  // Add event listener to the "Add Players" button
+  const addPlayersButton = document.getElementById("addPlayersButton");
+  if (addPlayersButton) {
+    addPlayersButton.addEventListener("click", function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const securityKey = urlParams.get('security');
+      const studio = urlParams.get('studio');
+      window.location.href = `https://leaderboard.snookerplus.in/clubplayers?security=${securityKey}&studio=${studio}`;
+    });
+  }
+});
+
+// Perform initial operations after the window has loaded
 window.onload = function () {
   // Extract studio name and security key from URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -231,32 +255,12 @@ window.onload = function () {
       }))
       .filter((entry) => entry.isValid)
       .reverse();
-    
+
     // Store frame entries globally for later use
     frameGlobalData = frameEntries;
 
     // Display the frame entries
     displayFrameEntries(frameEntries);
   });
-
-  // Populate player names in the playerNames dropdown
-  populatePlayerNames();
-  
-document.addEventListener('DOMContentLoaded', function() {
-    fetchPlayerData();
-
-    // Other event listeners...
-
-    // Add event listener to the "Add Players" button
-    const addPlayersButton = document.getElementById("addPlayersButton");
-    if (addPlayersButton) {
-        addPlayersButton.addEventListener("click", function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const securityKey = urlParams.get('security');
-            const studio = urlParams.get('studio');
-            window.location.href = `https://leaderboard.snookerplus.in/clubplayers?security=${securityKey}&studio=${studio}`;
-        });
-    }
-});
-
 };
+

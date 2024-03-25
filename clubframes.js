@@ -17,8 +17,9 @@ function markFrameOn() {
     }
     const urlParams = new URLSearchParams(window.location.search);
     const securityKey = urlParams.get('security');
+    const studio = urlParams.get('studio');
     window.location.href =
-      `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe?frameId=${frameId}&markOn=true&security=${securityKey}`;
+      `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe?frameId=${frameId}&markOn=true&security=${securityKey}&studio=${studio}`;
 }
 // Function to display frame entries on the webpage
 function displayFrameEntries(frameEntries) {
@@ -80,10 +81,10 @@ editButton.className = "btn btn-primary edit-btn";
 editButton.onclick = function () {
     const urlParams = new URLSearchParams(window.location.search);
     const securityKey = urlParams.get('security');
-    window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}&security=${securityKey}`;
+    const studio = urlParams.get('studio');
+    window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}&security=${securityKey}&studio=${studio}`;
 };
 frameElement.appendChild(editButton);
-
       // Off Button
       const offButton = document.createElement("button");
       offButton.innerText = "Off";

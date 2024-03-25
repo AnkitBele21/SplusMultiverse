@@ -209,7 +209,7 @@ function goBack() {
     const security = urlParams.get("security");
     const studio = urlParams.get("studio");
     
-    let backUrl = "https://leaderboard.snookerplus.in/clubframes";
+    let backUrl = "https://ankitbele21.github.io/SplusMultiverse/clubframes";
     if (security && studio) {
         backUrl += `?security=${security}&studio=${studio}`;
     }

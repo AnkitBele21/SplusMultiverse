@@ -165,12 +165,6 @@ function applyFilters() {
         duration: row[3],
         startTime: row[10],
         tableMoney: row[20],
-        tableNo: row[.map((row, index) => ({
-        rowNumber: index + 2, // Correctly scoped index
-        date: row[2],
-        duration: row[3],
-        startTime: row[10],
-        tableMoney: row[20],
         tableNo: row[7],
         playerNames: row.slice(12, 18),
         paidByNames: row.slice(23, 29),
@@ -201,6 +195,7 @@ function applyFilters() {
     displayFrameEntries(frameEntries);
   });
 }
+
 
 // Function to populate player names in the playerNames dropdown
 function populatePlayerNames() {

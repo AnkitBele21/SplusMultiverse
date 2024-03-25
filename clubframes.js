@@ -84,7 +84,7 @@ editButton.onclick = function () {
     const urlParams = new URLSearchParams(window.location.search);
     const securityKey = urlParams.get('security');
     const studio = urlParams.get('studio');
-    window.location.href = `https://leaderboard.snookerplus.in/updateactiveframe.html?frameId=SPS${entry.rowNumber}&security=${securityKey}&studio=${studio}`;
+    window.location.href = `https://ankitbele21.github.io/SplusMultiverse/updateactiveframe.html?frameId=SPS${entry.rowNumber}&security=${securityKey}&studio=${studio}`;
 };
 frameElement.appendChild(editButton);
       // Off Button

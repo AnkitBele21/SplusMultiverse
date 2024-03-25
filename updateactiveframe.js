@@ -1,6 +1,9 @@
-const API_KEY = "AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc";
-const SHEET_ID = "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
-const SHEET_NAME = "Frames";
+const API_KEY = "AIzaSyC8Vuysinrwm5ww5WPM5W-GxBnGm1pOUr8";
+const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
+
+// Extracting SHEET_NAME from the URL
+const urlParams = new URLSearchParams(window.location.search);
+const SHEET_NAME = urlParams.get('studio');
 
 const loaderInstance = new FullScreenLoader();
 
@@ -186,18 +189,18 @@ document.getElementById("addPlayerButton").addEventListener("click", function ()
     const playersContainer = document.getElementById("playersContainer");
     const playerInputs = playersContainer.getElementsByClassName("player-input");
     if (playerInputs.length < 6) {
-        const playerInput = createPlayerInput("", playerInputs.length);
-        playersContainer.appendChild(playerInput);
-        populatePlayerNames();
-    } else {
-        alert("You can add up to 6 players.");
-    }
+        const playerInput = createPlayerInput("",playerInputs.length);
+playersContainer.appendChild(playerInput);
+populatePlayerNames();
+} else {
+alert("You can add up to 6 players.");
+}
 });
 
 function formatTime(time) {
-    // If seconds are not present, append ":00"
-    if (time && time.split(":").length === 2) {
-        return `${time}:00`;
-    }
-    return time;
+// If seconds are not present, append ":00"
+if (time && time.split(":").length === 2) {
+return ${time}:00;
+}
+return time;
 }

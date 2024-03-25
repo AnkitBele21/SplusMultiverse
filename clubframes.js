@@ -165,7 +165,7 @@ function applyFilters() {
         duration: row[3],
         startTime: row[10],
         tableMoney: row[20],
-        tableNo: row[      .map((row, index) => ({
+        tableNo: row[.map((row, index) => ({
         rowNumber: index + 2, // Correctly scoped index
         date: row[2],
         duration: row[3],

@@ -46,7 +46,7 @@ function fetchPlayerData() {
                         if (row.length > studioIndex) { // Check if the row contains data in the desired column
                             const playerName = row[studioIndex]; // Get player name from the specified column
                             if (playerName.trim() !== '') { // Check if player name is not empty or null
-                                const balance = parseFloat(row[studioIndex + 3]); // Assuming balance is 3 columns after player name
+                                const balance = parseFloat(row[15]); // Assuming balance is always in column P
                                 const rowElement = tableBody.insertRow();
 
                                 // Apply classes based on conditions

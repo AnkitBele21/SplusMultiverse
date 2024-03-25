@@ -113,7 +113,7 @@ async function updateFrameData() {
                 .then((_body) => {
                     alert("Frame updated successfully!");
                     window.location.href =
-                        "https://leaderboard.snookerplus.in/clubframes"; // Redirect back to the frames page
+                        "https://ankitbele21.github.io/SplusMultiverse/clubframes"; // Redirect back to the frames page
                 });
         } catch (error) {
             loaderInstance.hideLoader();

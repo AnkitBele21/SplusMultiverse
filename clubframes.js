@@ -197,31 +197,31 @@ function applyFilters() {
 }
 
 
-function populatePlayerNames(studioName) {
-  fetchData(studioName).then((data) => {
+// Function to populate player names in the playerNames dropdown
+function populatePlayerNames() {
+  // Fetch player names from the 'SnookerPlus' sheet
+  fetchData("SnookerPlus").then((data) => {
     const nameDatalist = document.getElementById("playerNames");
     data.forEach((row) => {
       const optionElement = document.createElement("option");
-      optionElement.value = row[80];
+      optionElement.value = row[2];
       nameDatalist.appendChild(optionElement);
     });
   });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Extract studio name and security key from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const studioName = urlParams.get('studio');
-
   // Fetch player data
-  populatePlayerNames(playerNames);
+  populatePlayerNames();
 
   // Add event listener to the "Add Players" button
   const addPlayersButton = document.getElementById("addPlayersButton");
   if (addPlayersButton) {
     addPlayersButton.addEventListener("click", function () {
+      const urlParams = new URLSearchParams(window.location.search);
       const securityKey = urlParams.get('security');
-      window.location.href = `https://ankitbele21.github.io/SplusMultiverse/clubplayers?security=${securityKey}&studio=${studioName}`;
+      const studio = urlParams.get('studio');
+      window.location.href = `https://ankitbele21.github.io/SplusMultiverse/clubplayers?security=${securityKey}&studio=${studio}`;
     });
   }
 });
@@ -258,4 +258,3 @@ window.onload = function () {
     displayFrameEntries(frameEntries);
   });
 };
-

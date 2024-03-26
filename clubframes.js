@@ -197,7 +197,7 @@ function applyFilters() {
 }
 
 
-function populatePlayerNames() {
+function populatePlayerNames(studioName) {
   // Fetch player names from the 'SnookerPlus' sheet
   fetchData(studioName).then((data) => {
     const nameDatalist = document.getElementById("playerNames");
@@ -210,17 +210,19 @@ function populatePlayerNames() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  // Extract studio name and security key from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const studioName = urlParams.get('studio');
+
   // Fetch player data
-  populatePlayerNames();
+  populatePlayerNames(studioName);
 
   // Add event listener to the "Add Players" button
   const addPlayersButton = document.getElementById("addPlayersButton");
   if (addPlayersButton) {
     addPlayersButton.addEventListener("click", function () {
-      const urlParams = new URLSearchParams(window.location.search);
       const securityKey = urlParams.get('security');
-      const studio = urlParams.get('studio');
-      window.location.href = `https://ankitbele21.github.io/SplusMultiverse/clubplayers?security=${securityKey}&studio=${studio}`;
+      window.location.href = `https://ankitbele21.github.io/SplusMultiverse/clubplayers?security=${securityKey}&studio=${studioName}`;
     });
   }
 });

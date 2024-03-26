@@ -207,8 +207,9 @@ function populatePlayerNames() {
   fetchData("SnookerPlus").then((data) => {
     const nameDatalist = document.getElementById("playerNames");
     data.forEach((row) => {
-      // Check if the studio value from the URL matches the Studio value in column J
-      if (row[9] === studioName) { // Assuming column J is index 9 (0-based index)
+      // Check if the Studio value from the URL is contained within the comma-separated values in column J
+      const studios = row[9].split(',').map(studio => studio.trim());
+      if (studios.includes(studioName)) {
         const optionElement = document.createElement("option");
         optionElement.value = row[2];
         nameDatalist.appendChild(optionElement);
@@ -216,6 +217,7 @@ function populatePlayerNames() {
     });
   });
 }
+
 
 
 document.addEventListener('DOMContentLoaded', function() {

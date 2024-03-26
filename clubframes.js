@@ -105,11 +105,23 @@ function showOffPopup(rowNumber, playerNames) {
   // Create overlay div
   const overlay = document.createElement("div");
   overlay.id = "offFormOverlay";
-  overlay.className = "overlay";
+  overlay.style.position = "fixed";
+  overlay.style.top = "0";
+  overlay.style.left = "0";
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // semi-transparent black
   
   // Create content div
   const content = document.createElement("div");
   content.className = "overlay-content";
+  content.style.position = "absolute";
+  content.style.top = "50%";
+  content.style.left = "50%";
+  content.style.transform = "translate(-50%, -50%)";
+  content.style.backgroundColor = "white";
+  content.style.padding = "20px";
+  content.style.borderRadius = "5px";
   
   // Create form
   const form = document.createElement("form");
@@ -161,6 +173,7 @@ function showOffPopup(rowNumber, playerNames) {
     }
   });
 }
+
 
 
 // Function to apply filters to frame entries

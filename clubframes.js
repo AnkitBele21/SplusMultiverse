@@ -102,27 +102,64 @@ frameElement.appendChild(editButton);
 }
 
 function showOffPopup(rowNumber, playerNames) {
-  const offForm = document.createElement("form");
-  offForm.id = "offForm";
+  // Create overlay div
+  const overlay = document.createElement("div");
+  overlay.id = "offFormOverlay";
+  overlay.className = "overlay";
   
-  // Add form elements as needed
-  offForm.innerHTML = `
-    <label for="offReason">Reason for turning off:</label>
-    <input type="text" id="offReason" name="offReason" required>
-    <input type="submit" value="Submit">
-  `;
-
-  offForm.addEventListener("submit", function(event) {
+  // Create content div
+  const content = document.createElement("div");
+  content.className = "overlay-content";
+  
+  // Create form
+  const form = document.createElement("form");
+  form.id = "offForm";
+  
+  // Create label and input for reason
+  const label = document.createElement("label");
+  label.htmlFor = "offReason";
+  label.innerText = "Reason for turning off:";
+  
+  const input = document.createElement("input");
+  input.type = "text";
+  input.id = "offReason";
+  input.name = "offReason";
+  input.required = true;
+  
+  // Create submit button
+  const submitButton = document.createElement("input");
+  submitButton.type = "submit";
+  submitButton.value = "Submit";
+  
+  // Append elements
+  form.appendChild(label);
+  form.appendChild(input);
+  form.appendChild(submitButton);
+  content.appendChild(form);
+  overlay.appendChild(content);
+  
+  // Append overlay to document
+  document.body.appendChild(overlay);
+  
+  // Show overlay
+  overlay.style.display = "block";
+  
+  // Submit form handler
+  form.addEventListener("submit", function(event) {
     event.preventDefault();
-    const offReason = document.getElementById("offReason").value;
+    const offReason = input.value;
     console.log(`Frame at row ${rowNumber} marked as off. Reason: ${offReason}`);
     // You can perform further actions here, such as sending data to the server
-    offForm.reset(); // Reset the form after submission
-    // Close the form or hide it after submission if needed
+    overlay.style.display = "none"; // Hide overlay after submission
+    form.reset(); // Reset form fields
   });
 
-  // Append the form to the document body or any desired container
-  document.body.appendChild(offForm);
+  // Clicking outside the form will also close the overlay
+  overlay.addEventListener('click', function(event) {
+    if (event.target === overlay) {
+      overlay.style.display = 'none';
+    }
+  });
 }
 
 

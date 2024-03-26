@@ -203,7 +203,7 @@ function populatePlayerNames() {
     const nameDatalist = document.getElementById("playerNames");
     data.forEach((row) => {
       const optionElement = document.createElement("option");
-      optionElement.value = row[79];
+      optionElement.value = row[80];
       nameDatalist.appendChild(optionElement);
     });
   });

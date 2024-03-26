@@ -127,30 +127,56 @@ function showOffPopup(rowNumber, playerNames) {
   const form = document.createElement("form");
   form.id = "offForm";
   
-  // Create label and input for reason
-  const label = document.createElement("label");
-  label.htmlFor = "offReason";
-  label.innerText = "Reason for turning off:";
-  
-  const input = document.createElement("input");
-  input.type = "text";
-  input.id = "offReason";
-  input.name = "offReason";
-  input.required = true;
+  // Create labels and inputs for each player name
+  playerNames.forEach((playerName, index) => {
+    const label = document.createElement("label");
+    label.innerText = playerName;
+    
+    const plusButton = document.createElement("button");
+    plusButton.type = "button";
+    plusButton.innerText = "+";
+    plusButton.onclick = function() {
+      // Handle plus button action here
+      // For now, we'll just log the player name
+      console.log(`Plus button clicked for ${playerName}`);
+    };
+    
+    label.appendChild(plusButton);
+    
+    const select = document.createElement("select");
+    select.name = `amount_${index}`;
+    
+    // Add options to the dropdown
+    [20, 50, 100, 150, 200, 300, 500, 1000, 2000].forEach((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.innerText = value;
+      select.appendChild(option);
+    });
+    
+    // Append label and select to the form
+    form.appendChild(label);
+    form.appendChild(select);
+    
+    // Add line break for better spacing
+    form.appendChild(document.createElement("br"));
+  });
   
   // Create submit button
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
   submitButton.value = "Submit";
   
-  // Append elements
-  form.appendChild(label);
-  form.appendChild(input);
+  // Append submit button to the form
   form.appendChild(submitButton);
+  
+  // Append form to the content
   content.appendChild(form);
+  
+  // Append content to the overlay
   overlay.appendChild(content);
   
-  // Append overlay to document
+  // Append overlay to the document body
   document.body.appendChild(overlay);
   
   // Show overlay
@@ -159,8 +185,7 @@ function showOffPopup(rowNumber, playerNames) {
   // Submit form handler
   form.addEventListener("submit", function(event) {
     event.preventDefault();
-    const offReason = input.value;
-    console.log(`Frame at row ${rowNumber} marked as off. Reason: ${offReason}`);
+    console.log("Form submitted");
     // You can perform further actions here, such as sending data to the server
     overlay.style.display = "none"; // Hide overlay after submission
     form.reset(); // Reset form fields

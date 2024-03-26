@@ -207,7 +207,7 @@ function populatePlayerNames() {
   fetchData("SnookerPlus").then((data) => {
     const nameDatalist = document.getElementById("playerNames");
     data.forEach((row) => {
-      // Check if the Studio value from the URL is contained within the comma-separated values in column J
+      // Check if the studio value from the URL is one of the Studios in column J
       const studios = row[9].split(',').map(studio => studio.trim());
       if (studios.includes(studioName)) {
         const optionElement = document.createElement("option");

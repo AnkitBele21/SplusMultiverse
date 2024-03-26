@@ -102,48 +102,27 @@ frameElement.appendChild(editButton);
 }
 
 function showOffPopup(rowNumber, playerNames) {
-  // Create a modal dialog
-  const modal = document.createElement("div");
-  modal.className = "modal";
+  const offForm = document.createElement("form");
+  offForm.id = "offForm";
   
-  // Create a container for player buttons
-  const playerContainer = document.createElement("div");
-  playerContainer.className = "player-container";
-  
-  // Add buttons for each player in the active frame
-  playerNames.forEach((player) => {
-    const playerButton = document.createElement("button");
-    playerButton.innerText = player;
-    playerButton.className = "player-button";
-    playerButton.addEventListener("click", function() {
-      // Add player name to the field below
-      const playerField = document.getElementById("selectedPlayers");
-      playerField.value += player + ", ";
-    });
-    playerContainer.appendChild(playerButton);
+  // Add form elements as needed
+  offForm.innerHTML = `
+    <label for="offReason">Reason for turning off:</label>
+    <input type="text" id="offReason" name="offReason" required>
+    <input type="submit" value="Submit">
+  `;
+
+  offForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const offReason = document.getElementById("offReason").value;
+    console.log(`Frame at row ${rowNumber} marked as off. Reason: ${offReason}`);
+    // You can perform further actions here, such as sending data to the server
+    offForm.reset(); // Reset the form after submission
+    // Close the form or hide it after submission if needed
   });
-  
-  // Create a field to display selected players
-  const selectedPlayersField = document.createElement("input");
-  selectedPlayersField.id = "selectedPlayers";
-  selectedPlayersField.type = "text";
-  selectedPlayersField.placeholder = "Selected Players";
-  
-  // Create a button to close the modal
-  const closeButton = document.createElement("button");
-  closeButton.innerText = "Close";
-  closeButton.className = "close-button";
-  closeButton.addEventListener("click", function() {
-    modal.style.display = "none";
-  });
-  
-  // Append elements to the modal
-  modal.appendChild(playerContainer);
-  modal.appendChild(selectedPlayersField);
-  modal.appendChild(closeButton);
-  
-  // Display the modal
-  document.body.appendChild(modal);
+
+  // Append the form to the document body or any desired container
+  document.body.appendChild(offForm);
 }
 
 

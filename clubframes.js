@@ -199,16 +199,24 @@ function applyFilters() {
 
 // Function to populate player names in the playerNames dropdown
 function populatePlayerNames() {
+  // Extract studio name from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const studioName = urlParams.get('studio');
+
   // Fetch player names from the 'SnookerPlus' sheet
   fetchData("SnookerPlus").then((data) => {
     const nameDatalist = document.getElementById("playerNames");
     data.forEach((row) => {
-      const optionElement = document.createElement("option");
-      optionElement.value = row[2];
-      nameDatalist.appendChild(optionElement);
+      // Check if the studio value from the URL matches the Studio value in column J
+      if (row[9] === studioName) { // Assuming column J is index 9 (0-based index)
+        const optionElement = document.createElement("option");
+        optionElement.value = row[2];
+        nameDatalist.appendChild(optionElement);
+      }
     });
   });
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
   // Fetch player data

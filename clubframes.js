@@ -102,44 +102,91 @@ frameElement.appendChild(editButton);
 }
 
 // Function to handle showing the off popup
-function showOffPopup(rowNumber, playerName) {
-  const playerListString = prompt(`To be paid by ${playerName}:`);
+function showOffPopup(rowNumber, playerNames) {
+  const popupContainer = document.createElement("div");
+  popupContainer.className = "off-popup-container";
 
-  if (playerListString) {
-    console.log(
-      `Marking frame at row ${rowNumber} as off. Paid by: ${playerName} and amount: ${playerListString}`
-    );
-    const url = "https://payment.snookerplus.in/update/frame/off/";
+  playerNames.forEach((playerName) => {
+    const playerDiv = document.createElement("div");
+    playerDiv.className = "player-div";
 
-    const payload = {
-      frameId: `SPS${rowNumber}`,
-      players: playerListString.split(",").map((player) => player.trim()), // Ensure players are trimmed
+    const playerNameSpan = document.createElement("span");
+    playerNameSpan.innerText = playerName;
+    playerDiv.appendChild(playerNameSpan);
+
+    const plusButton = document.createElement("button");
+    plusButton.innerText = "+";
+    plusButton.className = "plus-button";
+    plusButton.onclick = function () {
+      const playerNameInput = document.getElementById("playerNameInput");
+      if (playerNameInput.value === "") {
+        playerNameInput.value = playerName;
+      } else {
+        playerNameInput.value += ", " + playerName;
+      }
     };
+    playerDiv.appendChild(plusButton);
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new
-                    Error("Network response was not ok");
-        }
-        return resp.json();
+    popupContainer.appendChild(playerDiv);
+  });
+
+  const playerNameInput = document.createElement("input");
+  playerNameInput.id = "playerNameInput";
+  playerNameInput.type = "text";
+  playerNameInput.placeholder = "Select players...";
+  playerNameInput.readOnly = true;
+  popupContainer.appendChild(playerNameInput);
+
+  const confirmButton = document.createElement("button");
+  confirmButton.innerText = "Confirm";
+  confirmButton.className = "confirm-button";
+  confirmButton.onclick = function () {
+    const playerListString = playerNameInput.value.trim();
+    if (playerListString !== "") {
+      console.log(
+        `Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`
+      );
+      const url = "https://payment.snookerplus.in/update/frame/off/";
+
+      const payload = {
+        frameId: `SPS${rowNumber}`,
+        players: playerListString.split(",").map((player) => player.trim()),
+      };
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       })
-      .then((_body) => {
-        alert("Frame turned off successfully!");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-        alert("Failed to turn off the frame. Please try again.");
-      });
-  }
+        .then((resp) => {
+          if (!resp.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return resp.json();
+        })
+        .then((_body) => {
+          alert("Frame turned off successfully!");
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+          alert("Failed to turn off the frame. Please try again.");
+        });
+    } else {
+      alert("Please select at least one player.");
+    }
+  };
+  popupContainer.appendChild(confirmButton);
+
+  // Display the popup
+  const popupOverlay = document.createElement("div");
+  popupOverlay.className = "popup-overlay";
+  popupOverlay.appendChild(popupContainer);
+  document.body.appendChild(popupOverlay);
 }
+
 
 // Function to apply filters to frame entries
 function applyFilters() {

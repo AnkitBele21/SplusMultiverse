@@ -101,90 +101,49 @@ frameElement.appendChild(editButton);
   });
 }
 
-// Function to handle showing the off popup
 function showOffPopup(rowNumber, playerNames) {
-  const popupContainer = document.createElement("div");
-  popupContainer.className = "off-popup-container";
-
-  playerNames.forEach((playerName) => {
-    const playerDiv = document.createElement("div");
-    playerDiv.className = "player-div";
-
-    const playerNameSpan = document.createElement("span");
-    playerNameSpan.innerText = playerName;
-    playerDiv.appendChild(playerNameSpan);
-
-    const plusButton = document.createElement("button");
-    plusButton.innerText = "+";
-    plusButton.className = "plus-button";
-    plusButton.onclick = function () {
-      const playerNameInput = document.getElementById("playerNameInput");
-      if (playerNameInput.value === "") {
-        playerNameInput.value = playerName;
-      } else {
-        playerNameInput.value += ", " + playerName;
-      }
-    };
-    playerDiv.appendChild(plusButton);
-
-    popupContainer.appendChild(playerDiv);
+  // Create a modal dialog
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  
+  // Create a container for player buttons
+  const playerContainer = document.createElement("div");
+  playerContainer.className = "player-container";
+  
+  // Add buttons for each player in the active frame
+  playerNames.forEach((player) => {
+    const playerButton = document.createElement("button");
+    playerButton.innerText = player;
+    playerButton.className = "player-button";
+    playerButton.addEventListener("click", function() {
+      // Add player name to the field below
+      const playerField = document.getElementById("selectedPlayers");
+      playerField.value += player + ", ";
+    });
+    playerContainer.appendChild(playerButton);
   });
-
-  const playerNameInput = document.createElement("input");
-  playerNameInput.id = "playerNameInput";
-  playerNameInput.type = "text";
-  playerNameInput.placeholder = "Select players...";
-  playerNameInput.readOnly = true;
-  popupContainer.appendChild(playerNameInput);
-
-  const confirmButton = document.createElement("button");
-  confirmButton.innerText = "Confirm";
-  confirmButton.className = "confirm-button";
-  confirmButton.onclick = function () {
-    const playerListString = playerNameInput.value.trim();
-    if (playerListString !== "") {
-      console.log(
-        `Marking frame at row ${rowNumber} as off. Paid by: ${playerListString}`
-      );
-      const url = "https://payment.snookerplus.in/update/frame/off/";
-
-      const payload = {
-        frameId: `SPS${rowNumber}`,
-        players: playerListString.split(",").map((player) => player.trim()),
-      };
-
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      })
-        .then((resp) => {
-          if (!resp.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return resp.json();
-        })
-        .then((_body) => {
-          alert("Frame turned off successfully!");
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.error("Fetch error:", error);
-          alert("Failed to turn off the frame. Please try again.");
-        });
-    } else {
-      alert("Please select at least one player.");
-    }
-  };
-  popupContainer.appendChild(confirmButton);
-
-  // Display the popup
-  const popupOverlay = document.createElement("div");
-  popupOverlay.className = "popup-overlay";
-  popupOverlay.appendChild(popupContainer);
-  document.body.appendChild(popupOverlay);
+  
+  // Create a field to display selected players
+  const selectedPlayersField = document.createElement("input");
+  selectedPlayersField.id = "selectedPlayers";
+  selectedPlayersField.type = "text";
+  selectedPlayersField.placeholder = "Selected Players";
+  
+  // Create a button to close the modal
+  const closeButton = document.createElement("button");
+  closeButton.innerText = "Close";
+  closeButton.className = "close-button";
+  closeButton.addEventListener("click", function() {
+    modal.style.display = "none";
+  });
+  
+  // Append elements to the modal
+  modal.appendChild(playerContainer);
+  modal.appendChild(selectedPlayersField);
+  modal.appendChild(closeButton);
+  
+  // Display the modal
+  document.body.appendChild(modal);
 }
 
 

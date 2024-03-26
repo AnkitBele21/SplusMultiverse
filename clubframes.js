@@ -207,12 +207,16 @@ function populatePlayerNames() {
   fetchData("SnookerPlus").then((data) => {
     const nameDatalist = document.getElementById("playerNames");
     data.forEach((row) => {
-      // Check if the studio value from the URL is one of the Studios in column J
-      const studios = row[9].split(',').map(studio => studio.trim());
-      if (studios.includes(studioName)) {
-        const optionElement = document.createElement("option");
-        optionElement.value = row[2];
-        nameDatalist.appendChild(optionElement);
+      // Check if studio value exists, is not null, and is a string
+      if (typeof row[9] === "string" && row[9].trim() !== "") {
+        // Split Studios in column J by commas and trim each value
+        const studios = row[9].split(',').map(studio => studio.trim());
+        // Check if the studio value from the URL is included in the array of studios associated with the player
+        if (studios.includes(studioName)) {
+          const optionElement = document.createElement("option");
+          optionElement.value = row[2];
+          nameDatalist.appendChild(optionElement);
+        }
       }
     });
   });

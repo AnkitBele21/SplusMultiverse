@@ -198,7 +198,6 @@ function applyFilters() {
 
 
 function populatePlayerNames(studioName) {
-  // Fetch player names from the 'SnookerPlus' sheet
   fetchData(studioName).then((data) => {
     const nameDatalist = document.getElementById("playerNames");
     data.forEach((row) => {
@@ -215,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const studioName = urlParams.get('studio');
 
   // Fetch player data
-  populatePlayerNames(studioName);
+  populatePlayerNames(playerNames);
 
   // Add event listener to the "Add Players" button
   const addPlayersButton = document.getElementById("addPlayersButton");

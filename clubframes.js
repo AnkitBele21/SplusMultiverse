@@ -197,14 +197,13 @@ function applyFilters() {
 }
 
 
-// Function to populate player names in the playerNames dropdown
 function populatePlayerNames() {
   // Fetch player names from the 'SnookerPlus' sheet
-  fetchData("SnookerPlus").then((data) => {
+  fetchData(studioName).then((data) => {
     const nameDatalist = document.getElementById("playerNames");
     data.forEach((row) => {
       const optionElement = document.createElement("option");
-      optionElement.value = row[2];
+      optionElement.value = row[79];
       nameDatalist.appendChild(optionElement);
     });
   });

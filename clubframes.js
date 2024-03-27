@@ -105,103 +105,76 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   // Create overlay div
   const overlay = document.createElement("div");
   overlay.id = "offFormOverlay";
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // semi-transparent black
-  
+
   // Create content div
   const content = document.createElement("div");
   content.className = "overlay-content";
-  content.style.position = "absolute";
-  content.style.top = "50%";
-  content.style.left = "50%";
-  content.style.transform = "translate(-50%, -50%)";
-  content.style.backgroundColor = "white";
-  content.style.padding = "20px";
-  content.style.borderRadius = "5px";
-  
+
   // Create form
   const form = document.createElement("form");
   form.id = "offForm";
-  
-  // Regular expression to extract player numbers
-  const playerNumberRegex = /Player (\d+)/;
-  
+
   // Create labels and plus buttons for each player
   activeFramePlayerNames.slice(0, 6).forEach((playerName) => { // Limit to 6 players
-    // Extract player number from the player name
-    const playerNumberMatch = playerName.match(playerNumberRegex);
-    const playerNumber = playerNumberMatch ? playerNumberMatch[1] : null;
-
     const label = document.createElement("label");
     label.innerText = playerName;
-    
-    if (playerNumber) {
-      const plusButton = document.createElement("button");
-      plusButton.type = "button";
-      plusButton.innerText = "+";
-      plusButton.onclick = function() {
-        // Append player name to the input field
-        const paymentDetails = document.getElementById("paymentDetails");
-        paymentDetails.value += `${playerName}, `;
-      };
-      label.appendChild(plusButton);
-    }
-    
-    // Append label to the form
+
+    const plusButton = document.createElement("button");
+    plusButton.type = "button";
+    plusButton.innerText = "+";
+    plusButton.className = "plus-button";
+    plusButton.onclick = function() {
+      const paymentDetails = document.getElementById("paymentDetails");
+      paymentDetails.value += `${playerName}, `;
+    };
+
+    label.appendChild(plusButton);
     form.appendChild(label);
-    
-    // Add line break for better spacing
-    form.appendChild(document.createElement("br"));
+    form.appendChild(document.createElement("br")); // Add line break
   });
-  
+
   // Create input field for payment details
   const paymentDetailsInput = document.createElement("input");
   paymentDetailsInput.type = "text";
   paymentDetailsInput.id = "paymentDetails";
   paymentDetailsInput.placeholder = "Enter payment details...";
-  paymentDetailsInput.style.width = "100%";
-  
-  // Append input field to the form
-  form.appendChild(paymentDetailsInput);
-  
+
   // Create submit and cancel buttons
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
   submitButton.value = "Confirm";
-  
+  submitButton.className = "submit-button";
+
   const cancelButton = document.createElement("button");
   cancelButton.type = "button";
   cancelButton.innerText = "Cancel";
+  cancelButton.className = "cancel-button";
   cancelButton.onclick = function() {
     overlay.style.display = "none"; // Hide overlay on cancel
   };
-  
-  // Append buttons to the form
+
+  // Append elements to form
+  form.appendChild(paymentDetailsInput);
   form.appendChild(submitButton);
   form.appendChild(cancelButton);
-  
-  // Append form to the content
+
+  // Append form to content
   content.appendChild(form);
-  
-  // Append content to the overlay
+
+  // Append content to overlay
   overlay.appendChild(content);
-  
-  // Append overlay to the document body
+
+  // Append overlay to body
   document.body.appendChild(overlay);
-  
+
   // Show overlay
   overlay.style.display = "block";
-  
+
   // Submit form handler
   form.addEventListener("submit", function(event) {
     event.preventDefault();
     const paymentDetails = document.getElementById("paymentDetails").value;
     console.log(`Frame at row ${rowNumber} marked as off. Payment details: ${paymentDetails}`);
-    // You can perform further actions here, such as sending data to the server
     overlay.style.display = "none"; // Hide overlay after submission
     form.reset(); // Reset form fields
   });

@@ -163,6 +163,7 @@ button:hover {
     margin-right: 5px; /* Add margin to create space between the text and checkbox */
     white-space: nowrap; /* Prevent text from wrapping */
 }
+
 .overlay-content {
   position: absolute;
   top: 50%;
@@ -177,7 +178,8 @@ button:hover {
 }
 
 #offForm label {
-  display: block;
+  display: flex;
+  align-items: center;
   margin-bottom: 15px;
   color: #333333; /* Dark text color for labels */
 }
@@ -191,6 +193,22 @@ button:hover {
   box-sizing: border-box; /* Include padding and border in width calculation */
 }
 
+.plus-button {
+  display: inline-block;
+  width: 24px; /* Adjusted width */
+  height: 24px; /* Adjusted height */
+  margin-left: 10px;
+  background-color: #28A745;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px; /* Adjusted font size */
+  line-height: 24px; /* Adjusted line height */
+  text-align: center;
+}
+
+
 #offForm input[type="submit"],
 #offForm button {
   display: inline-block;
@@ -198,6 +216,7 @@ button:hover {
   padding: 12px;
   margin-top: 10px;
   color: #FFFFFF;
+  background-color: #DC3545; /* Red button color */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -206,29 +225,14 @@ button:hover {
 
 #offForm button[type="button"] {
   background-color: transparent;
-  border: 2px solid #DC3545; /* Button border color for cancel */
+  border: 1px solid #DC3545; /* Red border color for cancel button */
+  color: #DC3545; /* Red text color for cancel button */
 }
 
-/* Hover effect for cancel button */
-#offForm button[type="button"]:hover {
-  background-color: #DC3545;
-  color: #FFFFFF; /* Text color for cancel button on hover */
-}
-
-/* Plus button style */
-.plus-button {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  margin-left: 5px;
-  background-color: #28A745;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 30px;
-  text-align: center;
+/* Hover effect for buttons */
+#offForm input[type="submit"]:hover,
+#offForm button:hover {
+  background-color: #b30015; /* Darker shade of red for hover effect */
 }
 
 /* Adjustments for mobile screens */
@@ -246,4 +250,5 @@ button:hover {
     width: 100%; /* Full width buttons on mobile */
   }
 }
+
 

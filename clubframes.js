@@ -140,16 +140,18 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     label.innerText = playerName;
     
     if (playerNumber) {
-      const plusButton = document.createElement("button");
-      plusButton.type = "button";
-      plusButton.innerText = "+";
-      plusButton.onclick = function() {
+    const plusButton = document.createElement("button");
+    plusButton.type = "button";
+    plusButton.innerText = "+";
+    plusButton.className = "plus-button"; // Add the class name for styling
+    plusButton.onclick = function() {
         // Append player name to the input field
         const paymentDetails = document.getElementById("paymentDetails");
         paymentDetails.value += `${playerName}, `;
-      };
-      label.appendChild(plusButton);
-    }
+    };
+    label.appendChild(plusButton);
+}
+
     
     // Append label to the form
     form.appendChild(label);

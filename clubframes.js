@@ -127,10 +127,17 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   const form = document.createElement("form");
   form.id = "offForm";
   
+  // Regular expression to extract player numbers
+  const playerNumberRegex = /Player (\d+)/;
+  
   // Create labels and plus buttons for each player
-  for (let i = 0; i < 6; i++) {
+  activeFramePlayerNames.forEach((playerName) => {
+    // Extract player number from the player name
+    const playerNumberMatch = playerName.match(playerNumberRegex);
+    const playerNumber = playerNumberMatch ? playerNumberMatch[1] : null;
+
     const label = document.createElement("label");
-    label.innerText = activeFramePlayerNames[i] || `Player ${i+1}`; // Use active frame player names if available, otherwise default to "Player i+1"
+    label.innerText = playerName;
     
     const plusButton = document.createElement("button");
     plusButton.type = "button";
@@ -148,7 +155,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     
     // Add line break for better spacing
     form.appendChild(document.createElement("br"));
-  }
+  });
   
   // Create input field for payment details
   const paymentDetailsInput = document.createElement("input");
@@ -205,6 +212,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     }
   });
 }
+
 
 
 

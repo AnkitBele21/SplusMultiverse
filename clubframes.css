@@ -177,22 +177,12 @@ button:hover {
   max-width: 400px; /* Limit maximum width for better readability */
 }
 
-#offForm .player-button {
-  background-color: #28A745; /* Green background color */
-  color: #FFFFFF; /* White text color */
-  border: none;
-  border-radius: 50%; /* Make it circular */
-  cursor: pointer;
-  font-size: 16px; /* Adjust font size as needed */
-  width: 24px; /* Adjust width as needed */
-  height: 24px; /* Adjust height as needed */
-  line-height: 24px; /* Adjust line height to center the text vertically */
-  text-align: center;
-  margin-right: 10px; /* Add space between buttons */
-}
-
-#offForm .player-button:last-child {
-  margin-right: 0; /* Remove margin for the last button */
+#offForm label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Align items to the left and right */
+  margin-bottom: 15px;
+  color: #333333; /* Dark text color for labels */
 }
 
 #offForm input[type="text"],
@@ -204,6 +194,22 @@ button:hover {
   border-radius: 5px;
   box-sizing: border-box; /* Include padding and border in width calculation */
 }
+
+.plus-button {
+    display: inline-block;
+    width: 24px; /* Adjust width as needed */
+    height: 24px; /* Adjust height as needed */
+    background-color: #28A745; /* Green background color */
+    color: #FFFFFF; /* White text color */
+    border: none;
+    border-radius: 50%; /* Make it circular */
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size as needed */
+    line-height: 24px; /* Adjust line height to center the text vertically */
+    text-align: center;
+    flex-shrink: 0; /* Prevent the button from shrinking */
+}
+
 
 #offForm input[type="submit"],
 #offForm button {
@@ -242,5 +248,3 @@ button:hover {
     width: 100%; /* Full width inputs on mobile */
   }
 }
-
-

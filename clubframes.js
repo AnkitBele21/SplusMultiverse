@@ -139,16 +139,17 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     const label = document.createElement("label");
     label.innerText = playerName;
     
-    const plusButton = document.createElement("button");
-    plusButton.type = "button";
-    plusButton.innerText = "+";
-    plusButton.onclick = function() {
-      // Append player name to the input field
-      const paymentDetails = document.getElementById("paymentDetails");
-      paymentDetails.value += `${playerName}, `;
-    };
-    
-    label.appendChild(plusButton);
+    if (playerNumber) {
+      const plusButton = document.createElement("button");
+      plusButton.type = "button";
+      plusButton.innerText = "+";
+      plusButton.onclick = function() {
+        // Append player name to the input field
+        const paymentDetails = document.getElementById("paymentDetails");
+        paymentDetails.value += `${playerName}, `;
+      };
+      label.appendChild(plusButton);
+    }
     
     // Append label to the form
     form.appendChild(label);
@@ -212,6 +213,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     }
   });
 }
+
 
 // Function to apply filters to frame entries
 function applyFilters() {

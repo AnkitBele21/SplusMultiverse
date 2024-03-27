@@ -153,34 +153,26 @@ function populatePlayerNames() {
     nameDatalist.innerHTML = "";
 
     // Fetch data from the spreadsheet
-    fetchData(SHEET_NAME).then((data) => {
-        const playerNames = data
-            .map(row => row[9]) // Assuming player names are in column J (adjust if needed)
-            .filter(cell => typeof cell === 'string' && cell.trim() !== '') // Filter non-empty string values
-            .map(cell => cell.trim()); // Trim whitespace from player names
-
+    fetchData("snookerplus").then((data) => {
+        const playerNames = data.map(row => row[3]).filter(Boolean); // Extract names from column D
         const existingOptions = new Set(Array.from(nameDatalist.childNodes)
             .filter(node => node.tagName === 'OPTION')
             .map(option => option.value));
 
         // Get the list of player names from the input fields
         const playerNameInputs = Array.from(playersInputs).map(input => input.value.trim());
-
         playerNames.forEach((name) => {
-            // Check if the name is not already in the datalist or input fields, then add it
-            if (!existingOptions.has(name) && !playerNameInputs.includes(name)) {
+            const trimmedName = name.trim();
+            // Check if the name is not empty and not already in the datalist, then add it
+            if (trimmedName !== "" && !existingOptions.has(trimmedName) && !playerNameInputs.includes(trimmedName)) {
                 const optionElement = document.createElement("option");
-                optionElement.value = name;
+                optionElement.value = trimmedName;
                 nameDatalist.appendChild(optionElement);
-                existingOptions.add(name);
+                existingOptions.add(trimmedName);
             }
         });
-    }).catch(error => {
-        console.error("Error fetching player names:", error);
-        alert("Failed to fetch player names. Please try again.");
     });
 }
-
 
 function createPlayerInput(value, index) {
     const playerInput = document.createElement("input");

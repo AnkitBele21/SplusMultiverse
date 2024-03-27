@@ -105,52 +105,29 @@ function showOffPopup(rowNumber, playerNames) {
   // Create overlay div
   const overlay = document.createElement("div");
   overlay.id = "offFormOverlay";
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // semi-transparent black
+  overlay.classList.add("overlay");
   
   // Create content div
   const content = document.createElement("div");
   content.className = "overlay-content";
-  content.style.position = "absolute";
-  content.style.top = "50%";
-  content.style.left = "50%";
-  content.style.transform = "translate(-50%, -50%)";
-  content.style.backgroundColor = "white";
-  content.style.padding = "20px";
-  content.style.borderRadius = "5px";
   
   // Create form
   const form = document.createElement("form");
   form.id = "offForm";
   
-  // Create labels and plus buttons for each player
-  playerNames.slice(0, 6).forEach((playerName, index) => { // Limit to 6 players
-    const label = document.createElement("label");
-    label.innerText = playerName;
-    label.style.display = "flex";
-    label.style.alignItems = "center";
-
-    const plusButton = document.createElement("button");
-    plusButton.type = "button";
-    plusButton.className = "plus-button";
-    plusButton.innerText = "+";
-    plusButton.onclick = function() {
+  // Create buttons for each player
+  playerNames.slice(0, 6).forEach((playerName) => { // Limit to 6 players
+    const playerButton = document.createElement("button");
+    playerButton.type = "button";
+    playerButton.className = "player-button";
+    playerButton.innerText = playerName;
+    playerButton.onclick = function() {
       // Append player name to the input field
       const paymentDetails = document.getElementById("paymentDetails");
       paymentDetails.value += `${playerName}, `;
     };
     
-    label.appendChild(plusButton);
-    
-    // Append label to the form
-    form.appendChild(label);
-    
-    // Add line break for better spacing
-    form.appendChild(document.createElement("br"));
+    form.appendChild(playerButton);
   });
   
   // Create input field for payment details
@@ -159,8 +136,6 @@ function showOffPopup(rowNumber, playerNames) {
   paymentDetailsInput.id = "paymentDetails";
   paymentDetailsInput.name = "paymentDetails";
   paymentDetailsInput.placeholder = "To be Paid By...";
-  paymentDetailsInput.style.width = "100%";
-  paymentDetailsInput.style.marginBottom = "10px";
   
   // Append input field to the form
   form.appendChild(paymentDetailsInput);
@@ -210,7 +185,6 @@ function showOffPopup(rowNumber, playerNames) {
     }
   });
 }
-
 
 
 // Function to apply filters to frame entries

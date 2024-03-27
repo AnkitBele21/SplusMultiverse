@@ -101,7 +101,7 @@ frameElement.appendChild(editButton);
   });
 }
 
-function showOffPopup(rowNumber, playerNames) {
+function showOffPopup(rowNumber, activeFramePlayerNames) {
   // Create overlay div
   const overlay = document.createElement("div");
   overlay.id = "offFormOverlay";
@@ -127,10 +127,10 @@ function showOffPopup(rowNumber, playerNames) {
   const form = document.createElement("form");
   form.id = "offForm";
   
-  // Create dummy labels and plus buttons for each player
-  for (let i = 1; i <= 6; i++) {
+  // Create labels and plus buttons for each player
+  for (let i = 0; i < 6; i++) {
     const label = document.createElement("label");
-    label.innerText = `Player ${i}`;
+    label.innerText = activeFramePlayerNames[i] || `Player ${i+1}`; // Use active frame player names if available, otherwise default to "Player i+1"
     
     const plusButton = document.createElement("button");
     plusButton.type = "button";
@@ -138,7 +138,7 @@ function showOffPopup(rowNumber, playerNames) {
     plusButton.onclick = function() {
       // Append player name to the input field
       const paymentDetails = document.getElementById("paymentDetails");
-      paymentDetails.value += `Player ${i}, `;
+      paymentDetails.value += `${label.innerText}, `;
     };
     
     label.appendChild(plusButton);

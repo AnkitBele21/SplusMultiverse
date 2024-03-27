@@ -184,7 +184,8 @@ button:hover {
   color: #333333; /* Dark text color for labels */
 }
 
-#offForm input[type="text"] {
+#offForm input[type="text"],
+#offForm input[type="number"] {
   width: calc(100% - 20px); /* Adjust width and padding */
   padding: 10px;
   margin-bottom: 15px;
@@ -208,11 +209,10 @@ button:hover {
   text-align: center;
 }
 
-
 #offForm input[type="submit"],
 #offForm button {
   display: inline-block;
-  width: 48%; /* Adjust button width */
+  width: 100%; /* Full width buttons */
   padding: 12px;
   margin-top: 10px;
   color: #FFFFFF;
@@ -241,14 +241,8 @@ button:hover {
     padding: 20px;
   }
 
-  #offForm input[type="text"] {
-    width: 100%; /* Full width input on mobile */
-  }
-
-  #offForm input[type="submit"],
-  #offForm button {
-    width: 100%; /* Full width buttons on mobile */
+  #offForm input[type="text"],
+  #offForm input[type="number"] {
+    width: 100%; /* Full width inputs on mobile */
   }
 }
-
-

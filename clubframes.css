@@ -196,16 +196,16 @@ button:hover {
 
 .plus-button {
   display: inline-block;
-  width: 24px; /* Adjusted width */
-  height: 24px; /* Adjusted height */
-  margin-left: 10px;
+  width: 20px; /* Reduce the width of the plus button */
+  height: 20px; /* Reduce the height of the plus button */
+  margin-left: 5px; /* Adjust the margin between the player name and the plus button */
   background-color: #28A745;
   color: #FFFFFF;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   font-size: 12px; /* Adjusted font size */
-  line-height: 24px; /* Adjusted line height */
+  line-height: 20px; /* Adjusted line height */
   text-align: center;
 }
 

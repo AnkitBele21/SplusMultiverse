@@ -127,10 +127,10 @@ function showOffPopup(rowNumber, playerNames) {
   const form = document.createElement("form");
   form.id = "offForm";
   
-  // Create labels and plus buttons for each player name
-  playerNames.forEach((playerName) => {
+  // Create dummy labels and plus buttons for each player
+  for (let i = 1; i <= 6; i++) {
     const label = document.createElement("label");
-    label.innerText = playerName;
+    label.innerText = `Player ${i}`;
     
     const plusButton = document.createElement("button");
     plusButton.type = "button";
@@ -138,7 +138,7 @@ function showOffPopup(rowNumber, playerNames) {
     plusButton.onclick = function() {
       // Append player name to the input field
       const paymentDetails = document.getElementById("paymentDetails");
-      paymentDetails.value += playerName + ", ";
+      paymentDetails.value += `Player ${i}, `;
     };
     
     label.appendChild(plusButton);
@@ -148,7 +148,7 @@ function showOffPopup(rowNumber, playerNames) {
     
     // Add line break for better spacing
     form.appendChild(document.createElement("br"));
-  });
+  }
   
   // Create input field for payment details
   const paymentDetailsInput = document.createElement("input");
@@ -205,6 +205,7 @@ function showOffPopup(rowNumber, playerNames) {
     }
   });
 }
+
 
 
 

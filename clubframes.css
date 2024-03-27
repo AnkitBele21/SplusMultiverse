@@ -195,19 +195,19 @@ button:hover {
 }
 
 .plus-button {
-  display: inline-block;
-  width: 20px; /* Reduce the width of the plus button */
-  height: 20px; /* Reduce the height of the plus button */
-  margin-left: 5px; /* Adjust the margin between the player name and the plus button */
-  background-color: #28A745;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 12px; /* Adjusted font size */
-  line-height: 20px; /* Adjusted line height */
-  text-align: center;
+    display: inline-block;
+    width: 24px; /* Adjust width as needed */
+    height: 24px; /* Adjust height as needed */
+    background-color: #28A745; /* Green background color */
+    color: #FFFFFF; /* White text color */
+    border: none;
+    border-radius: 50%; /* Make it circular */
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size as needed */
+    line-height: 24px; /* Adjust line height to center the text vertically */
+    text-align: center;
 }
+
 
 #offForm input[type="submit"],
 #offForm button {

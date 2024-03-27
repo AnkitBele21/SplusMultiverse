@@ -150,7 +150,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     
     label.appendChild(plusButton);
     
-    // Append label to the form
+    // Append label and plus button to the form
     form.appendChild(label);
     
     // Add line break for better spacing
@@ -212,6 +212,9 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     }
   });
 }
+
+
+
 
 
 // Function to apply filters to frame entries

@@ -131,7 +131,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   const playerNumberRegex = /Player (\d+)/;
   
   // Create labels and plus buttons for each player
-  activeFramePlayerNames.forEach((playerName) => {
+  activeFramePlayerNames.slice(0, 6).forEach((playerName) => { // Limit to 6 players
     // Extract player number from the player name
     const playerNumberMatch = playerName.match(playerNumberRegex);
     const playerNumber = playerNumberMatch ? playerNumberMatch[1] : null;
@@ -145,7 +145,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     plusButton.onclick = function() {
       // Append player name to the input field
       const paymentDetails = document.getElementById("paymentDetails");
-      paymentDetails.value += `${label.innerText}, `;
+      paymentDetails.value += `${playerName}, `;
     };
     
     label.appendChild(plusButton);

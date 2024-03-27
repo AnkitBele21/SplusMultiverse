@@ -165,7 +165,7 @@ button:hover {
 }
 
 .overlay-content {
-  position: absolute;
+  position: fixed; /* Change from absolute to fixed */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

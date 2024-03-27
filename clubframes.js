@@ -122,10 +122,11 @@ function showOffPopup(rowNumber, playerNames) {
       playerButton.type = "button";
       playerButton.className = "player-button";
       playerButton.innerText = playerName;
-      playerButton.onclick = function() {
-        const paymentDetails = document.getElementById("paymentDetails");
-        paymentDetails.value += `${playerName}, `;
-      };
+     playerButton.onclick = function() {
+  const paymentDetails = document.getElementById("paymentDetails");
+  paymentDetails.value += `${playerName}, `;
+};
+
       form.appendChild(playerButton);
     }
   });

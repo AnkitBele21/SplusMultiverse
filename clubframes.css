@@ -177,7 +177,8 @@ button:hover {
 }
 
 #offForm label {
-  display: block;
+  display: flex;
+  align-items: center;
   margin-bottom: 15px;
   color: #333333; /* Dark text color for labels */
 }
@@ -191,6 +192,21 @@ button:hover {
   box-sizing: border-box; /* Include padding and border in width calculation */
 }
 
+.plus-button {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  background-color: #28A745;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+}
+
 #offForm input[type="submit"],
 #offForm button {
   display: inline-block;
@@ -198,7 +214,7 @@ button:hover {
   padding: 12px;
   margin-top: 10px;
   color: #FFFFFF;
-  background-color: #007BFF; /* Primary button color */
+  background-color: #DC3545; /* Red button color */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -206,29 +222,15 @@ button:hover {
 }
 
 #offForm button[type="button"] {
-  background-color: #DC3545; /* Button color for cancel */
+  background-color: transparent;
+  border: 1px solid #DC3545; /* Red border color for cancel button */
+  color: #DC3545; /* Red text color for cancel button */
 }
 
 /* Hover effect for buttons */
 #offForm input[type="submit"]:hover,
 #offForm button:hover {
-  background-color: #0056b3; /* Darker shade for hover effect */
-}
-
-/* Plus button style */
-.plus-button {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  margin-left: 5px;
-  background-color: #28A745;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 30px;
-  text-align: center;
+  background-color: #b30015; /* Darker shade of red for hover effect */
 }
 
 /* Adjustments for mobile screens */

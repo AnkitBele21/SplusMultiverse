@@ -116,17 +116,15 @@ function showOffPopup(rowNumber, playerNames) {
   form.id = "offForm";
   
   // Create buttons for each player
-  playerNames.slice(0, 6).forEach((playerName) => { // Limit to 6 players
+  playerNames.forEach((playerName) => {
     const playerButton = document.createElement("button");
     playerButton.type = "button";
     playerButton.className = "player-button";
     playerButton.innerText = playerName;
     playerButton.onclick = function() {
-      // Append player name to the input field
       const paymentDetails = document.getElementById("paymentDetails");
       paymentDetails.value += `${playerName}, `;
     };
-    
     form.appendChild(playerButton);
   });
   
@@ -134,10 +132,7 @@ function showOffPopup(rowNumber, playerNames) {
   const paymentDetailsInput = document.createElement("input");
   paymentDetailsInput.type = "text";
   paymentDetailsInput.id = "paymentDetails";
-  paymentDetailsInput.name = "paymentDetails";
-  paymentDetailsInput.placeholder = "To be Paid By...";
-  
-  // Append input field to the form
+  paymentDetailsInput.placeholder = "Enter payment details...";
   form.appendChild(paymentDetailsInput);
   
   // Create submit and cancel buttons

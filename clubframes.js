@@ -162,11 +162,32 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   const paymentDetailsInput = document.createElement("input");
   paymentDetailsInput.type = "text";
   paymentDetailsInput.id = "paymentDetails";
+  paymentDetailsInput.name = "paymentDetails";
   paymentDetailsInput.placeholder = "Enter payment details...";
   paymentDetailsInput.style.width = "100%";
+  paymentDetailsInput.style.marginBottom = "10px";
   
   // Append input field to the form
   form.appendChild(paymentDetailsInput);
+  
+  // Create input field for bet value
+  const betInput = document.createElement("input");
+  betInput.type = "number";
+  betInput.id = "bet";
+  betInput.name = "bet";
+  betInput.placeholder = "Enter bet...";
+  betInput.style.width = "100%";
+  
+  // Create label for bet input
+  const betLabel = document.createElement("label");
+  betLabel.innerText = "Bet";
+  betLabel.htmlFor = "bet";
+  betLabel.style.marginTop = "10px";
+  betLabel.style.display = "block";
+  
+  // Append bet input and label to the form
+  form.appendChild(betLabel);
+  form.appendChild(betInput);
   
   // Create submit and cancel buttons
   const submitButton = document.createElement("input");
@@ -200,7 +221,8 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   form.addEventListener("submit", function(event) {
     event.preventDefault();
     const paymentDetails = document.getElementById("paymentDetails").value;
-    console.log(`Frame at row ${rowNumber} marked as off. Payment details: ${paymentDetails}`);
+    const bet = document.getElementById("bet").value;
+    console.log(`Frame at row ${rowNumber} marked as off. Payment details: ${paymentDetails}, Bet: ${bet}`);
     // You can perform further actions here, such as sending data to the server
     overlay.style.display = "none"; // Hide overlay after submission
     form.reset(); // Reset form fields
@@ -213,6 +235,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     }
   });
 }
+
 
 
 

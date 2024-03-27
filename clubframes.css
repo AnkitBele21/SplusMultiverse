@@ -188,6 +188,7 @@ button:hover {
 #offForm label {
   display: block;
   margin-bottom: 10px;
+  color: #333; /* Adjusted label color */
 }
 
 #offForm input[type="text"] {
@@ -236,4 +237,3 @@ button:hover {
 .cancel-button {
   background-color: #dc3545;
 }
-

@@ -117,15 +117,17 @@ function showOffPopup(rowNumber, playerNames) {
   
   // Create buttons for each player
   playerNames.forEach((playerName) => {
-    const playerButton = document.createElement("button");
-    playerButton.type = "button";
-    playerButton.className = "player-button";
-    playerButton.innerText = playerName;
-    playerButton.onclick = function() {
-      const paymentDetails = document.getElementById("paymentDetails");
-      paymentDetails.value += `${playerName}, `;
-    };
-    form.appendChild(playerButton);
+    if (playerName.trim() !== "") { // Check if player name is not empty
+      const playerButton = document.createElement("button");
+      playerButton.type = "button";
+      playerButton.className = "player-button";
+      playerButton.innerText = playerName;
+      playerButton.onclick = function() {
+        const paymentDetails = document.getElementById("paymentDetails");
+        paymentDetails.value += `${playerName}, `;
+      };
+      form.appendChild(playerButton);
+    }
   });
   
   // Create input field for payment details

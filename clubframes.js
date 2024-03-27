@@ -215,6 +215,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
 }
 
 
+
 // Function to apply filters to frame entries
 function applyFilters() {
   const playerNameFilter = document.getElementById("playerNameFilter").value.toLowerCase();

@@ -163,65 +163,66 @@ button:hover {
     margin-right: 5px; /* Add margin to create space between the text and checkbox */
     white-space: nowrap; /* Prevent text from wrapping */
 }
-
-#offFormOverlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
-}
-
 .overlay-content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #FFFFFF;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 400px; /* Limit maximum width for better readability */
 }
 
 #offForm label {
   display: block;
-  margin-bottom: 10px;
-  color: #333; /* Adjusted label color */
+  margin-bottom: 15px;
+  color: #333333; /* Dark text color for labels */
 }
 
 #offForm input[type="text"] {
-  width: calc(100% - 20px); /* Adjusted width with padding */
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: calc(100% - 20px); /* Adjust width and padding */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #CCCCCC; /* Light border color */
+  border-radius: 5px;
+  box-sizing: border-box; /* Include padding and border in width calculation */
 }
 
-#offForm input[type="submit"], #offForm button {
-  display: block;
-  width: calc(50% - 5px); /* Adjusted width with padding and margin */
-  padding: 10px;
+#offForm input[type="submit"],
+#offForm button {
+  display: inline-block;
+  width: 48%; /* Adjust button width */
+  padding: 12px;
   margin-top: 10px;
-  color: #fff;
-  background-color: #007bff;
+  color: #FFFFFF;
+  background-color: #007BFF; /* Primary button color */
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #offForm button[type="button"] {
-  background-color: #dc3545;
+  background-color: #DC3545; /* Button color for cancel */
 }
 
+/* Hover effect for buttons */
+#offForm input[type="submit"]:hover,
+#offForm button:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+}
+
+/* Plus button style */
 .plus-button {
   display: inline-block;
   width: 30px;
   height: 30px;
   margin-left: 5px;
-  background-color: #28a745;
-  color: #fff;
+  background-color: #28A745;
+  color: #FFFFFF;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -230,10 +231,19 @@ button:hover {
   text-align: center;
 }
 
-.submit-button {
-  background-color: #007bff;
+/* Adjustments for mobile screens */
+@media (max-width: 768px) {
+  .overlay-content {
+    padding: 20px;
+  }
+
+  #offForm input[type="text"] {
+    width: 100%; /* Full width input on mobile */
+  }
+
+  #offForm input[type="submit"],
+  #offForm button {
+    width: 100%; /* Full width buttons on mobile */
+  }
 }
 
-.cancel-button {
-  background-color: #dc3545;
-}

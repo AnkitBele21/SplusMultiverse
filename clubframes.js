@@ -163,7 +163,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   paymentDetailsInput.type = "text";
   paymentDetailsInput.id = "paymentDetails";
   paymentDetailsInput.name = "paymentDetails";
-  paymentDetailsInput.placeholder = "Enter payment details...";
+  paymentDetailsInput.placeholder = "To be Paid By...";
   paymentDetailsInput.style.width = "100%";
   paymentDetailsInput.style.marginBottom = "10px";
   
@@ -175,12 +175,12 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   betInput.type = "number";
   betInput.id = "bet";
   betInput.name = "bet";
-  betInput.placeholder = "Enter bet...";
+  betInput.placeholder = "Enter Plus Amount";
   betInput.style.width = "100%";
   
   // Create label for bet input
   const betLabel = document.createElement("label");
-  betLabel.innerText = "Bet";
+  betLabel.innerText = "Plus amount";
   betLabel.htmlFor = "bet";
   betLabel.style.marginTop = "10px";
   betLabel.style.display = "block";

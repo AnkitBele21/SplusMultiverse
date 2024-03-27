@@ -101,7 +101,7 @@ frameElement.appendChild(editButton);
   });
 }
 
-function showOffPopup(rowNumber, activeFramePlayerNames) {
+function showOffPopup(rowNumber, playerNames) {
   // Create overlay div
   const overlay = document.createElement("div");
   overlay.id = "offFormOverlay";
@@ -127,31 +127,24 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   const form = document.createElement("form");
   form.id = "offForm";
   
-  // Regular expression to extract player numbers
-  const playerNumberRegex = /Player (\d+)/;
-  
   // Create labels and plus buttons for each player
-  activeFramePlayerNames.slice(0, 6).forEach((playerName) => { // Limit to 6 players
-    // Extract player number from the player name
-    const playerNumberMatch = playerName.match(playerNumberRegex);
-    const playerNumber = playerNumberMatch ? playerNumberMatch[1] : null;
-
+  playerNames.slice(0, 6).forEach((playerName, index) => { // Limit to 6 players
     const label = document.createElement("label");
     label.innerText = playerName;
-    
-    if (playerNumber) {
+    label.style.display = "flex";
+    label.style.alignItems = "center";
+
     const plusButton = document.createElement("button");
     plusButton.type = "button";
+    plusButton.className = "plus-button";
     plusButton.innerText = "+";
-    plusButton.className = "plus-button"; // Add the class name for styling
     plusButton.onclick = function() {
-        // Append player name to the input field
-        const paymentDetails = document.getElementById("paymentDetails");
-        paymentDetails.value += `${playerName}, `;
+      // Append player name to the input field
+      const paymentDetails = document.getElementById("paymentDetails");
+      paymentDetails.value += `${playerName}, `;
     };
+    
     label.appendChild(plusButton);
-}
-
     
     // Append label to the form
     form.appendChild(label);
@@ -171,25 +164,6 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   
   // Append input field to the form
   form.appendChild(paymentDetailsInput);
-  
-  // Create input field for bet value
-  const betInput = document.createElement("input");
-  betInput.type = "number";
-  betInput.id = "bet";
-  betInput.name = "bet";
-  betInput.placeholder = "Enter Plus Amount";
-  betInput.style.width = "100%";
-  
-  // Create label for bet input
-  const betLabel = document.createElement("label");
-  betLabel.innerText = "Plus amount";
-  betLabel.htmlFor = "bet";
-  betLabel.style.marginTop = "10px";
-  betLabel.style.display = "block";
-  
-  // Append bet input and label to the form
-  form.appendChild(betLabel);
-  form.appendChild(betInput);
   
   // Create submit and cancel buttons
   const submitButton = document.createElement("input");
@@ -223,8 +197,7 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
   form.addEventListener("submit", function(event) {
     event.preventDefault();
     const paymentDetails = document.getElementById("paymentDetails").value;
-    const bet = document.getElementById("bet").value;
-    console.log(`Frame at row ${rowNumber} marked as off. Payment details: ${paymentDetails}, Bet: ${bet}`);
+    console.log(`Frame at row ${rowNumber} marked as off. Payment details: ${paymentDetails}`);
     // You can perform further actions here, such as sending data to the server
     overlay.style.display = "none"; // Hide overlay after submission
     form.reset(); // Reset form fields
@@ -237,7 +210,6 @@ function showOffPopup(rowNumber, activeFramePlayerNames) {
     }
   });
 }
-
 
 
 

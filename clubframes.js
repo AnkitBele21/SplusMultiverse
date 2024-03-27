@@ -127,8 +127,8 @@ function showOffPopup(rowNumber, playerNames) {
   const form = document.createElement("form");
   form.id = "offForm";
   
-  // Create labels and inputs for each player name
-  playerNames.forEach((playerName, index) => {
+  // Create labels and plus buttons for each player name
+  playerNames.forEach((playerName) => {
     const label = document.createElement("label");
     label.innerText = playerName;
     
@@ -136,39 +136,45 @@ function showOffPopup(rowNumber, playerNames) {
     plusButton.type = "button";
     plusButton.innerText = "+";
     plusButton.onclick = function() {
-      // Handle plus button action here
-      // For now, we'll just log the player name
-      console.log(`Plus button clicked for ${playerName}`);
+      // Append player name to the input field
+      const paymentDetails = document.getElementById("paymentDetails");
+      paymentDetails.value += playerName + ", ";
     };
     
     label.appendChild(plusButton);
     
-    const select = document.createElement("select");
-    select.name = `amount_${index}`;
-    
-    // Add options to the dropdown
-    [20, 50, 100, 150, 200, 300, 500, 1000, 2000].forEach((value) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.innerText = value;
-      select.appendChild(option);
-    });
-    
-    // Append label and select to the form
+    // Append label to the form
     form.appendChild(label);
-    form.appendChild(select);
     
     // Add line break for better spacing
     form.appendChild(document.createElement("br"));
   });
   
-  // Create submit button
+  // Create input field for payment details
+  const paymentDetailsInput = document.createElement("input");
+  paymentDetailsInput.type = "text";
+  paymentDetailsInput.id = "paymentDetails";
+  paymentDetailsInput.placeholder = "Enter payment details...";
+  paymentDetailsInput.style.width = "100%";
+  
+  // Append input field to the form
+  form.appendChild(paymentDetailsInput);
+  
+  // Create submit and cancel buttons
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
-  submitButton.value = "Submit";
+  submitButton.value = "Confirm";
   
-  // Append submit button to the form
+  const cancelButton = document.createElement("button");
+  cancelButton.type = "button";
+  cancelButton.innerText = "Cancel";
+  cancelButton.onclick = function() {
+    overlay.style.display = "none"; // Hide overlay on cancel
+  };
+  
+  // Append buttons to the form
   form.appendChild(submitButton);
+  form.appendChild(cancelButton);
   
   // Append form to the content
   content.appendChild(form);
@@ -185,7 +191,8 @@ function showOffPopup(rowNumber, playerNames) {
   // Submit form handler
   form.addEventListener("submit", function(event) {
     event.preventDefault();
-    console.log("Form submitted");
+    const paymentDetails = document.getElementById("paymentDetails").value;
+    console.log(`Frame at row ${rowNumber} marked as off. Payment details: ${paymentDetails}`);
     // You can perform further actions here, such as sending data to the server
     overlay.style.display = "none"; // Hide overlay after submission
     form.reset(); // Reset form fields

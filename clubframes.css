@@ -164,7 +164,6 @@ button:hover {
     white-space: nowrap; /* Prevent text from wrapping */
 }
 
-/* New CSS styles for offFormOverlay */
 #offFormOverlay {
   display: none;
   position: fixed;
@@ -173,7 +172,6 @@ button:hover {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
-  z-index: 999; /* Ensure the overlay is on top of other elements */
 }
 
 .overlay-content {
@@ -181,43 +179,39 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #33363B; /* Adjust background color to match theme */
+  background-color: white;
   padding: 20px;
-  border-radius: 10px; /* Increase border radius for a softer look */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box shadow for depth */
-  color: #FFFFFF; /* Set text color to white */
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #offForm label {
   display: block;
   margin-bottom: 10px;
-  color: #FFFFFF; /* Set label text color to white */
 }
 
 #offForm input[type="text"] {
-  width: calc(100% - 20px); /* Adjust width to fit within the container */
-  padding: 10px;
+  width: calc(100% - 20px); /* Adjusted width with padding */
+  padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  color: #33363B; /* Set text color to match input field */
-  background-color: #FFFFFF; /* Set background color to white */
+  border-radius: 4px;
 }
 
 #offForm input[type="submit"], #offForm button {
   display: block;
-  width: calc(100% - 20px); /* Adjust width to fit within the container */
+  width: calc(50% - 5px); /* Adjusted width with padding and margin */
   padding: 10px;
   margin-top: 10px;
-  color: #FFFFFF;
-  background-color: #01AB7A; /* Set button background color to match theme */
+  color: #fff;
+  background-color: #007bff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 #offForm button[type="button"] {
-  background-color: #DC3545; /* Set cancel button background color to match theme */
+  background-color: #dc3545;
 }
 
 .plus-button {
@@ -225,8 +219,8 @@ button:hover {
   width: 30px;
   height: 30px;
   margin-left: 5px;
-  background-color: #28A745;
-  color: #FFFFFF;
+  background-color: #28a745;
+  color: #fff;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -236,10 +230,10 @@ button:hover {
 }
 
 .submit-button {
-  background-color: #01AB7A; /* Set submit button background color to match theme */
+  background-color: #007bff;
 }
 
 .cancel-button {
-  background-color: #DC3545; /* Set cancel button background color to match theme */
+  background-color: #dc3545;
 }
 

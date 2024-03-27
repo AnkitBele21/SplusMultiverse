@@ -137,6 +137,14 @@ function showOffPopup(rowNumber, playerNames) {
   paymentDetailsInput.placeholder = "Enter payment details...";
   form.appendChild(paymentDetailsInput);
   
+  // Create input field for bet value
+  const betInput = document.createElement("input");
+  betInput.type = "number";
+  betInput.id = "bet";
+  betInput.name = "bet";
+  betInput.placeholder = "Enter Bet Amount";
+  form.appendChild(betInput);
+  
   // Create submit and cancel buttons
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
@@ -169,7 +177,8 @@ function showOffPopup(rowNumber, playerNames) {
   form.addEventListener("submit", function(event) {
     event.preventDefault();
     const paymentDetails = document.getElementById("paymentDetails").value;
-    console.log(`Frame at row ${rowNumber} marked as off. Payment details: ${paymentDetails}`);
+    const bet = document.getElementById("bet").value;
+    console.log(`Frame at row ${rowNumber} marked as off. Payment details: ${paymentDetails}, Bet: ${bet}`);
     // You can perform further actions here, such as sending data to the server
     overlay.style.display = "none"; // Hide overlay after submission
     form.reset(); // Reset form fields
@@ -182,6 +191,7 @@ function showOffPopup(rowNumber, playerNames) {
     }
   });
 }
+
 
 
 // Function to apply filters to frame entries

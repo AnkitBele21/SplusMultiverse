@@ -21,15 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-   document.getElementById('backButton').addEventListener('click', function() {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const studio = urlParams.get('studio');
-    const security = urlParams.get('security');
-    const backURL = `https://ankitbele21.github.io/SplusMultiverse/clubframes?studio=${studio}&security=${security}`;
-    window.location.href = backURL;
+    // Add event listener to the Back button
+    const backButton = document.getElementById("backButton");
+    if (backButton) {
+        backButton.addEventListener("click", function () {
+            window.location.href = "https://ankitbele21.github.io/SplusMultiverse/clubframes";
+        });
+    }
 });
-
 
 function fetchPlayerData() {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PLAYER_SHEET_NAME}?key=${API_KEY}`;
@@ -154,66 +153,71 @@ function addPlayer() {
 // Removed the redundant window.onload function as it was causing issues with loading the player data correctly.
 
 
-function recordTopUp(playerName, amount) {
+function recordTopUp(playerName, amount,) {
     try {
-        loaderInstance.showLoader();
-
-        fetch("https://payment.snookerplus.in/record_top_up/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user_id: playerName,
-                amount_paid: amount,
-            }),
-        })
+      loaderInstance.showLoader();
+  
+      fetch("https://payment.snookerplus.in/record_top_up/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: playerName,
+          amount_paid: amount,
+        }),
+      })
         .then((resp) => {
-            loaderInstance.hideLoader();
-            if (!resp.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return resp.json();
+          loaderInstance.hideLoader();
+          if (!resp.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return resp.json();
         })
         .then((_body) => {
-            // Just reload to get latest info
-            window.location.reload();
+          // Just reload to get latest info
+          window.location.reload();
         });
     } catch (error) {
-        loaderInstance.hideLoader();
-        console.error("Fetch error:", error);
-        alert("Something went wrong while handling payment success. Contact support.");
+      loaderInstance.hideLoader();
+      console.error("Fetch error:", error);
+      alert(
+        "Something went wrong while handling payment success. Contact support."
+      );
     }
-}
+  }
 
-function recordAppPurchase(playerName, amount) {
+
+  function recordAppPurchase(playerName, amount,) {
     try {
-        loaderInstance.showLoader();
-
-        fetch("https://payment.snookerplus.in/record_app_purchase/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user_id: playerName,
-                amount_paid: amount,
-            }),
-        })
+      loaderInstance.showLoader();
+  
+      fetch("https://payment.snookerplus.in/record_app_purchase/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: playerName,
+          amount_paid: amount,
+        }),
+      })
         .then((resp) => {
-            loaderInstance.hideLoader();
-            if (!resp.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return resp.json();
+          loaderInstance.hideLoader();
+          if (!resp.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return resp.json();
         })
         .then((_body) => {
-            // Just reload to get latest info
-            window.location.reload();
+          // Just reload to get latest info
+          window.location.reload();
         });
     } catch (error) {
-        loaderInstance.hideLoader();
-        console.error("Fetch error:", error);
-        alert("Something went wrong while handling payment success. Contact support.");
+      loaderInstance.hideLoader();
+      console.error("Fetch error:", error);
+      alert(
+        "Something went wrong while handling payment success. Contact support."
+      );
     }
-}
+  }

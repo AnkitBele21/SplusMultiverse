@@ -41,7 +41,10 @@
             const urlParams = new URLSearchParams(queryString);
             const studio = urlParams.get('studio');
             const security = urlParams.get('security');
+            console.log('Studio:', studio);
+            console.log('Security:', security);
             const backURL = `https://ankitbele21.github.io/SplusMultiverse/club_dashboard?studio=${studio}&security=${security}`;
+            console.log('Back URL:', backURL);
             window.location.href = backURL;
         });
     </script>

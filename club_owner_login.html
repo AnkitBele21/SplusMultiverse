@@ -25,12 +25,13 @@
             const password = document.getElementById("password").value.trim();
             
             try {
-                const data = await fetchData("Studios", "!A:F");
+                const data = await fetchData("Studios", "!A:H"); // Fetching data from columns A through H
                 const studioData = data.find(row => row[0] === studioName && row[4] === password);
                 
                 if (studioData) {
                     const securityKey = studioData[5] || "undefined";
-                    const redirectURL = `https://ankitbele21.github.io/SplusMultiverse/club_dashboard?studio=${encodeURIComponent(studioName)}&security=${encodeURIComponent(securityKey)}`;
+                    const clubName = studioData[7] || "undefined"; // Get the value from column H
+                    const redirectURL = `https://ankitbele21.github.io/SplusMultiverse/club_dashboard?studio=${encodeURIComponent(studioName)}&security=${encodeURIComponent(securityKey)}&clubname=${encodeURIComponent(clubName)}`; // Include clubName in the URL
                     window.location.href = redirectURL;
                 } else {
                     alert("Invalid studio name or password. Please try again.");

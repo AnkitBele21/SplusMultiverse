@@ -77,10 +77,10 @@ async function createTableWisePerformanceGraph() {
 }
 
 async function createDateWisePerformanceGraph() {
-    const data = await fetchData('club2', '!A:D'); // Fetching data from columns A, C, and D
-    const dates = data.map(row => row[0]);
-    const occupancy = data.map(row => row[2]);
-    const dayOfWeek = data.map(row => row[3]); // Column D data
+    const data = await fetchData('club', '!M:P'); // Fetching data from columns A, C, and D
+    const dates = data.map(row => row[12]);
+    const occupancy = data.map(row => row[14]);
+    const dayOfWeek = data.map(row => row[15]); // Column D data
 
     // Prepare datasets for maximum and average values
     const maxValues = [];

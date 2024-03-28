@@ -40,21 +40,23 @@ async function createTableWisePerformanceGraph() {
     createGraph(performanceValues, tables, 'tableWisePerformanceChart', 'Table\'s Performance');
 }
 
-async function createDateWisePerformanceGraph() {
-    const studioName = getParameterByName('studio');
+async function createDateWisePerformanceGraph(studioName) {
     const data = await fetchData('Studios');
-    const studioRow = data.find(row => row[0] === studioName);
-    if (studioRow) {
-        const performanceData = studioRow.slice(13, 47); // Performance data from Columns N2 to AR2
-        const dates = await fetchData('Studios', '!N2:AR2'); // Dates from Columns N2 to AR2
-        const dayLabels = dates[0]; // First row of days
-        const dateLabels = dates[1]; // Second row of dates
-
-        createGraph(performanceData, dateLabels, 'dateWisePerformanceChart', 'Date-wise Performance', dayLabels);
-    } else {
-        console.error('Studio not found');
+    const studioRow = await findStudioRow(studioName, data);
+    if (studioRow === -1) {
+        console.log('Studio not found.');
+        return;
     }
+    const dates = data[studioRow].slice(13, 47); // Extract dates from row 2 (index 1)
+    const performanceData = await fetchDateWisePerformanceData(studioRow, data);
+    createGraph(performanceData, dates, 'dateWisePerformanceChart', 'Date-wise Performance');
 }
+
+async function fetchDateWisePerformanceData(studioRow, data) {
+    const performanceData = data[studioRow].slice(13, 47); // Extract performance data from corresponding row
+    return performanceData;
+}
+
 
 
 function createGraph(data, labels, canvasId, graphTitle) {

@@ -9,40 +9,53 @@ async function fetchData(sheetName, range = '') {
 }
 
 async function displayClubDetails() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const studioName = urlParams.get('studio');
-
-    if (!studioName) {
-        console.error("Studio name not found in the URL.");
-        return;
-    }
-
-    try {
-        const studiosData = await fetchData('Studios', '!A:F'); // Fetching data from columns A through F
-        const studioRow = studiosData.find(row => row[0] === studioName);
-
-        if (studioRow) {
-            const clubDetailsContainer = document.getElementById('clubDetails');
-            clubDetailsContainer.innerHTML = ""; // Clear existing details
-
-            // Display club details
-            const labels = ['Table Money', 'Received', 'Goods', 'Credit Balance'];
-            const values = studioRow.slice(8, 12); // Data from columns I to L
-            values.forEach((value, index) => {
-                const detailElement = document.createElement('p');
-                detailElement.innerText = `${labels[index]}: ${value}`;
-                clubDetailsContainer.appendChild(detailElement);
-            });
-        } else {
-            console.error("Studio not found in the Studios sheet.");
-        }
-    } catch (error) {
-        console.error("Error fetching club details:", error);
-        alert("An error occurred while fetching club details. Please try again later.");
+    const studioName = getParameterByName('studio');
+    const data = await fetchData('Studios', '!A:L');
+    const studioRow = data.find(row => row[0] === studioName);
+    if (studioRow) {
+        const clubDetailsContainer = document.getElementById('clubDetails');
+        const details = {
+            'Table Money': studioRow[8], // Column I
+            'Credits': studioRow[11], // Column L
+            'Goods': studioRow[9], // Column J
+            'Received': studioRow[10] // Column K
+        };
+        Object.entries(details).forEach(([label, value]) => {
+            const detailElement = document.createElement('p');
+            detailElement.innerText = `${label}: ${value}`;
+            clubDetailsContainer.appendChild(detailElement);
+        });
+    } else {
+        console.error('Studio not found');
     }
 }
 
-function createGraph(data, labels, canvasId, graphTitle, backgroundColors) {
+async function createTableWisePerformanceGraph() {
+    const studioName = getParameterByName('studio');
+    const data = await fetchData('Tables');
+    const filteredData = data.filter(row => row[2] === studioName);
+    const tables = filteredData.map(row => row[4]); // Table Names (Column E)
+    const performanceValues = filteredData.map(row => row[10]); // Performance Values (Column K)
+
+    createGraph(performanceValues, tables, 'tableWisePerformanceChart', 'Table\'s Performance');
+}
+
+async function createDateWisePerformanceGraph() {
+    const studioName = getParameterByName('studio');
+    const data = await fetchData('Studios');
+    const studioRow = data.find(row => row[0] === studioName);
+    if (studioRow) {
+        const maxPerformance = studioRow[12]; // Column M2
+        const avgPerformance = studioRow[13]; // Column M
+        const dates = data[0].slice(13, 47); // Dates in Columns N2 to AR2
+
+        createDualGraph(maxPerformance, avgPerformance, dates, 'dateWisePerformanceChart', 'Club Performance');
+    } else {
+        console.error('Studio not found');
+    }
+}
+
+function createGraph(data, labels, canvasId, graphTitle) {
     var ctx = document.getElementById(canvasId).getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -51,7 +64,7 @@ function createGraph(data, labels, canvasId, graphTitle, backgroundColors) {
             datasets: [{
                 label: graphTitle,
                 data: data,
-                backgroundColor: backgroundColors || '#01AB7A', // Use provided colors or default color
+                backgroundColor: '#01AB7A',
                 borderColor: '#018a5e',
                 borderWidth: 1,
             }]
@@ -60,19 +73,12 @@ function createGraph(data, labels, canvasId, graphTitle, backgroundColors) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    display: canvasId !== 'dateWisePerformanceChart' // Hide axis for 'dateWisePerformanceChart'
+                    display: true
                 }
             },
             plugins: {
                 legend: {
                     display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        title: function(context) {
-                            return `Details for ${labels[context[0].dataIndex]}`;
-                        }
-                    }
                 }
             },
             title: {
@@ -88,79 +94,7 @@ function createGraph(data, labels, canvasId, graphTitle, backgroundColors) {
     });
 }
 
-async function createTableWisePerformanceGraph() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const studioName = urlParams.get('studio');
-
-    if (!studioName) {
-        console.error("Studio name not found in the URL.");
-        return;
-    }
-
-    try {
-        const tablesData = await fetchData('Tables', '!C:K'); // Fetching data from columns C to K
-        const studioTables = tablesData.filter(row => row[2] === studioName);
-        
-        if (studioTables.length > 0) {
-            const tables = studioTables.map(row => row[4]); // Table names from column E
-            const performance = studioTables.map(row => row[10]); // Performance from column K
-
-            // Set bar colors based on performance status
-            const barColors = performance.map(value => value === '1' ? '#01AB7A' : '#CCCCCC');
-
-            createGraph(performance, tables, 'tableWisePerformanceChart', 'Table\'s Performance', barColors);
-        } else {
-            console.error("No tables found for the studio.");
-        }
-    } catch (error) {
-        console.error("Error creating table-wise performance graph:", error);
-        alert("An error occurred while creating the table-wise performance graph. Please try again later.");
-    }
-}
-
-async function createDateWisePerformanceGraph() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const studioName = urlParams.get('studio');
-
-    if (!studioName) {
-        console.error("Studio name not found in the URL.");
-        return;
-    }
-
-    try {
-        const studiosData = await fetchData('Studios', '!A:AR'); // Fetching data from columns A through AR
-        const studioRow = studiosData.find(row => row[0] === studioName);
-
-        if (studioRow) {
-            const dates = studiosData[1].slice(14); // Dates from column O to AR in the second row
-            const occupancy = studioRow.slice(14); // Occupancy data from column O to AR
-
-            // Prepare datasets for maximum and average values
-            const maxValues = [];
-            const avgValues = [];
-            const barColorsMax = [];
-            const barColorsAvg = [];
-
-            occupancy.forEach((value, index) => {
-                if (!isNaN(value)) {
-                    maxValues.push(value); // Maximum value
-                    avgValues.push(null); // No average value
-                    barColorsMax.push(dates[index] === 'Sunday' ? '#F6AE2D' : '#01AB7A'); // Color based on day
-                    barColorsAvg.push('rgba(0,0,0,0)'); // Transparent for average
-                }
-            });
-
-            createDualGraph(maxValues, avgValues, dates, 'dateWisePerformanceChart', 'Club Performance', barColorsMax, barColorsAvg);
-        } else {
-            console.error("Studio not found in the Studios sheet.");
-        }
-    } catch (error) {
-        console.error("Error creating date-wise performance graph:", error);
-        alert("An error occurred while creating the date-wise performance graph. Please try again later.");
-    }
-}
-
-function createDualGraph(maxData, avgData, labels, canvasId, graphTitle, backgroundColorsMax, backgroundColorsAvg) {
+function createDualGraph(maxData, avgData, labels, canvasId, graphTitle) {
     var ctx = document.getElementById(canvasId).getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -168,12 +102,12 @@ function createDualGraph(maxData, avgData, labels, canvasId, graphTitle, backgro
             labels: labels,
             datasets: [{
                 label: 'Maximum',
-                data: maxData,
-                backgroundColor: backgroundColorsMax
+                data: Array(labels.length).fill(maxData),
+                backgroundColor: '#A0A0A0'
             }, {
                 label: 'Average',
-                data: avgData,
-                backgroundColor: backgroundColorsAvg
+                data: Array(labels.length).fill(avgData),
+                backgroundColor: '#2196F3'
             }]
         },
         options: {
@@ -185,13 +119,32 @@ function createDualGraph(maxData, avgData, labels, canvasId, graphTitle, backgro
             plugins: {
                 legend: {
                     display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        title: function(context) {
-                            return `Details for ${labels[context[0].dataIndex]}`;
-                        }
-                    }
                 }
             },
             title: {
+                display: true,
+                text: graphTitle,
+                font: {
+                    size: 18,
+                    weight: 'bold'
+                },
+                color: '#01AB7A'
+            }
+        }
+    });
+}
+
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+window.onload = function() {
+    displayClubDetails();
+    createTableWisePerformanceGraph();
+    createDateWisePerformanceGraph();
+};

@@ -37,20 +37,13 @@
     <script src="clubplayers.js" defer></script>
     <script>
         document.getElementById('backButton').addEventListener('click', function() {
-            const studio = getParameterByName('studio');
-            const security = getParameterByName('security');
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const studio = urlParams.get('studio');
+            const security = urlParams.get('security');
             const backURL = `https://ankitbele21.github.io/SplusMultiverse/club_dashboard?studio=${studio}&security=${security}`;
             window.location.href = backURL;
         });
-
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-            const results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
     </script>
 </body>
 </html>

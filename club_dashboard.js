@@ -40,18 +40,6 @@ async function createTableWisePerformanceGraph() {
     createGraph(performanceValues, tables, 'tableWisePerformanceChart', 'Table\'s Performance');
 }
 
-async function createDateWisePerformanceGraph(studioName) {
-    const data = await fetchData('Studios');
-    const studioRow = await findStudioRow(studioName, data);
-    if (studioRow === -1) {
-        console.log('Studio not found.');
-        return;
-    }
-    const dates = data[studioRow].slice(13, 47); // Extract dates from row 2 (index 1)
-    const performanceData = await fetchDateWisePerformanceData(studioRow, data);
-    createGraph(performanceData, dates, 'dateWisePerformanceChart', 'Date-wise Performance');
-}
-
 async function createDateWisePerformanceGraph() {
     const data = await fetchData('club2', '!A:D'); // Fetching data from columns A, C, and D
     const dates = data.map(row => row[0]);
@@ -127,8 +115,6 @@ function createDualGraph(maxData, avgData, labels, canvasId, graphTitle, backgro
         }
     });
 }
-
-
 
 function getParameterByName(name, url = window.location.href) {
     name = name.replace(/[\[\]]/g, '\\$&');

@@ -26,7 +26,7 @@
             
             try {
                 const data = await fetchData("Studios", "!A:F");
-                const studioData = data.find(row => row[0] === studioName && row[1] === password);
+                const studioData = data.find(row => row[0] === studioName && row[4] === password);
                 
                 if (studioData) {
                     const securityKey = studioData[5] || "undefined";

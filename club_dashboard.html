@@ -28,8 +28,20 @@
     <script src="club_dashboard.js"></script>
     <script>
         document.getElementById('framesButton').addEventListener('click', function() {
-            window.location.href = 'https://leaderboard.snookerplus.in/clubframes';
+            const studio = getParameterByName('studio');
+            const security = getParameterByName('security');
+            const framesURL = `https://ankitbele21.github.io/SplusMultiverse/clubframes?studio=${studio}&security=${security}`;
+            window.location.href = framesURL;
         });
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
     </script>
 </body>
 </html>

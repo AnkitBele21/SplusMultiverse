@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-   // Add event listener to the Back button
+  // Add event listener to the Back button
 const backButton = document.getElementById("backButton");
 if (backButton) {
     backButton.addEventListener("click", function () {
@@ -33,6 +33,7 @@ if (backButton) {
         window.location.href = backURL;
     });
 }
+
 
 
 function fetchPlayerData() {

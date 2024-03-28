@@ -25,12 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const backButton = document.getElementById("backButton");
     if (backButton) {
         backButton.addEventListener("click", function () {
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-            const studio = urlParams.get('studio');
-            const security = urlParams.get('security');
-            const backURL = `https://ankitbele21.github.io/SplusMultiverse/clubframes?studio=${studio}&security=${security}`;
-            window.location.href = backURL;
+            window.location.href = "https://ankitbele21.github.io/SplusMultiverse/clubframes";
         });
     }
 });
@@ -155,7 +150,10 @@ function addPlayer() {
     // This could involve displaying a modal to enter the new player's details or redirecting to a new page/form
 }
 
-function recordTopUp(playerName, amount) {
+// Removed the redundant window.onload function as it was causing issues with loading the player data correctly.
+
+
+function recordTopUp(playerName, amount,) {
     try {
       loaderInstance.showLoader();
   
@@ -180,4 +178,46 @@ function recordTopUp(playerName, amount) {
           // Just reload to get latest info
           window.location.reload();
         });
-   
+    } catch (error) {
+      loaderInstance.hideLoader();
+      console.error("Fetch error:", error);
+      alert(
+        "Something went wrong while handling payment success. Contact support."
+      );
+    }
+  }
+
+
+  function recordAppPurchase(playerName, amount,) {
+    try {
+      loaderInstance.showLoader();
+  
+      fetch("https://payment.snookerplus.in/record_app_purchase/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: playerName,
+          amount_paid: amount,
+        }),
+      })
+        .then((resp) => {
+          loaderInstance.hideLoader();
+          if (!resp.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return resp.json();
+        })
+        .then((_body) => {
+          // Just reload to get latest info
+          window.location.reload();
+        });
+    } catch (error) {
+      loaderInstance.hideLoader();
+      console.error("Fetch error:", error);
+      alert(
+        "Something went wrong while handling payment success. Contact support."
+      );
+    }
+  }

@@ -21,14 +21,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add event listener to the Back button
-    const backButton = document.getElementById("backButton");
-    if (backButton) {
-        backButton.addEventListener("click", function () {
-            window.location.href = "https://ankitbele21.github.io/SplusMultiverse/clubframes";
-        });
-    }
+   document.getElementById('backButton').addEventListener('click', function() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const studio = urlParams.get('studio');
+    const security = urlParams.get('security');
+    const backURL = `https://ankitbele21.github.io/SplusMultiverse/clubframes?studio=${studio}&security=${security}`;
+    window.location.href = backURL;
 });
+
 
 function fetchPlayerData() {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PLAYER_SHEET_NAME}?key=${API_KEY}`;

@@ -45,15 +45,17 @@ async function createDateWisePerformanceGraph() {
     const data = await fetchData('Studios');
     const studioRow = data.find(row => row[0] === studioName);
     if (studioRow) {
-        const maxPerformance = studioRow[12]; // Column M2
-        const avgPerformance = studioRow[13]; // Column M
-        const dates = data[0].slice(13, 47); // Dates in Columns N2 to AR2
+        const performanceData = studioRow.slice(13, 47); // Performance data from Columns N2 to AR2
+        const dates = await fetchData('Studios', '!N2:AR2'); // Dates from Columns N2 to AR2
+        const dayLabels = dates[0]; // First row of days
+        const dateLabels = dates[1]; // Second row of dates
 
-        createDualGraph(maxPerformance, avgPerformance, dates, 'dateWisePerformanceChart', 'Club Performance');
+        createGraph(performanceData, dateLabels, 'dateWisePerformanceChart', 'Date-wise Performance', dayLabels);
     } else {
         console.error('Studio not found');
     }
 }
+
 
 function createGraph(data, labels, canvasId, graphTitle) {
     var ctx = document.getElementById(canvasId).getContext('2d');
@@ -133,6 +135,9 @@ function createDualGraph(maxData, avgData, labels, canvasId, graphTitle) {
         }
     });
 }
+
+
+
 
 function getParameterByName(name, url = window.location.href) {
     name = name.replace(/[\[\]]/g, '\\$&');

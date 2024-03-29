@@ -39,14 +39,16 @@ function fetchPlayerData() {
             const tableBody = document.getElementById('playersTable').getElementsByTagName('tbody')[0];
             tableBody.innerHTML = ''; // Clear existing rows
             
-            // Find the column index based on the URL Studio
-            getStudioIndexFromURL().then(studioIndex => {
-                if (studioIndex !== -1) {
+            // Find the column index based on the URL Studio and fixed "Purchase" label
+            getIndexesFromURL().then(({ studioIndex, purchaseIndex }) => {
+                if (studioIndex !== -1 && purchaseIndex !== -1) {
                     rows.slice(3).forEach((row, index) => {
-                        if (row.length > studioIndex) { // Check if the row contains data in the desired column
+                        if (row.length > studioIndex && row.length > purchaseIndex) { // Check if the row contains data in the desired columns
                             const playerName = row[studioIndex]; // Get player name from the specified column
+                            const balance = parseFloat(row[15]); // Assuming balance is always in column P
+                            
+                            // Process player data...
                             if (playerName.trim() !== '') { // Check if player name is not empty or null
-                                const balance = parseFloat(row[15]); // Assuming balance is always in column P
                                 const rowElement = tableBody.insertRow();
 
                                 // Apply classes based on conditions
@@ -85,34 +87,38 @@ function fetchPlayerData() {
                         }
                     });
                 } else {
-                    console.error('Studio not found in URL or invalid column index.');
+                    console.error('Studio or purchase column not found in URL or invalid indices.');
                 }
             });
         })
         .catch(error => console.error('Error fetching player data:', error));
 }
 
-// Function to extract studio index from the URL
-function getStudioIndexFromURL() {
+// Function to extract studio index and "Purchase" index from the URL
+function getIndexesFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     const studio = urlParams.get('studio');
 
-    // Fetch data from the 'snookerplus' sheet to access the first row
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PLAYER_SHEET_NAME}!1:1?key=${API_KEY}`;
+    // Fetch data from the 'snookerplus' sheet to access the first two rows
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PLAYER_SHEET_NAME}!1:2?key=${API_KEY}`;
     return fetch(url)
         .then(response => response.json())
         .then(data => {
             const firstRow = data.values[0]; // Extract the first row of the sheet
+            const secondRow = data.values[1]; // Extract the second row of the sheet
+
             const studioIndex = firstRow.findIndex(value => value.toLowerCase() === studio.toLowerCase());
-            return studioIndex;
+            const purchaseIndex = secondRow.indexOf('Purchase');
+
+            return { studioIndex, purchaseIndex };
         })
         .catch(error => {
-            console.error('Error fetching studio data:', error);
-            return -1; // Return -1 if an error occurs
+            console.error('Error fetching data from sheet:', error);
+            return { studioIndex: -1, purchaseIndex: -1 }; // Return -1 if an error occurs
         });
 }
 
-
+// Function to handle top-up balance action
 function topUpBalance(playerName) {
     const amount = prompt(`Enter top-up amount for ${playerName}:`);
     if (amount) {
@@ -120,6 +126,7 @@ function topUpBalance(playerName) {
     }
 }
 
+// Function to handle purchase action
 function makePurchase(playerName) {
     const amount = prompt(`Enter purchase amount for ${playerName}:`);
     if (amount) {
@@ -129,31 +136,10 @@ function makePurchase(playerName) {
 
 // Rest of the functions remain unchanged
 
-function applyFilter() {
-    const filterValue = document.getElementById('playerFilter').value.toLowerCase();
-    const tableBody = document.getElementById('playersTable').getElementsByTagName('tbody')[0];
-    const rows = tableBody.getElementsByTagName('tr');
-
-    for (let i = 0; i < rows.length; i++) {
-        let playerName = rows[i].getElementsByTagName('td')[0].textContent;
-        if (playerName.toLowerCase().indexOf(filterValue) > -1) {
-            rows[i].style.display = "";
-        } else {
-            rows[i].style.display = "none";
-        }
-    }
-}
-
-function addPlayer() {
-    console.log('Add Player button clicked');
-    // Implement the functionality to add a new player
-    // This could involve displaying a modal to enter the new player's details or redirecting to a new page/form
-}
-
 // Removed the redundant window.onload function as it was causing issues with loading the player data correctly.
 
-
-function recordTopUp(playerName, amount,) {
+// Function to record top-up action
+function recordTopUp(playerName, amount) {
     try {
       loaderInstance.showLoader();
   
@@ -175,7 +161,7 @@ function recordTopUp(playerName, amount,) {
           return resp.json();
         })
         .then((_body) => {
-          // Just reload to get latest info
+          // Just reload to get the latest info
           window.location.reload();
         });
     } catch (error) {
@@ -185,10 +171,10 @@ function recordTopUp(playerName, amount,) {
         "Something went wrong while handling payment success. Contact support."
       );
     }
-  }
+}
 
-
-  function recordAppPurchase(playerName, amount,) {
+// Function to record purchase action
+function recordAppPurchase(playerName, amount) {
     try {
       loaderInstance.showLoader();
   
@@ -199,25 +185,25 @@ function recordTopUp(playerName, amount,) {
         },
         body: JSON.stringify({
           user_id: playerName,
-          amount_paid: amount,
-        }),
-      })
-        .then((resp) => {
-          loaderInstance.hideLoader();
-          if (!resp.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return resp.json();
-        })
-        .then((_body) => {
-          // Just reload to get latest info
-          window.location.reload();
-        });
-    } catch (error) {
-      loaderInstance.hideLoader();
-      console.error("Fetch error:", error);
-      alert(
-        "Something went wrong while handling payment success. Contact support."
-      );
-    }
-  }
+          amount_paid:amount,
+}),
+})
+.then((resp) => {
+loaderInstance.hideLoader();
+if (!resp.ok) {
+throw new Error("Network response was not ok");
+}
+return resp.json();
+})
+.then((_body) => {
+// Just reload to get the latest info
+window.location.reload();
+});
+} catch (error) {
+loaderInstance.hideLoader();
+console.error("Fetch error:", error);
+alert(
+"Something went wrong while handling payment success. Contact support."
+);
+}
+}

@@ -5,8 +5,10 @@ const PLAYER_SHEET_NAME = 'snookerplus';
 const loaderInstance = new FullScreenLoader();
 
 document.addEventListener('DOMContentLoaded', function() {
-    fetchPlayerData();
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const studio = urlParams.get('studio');
+    fetchPlayerData(studio);
+    
     document.getElementById('playerSearch').addEventListener('input', function(e) {
         const searchValue = e.target.value.toLowerCase();
         const rows = document.querySelectorAll('#playersTable tbody tr');
@@ -30,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function fetchPlayerData() {
+function fetchPlayerData(studio) {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PLAYER_SHEET_NAME}?key=${API_KEY}`;
     fetch(url)
         .then(response => response.json())
@@ -40,7 +42,7 @@ function fetchPlayerData() {
             tableBody.innerHTML = ''; // Clear existing rows
             
             // Find the column index based on the URL Studio
-            getStudioIndexFromURL().then(studioIndex => {
+             getStudioIndexFromURL(studio).then(studioIndex => {
                 if (studioIndex !== -1) {
                     rows.slice(3).forEach((row, index) => {
                         // Check if the studio value in the row matches the studio value from URL

@@ -42,55 +42,49 @@ function fetchPlayerData() {
             // Find the column index based on the URL Studio
             getStudioIndexFromURL().then(studioIndex => {
                 if (studioIndex !== -1) {
-                    // Find the column indices for "Top up" and "Purchase" labels
-                    const topUpIndex = rows[1].findIndex(label => label.toLowerCase() === 'top up');
-                    const purchaseIndex = rows[1].findIndex(label => label.toLowerCase() === 'purchase');
+                    rows.slice(3).forEach((row, index) => {
+                        // Check if the studio value in the row matches the studio value from URL
+                        if (row[9] && row[9].toLowerCase() === studio.toLowerCase()) {
+                            const playerName = row[3]; // Get player name from column D (index 3)
+                            const balance = parseFloat(row[15]); // Assuming balance is always in column P
 
-                    rows.slice(3).forEach(row => {
-                        const playerName = row[3]; // Assuming player name is in column D (index 3)
-                        const balance = parseFloat(row[15]); // Assuming balance is always in column P
+                            // Check if player name and balance exist
+                            if (playerName && !isNaN(balance)) {
+                                const rowElement = tableBody.insertRow();
 
-                        // Check if player name and balance exist
-                        if (playerName && !isNaN(balance)) {
-                            const rowElement = tableBody.insertRow();
+                                // Apply classes based on balance
+                                if (balance > 5) {
+                                    rowElement.classList.add('balance-high');
+                                } else if (balance < -5) {
+                                    rowElement.classList.add('balance-low');
+                                }
 
-                            // Apply classes based on balance
-                            if (balance > 5) {
-                                rowElement.classList.add('balance-high');
-                            } else if (balance < -5) {
-                                rowElement.classList.add('balance-low');
+                                const playerNameCell = rowElement.insertCell(0);
+                                playerNameCell.textContent = playerName;
+
+                                // Adjust color based on balance
+                                if (balance > 5) {
+                                    playerNameCell.style.color = '#F44336'; // Example color, adjust as needed
+                                } else if (balance < -5) {
+                                    playerNameCell.style.color = '#4CAF50'; // Example color, adjust as needed
+                                }
+
+                                const balanceCell = rowElement.insertCell(1);
+                                balanceCell.textContent = balance; // Directly display the balance without conversion
+
+                                const actionsCell = rowElement.insertCell(2);
+                                const topUpButton = document.createElement('button');
+                                topUpButton.textContent = 'Top Up';
+                                topUpButton.className = 'btn btn-primary mr-2';
+                                topUpButton.addEventListener('click', () => topUpBalance(playerName));
+                                actionsCell.appendChild(topUpButton);
+
+                                const purchaseButton = document.createElement('button');
+                                purchaseButton.textContent = 'Purchase';
+                                purchaseButton.className = 'btn btn-warning';
+                                purchaseButton.addEventListener('click', () => makePurchase(playerName));
+                                actionsCell.appendChild(purchaseButton);
                             }
-
-                            const playerNameCell = rowElement.insertCell(0);
-                            playerNameCell.textContent = playerName;
-
-                            // Adjust color based on balance
-                            if (balance > 5) {
-                                playerNameCell.style.color = '#F44336'; // Example color, adjust as needed
-                            } else if (balance < -5) {
-                                playerNameCell.style.color = '#4CAF50'; // Example color, adjust as needed
-                            }
-
-                            const balanceCell = rowElement.insertCell(1);
-                            balanceCell.textContent = balance; // Directly display the balance without conversion
-
-                            const actionsCell = rowElement.insertCell(2);
-                            
-                            // Determine top-up and purchase columns based on studio value
-                            const topUpColumn = row[topUpIndex];
-                            const purchaseColumn = row[purchaseIndex];
-
-                            const topUpButton = document.createElement('button');
-                            topUpButton.textContent = 'Top Up';
-                            topUpButton.className = 'btn btn-primary mr-2';
-                            topUpButton.addEventListener('click', () => topUpBalance(playerName, topUpColumn));
-                            actionsCell.appendChild(topUpButton);
-
-                            const purchaseButton = document.createElement('button');
-                            purchaseButton.textContent = 'Purchase';
-                            purchaseButton.className = 'btn btn-warning';
-                            purchaseButton.addEventListener('click', () => makePurchase(playerName, purchaseColumn));
-                            actionsCell.appendChild(purchaseButton);
                         }
                     });
                 } else {
@@ -100,6 +94,7 @@ function fetchPlayerData() {
         })
         .catch(error => console.error('Error fetching player data:', error));
 }
+
 
 // Function to extract studio index from the URL
 function getStudioIndexFromURL() {

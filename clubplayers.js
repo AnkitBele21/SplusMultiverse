@@ -47,6 +47,7 @@ function fetchPlayerData(studio) {
                     rows.slice(3).forEach((row, index) => {
                         // Check if the studio value in the row matches the studio value from URL
                         const studios = row[9] ? row[9].split(',').map(s => s.trim().toLowerCase()) : [];
+                        if (studios.includes(studio.toLowerCase())) {
                             const playerName = row[3]; // Get player name from column D (index 3)
                             const balance = parseFloat(row[15]); // Assuming balance is always in column P
 

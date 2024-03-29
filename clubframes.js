@@ -268,7 +268,7 @@ function populatePlayerNames() {
         // Check if the studio value from the URL is included in the array of studios associated with the player
         if (studios.includes(studioName)) {
           const optionElement = document.createElement("option");
-          optionElement.value = row[2];
+          optionElement.value = row[3];
           nameDatalist.appendChild(optionElement);
         }
       }

@@ -42,46 +42,55 @@ function fetchPlayerData() {
             // Find the column index based on the URL Studio
             getStudioIndexFromURL().then(studioIndex => {
                 if (studioIndex !== -1) {
-                    rows.slice(3).forEach((row, index) => {
-                        if (row.length > studioIndex) { // Check if the row contains data in the desired column
-                            const playerName = row[0]; // Player name is always in the first column
-                            if (playerName.trim() !== '') { // Check if player name is not empty or null
-                                const balance = parseFloat(row[15]); // Assuming balance is always in column P
-                                const rowElement = tableBody.insertRow();
+                    // Find the column indices for "Top up" and "Purchase" labels
+                    const topUpIndex = rows[1].findIndex(label => label.toLowerCase() === 'top up');
+                    const purchaseIndex = rows[1].findIndex(label => label.toLowerCase() === 'purchase');
 
-                                // Apply classes based on conditions
-                                if (!isNaN(parseFloat(balance)) && parseFloat(balance) > 5) {
-                                    rowElement.classList.add('balance-high');
-                                } else if (!isNaN(parseFloat(balance)) && parseFloat(balance) < -5) {
-                                    rowElement.classList.add('balance-low');
-                                }
+                    rows.slice(3).forEach(row => {
+                        const playerName = row[3]; // Assuming player name is in column D (index 3)
+                        const balance = parseFloat(row[15]); // Assuming balance is always in column P
 
-                                const playerNameCell = rowElement.insertCell(0);
-                                playerNameCell.textContent = playerName;
+                        // Check if player name and balance exist
+                        if (playerName && !isNaN(balance)) {
+                            const rowElement = tableBody.insertRow();
 
-                                // Adjust color based on balance
-                                if (!isNaN(parseFloat(balance)) && parseFloat(balance) > 5) {
-                                    playerNameCell.style.color = '#F44336'; // Example color, adjust as needed
-                                } else if (!isNaN(parseFloat(balance)) && parseFloat(balance) < -5) {
-                                    playerNameCell.style.color = '#4CAF50'; // Example color, adjust as needed
-                                }
-
-                                const balanceCell = rowElement.insertCell(1);
-                                balanceCell.textContent = balance; // Directly display the balance without conversion
-
-                                const actionsCell = rowElement.insertCell(2);
-                                const topUpButton = document.createElement('button');
-                                topUpButton.textContent = 'Top Up';
-                                topUpButton.className = 'btn btn-primary mr-2';
-                                topUpButton.addEventListener('click', () => topUpBalance(playerName));
-                                actionsCell.appendChild(topUpButton);
-
-                                const purchaseButton = document.createElement('button');
-                                purchaseButton.textContent = 'Purchase';
-                                purchaseButton.className = 'btn btn-warning';
-                                purchaseButton.addEventListener('click', () => makePurchase(playerName));
-                                actionsCell.appendChild(purchaseButton);
+                            // Apply classes based on balance
+                            if (balance > 5) {
+                                rowElement.classList.add('balance-high');
+                            } else if (balance < -5) {
+                                rowElement.classList.add('balance-low');
                             }
+
+                            const playerNameCell = rowElement.insertCell(0);
+                            playerNameCell.textContent = playerName;
+
+                            // Adjust color based on balance
+                            if (balance > 5) {
+                                playerNameCell.style.color = '#F44336'; // Example color, adjust as needed
+                            } else if (balance < -5) {
+                                playerNameCell.style.color = '#4CAF50'; // Example color, adjust as needed
+                            }
+
+                            const balanceCell = rowElement.insertCell(1);
+                            balanceCell.textContent = balance; // Directly display the balance without conversion
+
+                            const actionsCell = rowElement.insertCell(2);
+                            
+                            // Determine top-up and purchase columns based on studio value
+                            const topUpColumn = row[topUpIndex];
+                            const purchaseColumn = row[purchaseIndex];
+
+                            const topUpButton = document.createElement('button');
+                            topUpButton.textContent = 'Top Up';
+                            topUpButton.className = 'btn btn-primary mr-2';
+                            topUpButton.addEventListener('click', () => topUpBalance(playerName, topUpColumn));
+                            actionsCell.appendChild(topUpButton);
+
+                            const purchaseButton = document.createElement('button');
+                            purchaseButton.textContent = 'Purchase';
+                            purchaseButton.className = 'btn btn-warning';
+                            purchaseButton.addEventListener('click', () => makePurchase(playerName, purchaseColumn));
+                            actionsCell.appendChild(purchaseButton);
                         }
                     });
                 } else {
@@ -153,7 +162,7 @@ function addPlayer() {
 // Removed the redundant window.onload function as it was causing issues with loading the player data correctly.
 
 
-function recordTopUp(playerName, amount) {
+function recordTopUp(playerName, amount,) {
     try {
       loaderInstance.showLoader();
   
@@ -175,11 +184,10 @@ function recordTopUp(playerName, amount) {
           return resp.json();
         })
         .then((_body) => {
-          // Just reload to get the latest info
+          // Just reload to get latest info
           window.location.reload();
         });
-    } 
-        catch (error) {
+    } catch (error) {
       loaderInstance.hideLoader();
       console.error("Fetch error:", error);
       alert(
@@ -188,7 +196,8 @@ function recordTopUp(playerName, amount) {
     }
   }
 
-  function recordAppPurchase(playerName, amount) {
+
+  function recordAppPurchase(playerName, amount,) {
     try {
       loaderInstance.showLoader();
   
@@ -210,7 +219,7 @@ function recordTopUp(playerName, amount) {
           return resp.json();
         })
         .then((_body) => {
-          // Just reload to get the latest info
+          // Just reload to get latest info
           window.location.reload();
         });
     } catch (error) {

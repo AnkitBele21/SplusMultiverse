@@ -3,7 +3,7 @@
 const API_KEY = "AIzaSyC8Vuysinrwm5ww5WPM5W-GxBnGm1pOUr8";
 const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
 const PLAYER_SHEET_NAME = "snookerplus";
-const FRAMES_SHEET_NAME = "Frames";
+const FRAMES_SHEET_NAME = "Studio 111";
 const RANK_SHEET_NAME = "Rank";
 
 const SHEET_PLAYER_CELLS_CONSTANTS = {
@@ -63,67 +63,31 @@ function fetchPlayerInfo(playerName) {
 }
 
 function fetchFramesInfo(playerName) {
-  // Fetch the list of sheet names from the 'Studios' sheet
   gapi.client.sheets.spreadsheets.values
     .get({
       spreadsheetId: SHEET_ID,
-      range: `Studios!G2:G`,
+      range: `${FRAMES_SHEET_NAME}`,
     })
     .then(
       (response) => {
-        const studioNames = response.result.values.flat(); // Flatten the 2D array
-        const framesDataPromises = studioNames.map((studioName) =>
-          fetchFramesFromSheet(playerName, studioName)
-        );
-        Promise.all(framesDataPromises)
-          .then((framesDataArray) => {
-            // Concatenate frames data from all sheets
-            const framesData = framesDataArray.flat();
-            if (framesData.length > 0) {
-              displayFramesInfo(framesData, playerName);
-            } else {
-              console.log("No frames found for player.");
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching frames data:", error);
-          });
+        const values = response.result.values;
+        const framesData = values.filter((row) =>
+          [row[5], row[33]].includes(playerName)
+        ); // Assuming player names are in columns F and AH
+        if (framesData.length > 0) {
+          displayFramesInfo(framesData, playerName);
+        } else {
+          console.log("No frames found for player.");
+        }
       },
       (response) => {
         console.error(
-          "Error fetching sheet names:",
+          "Error fetching frames data:",
           response.result.error.message
         );
       }
     );
 }
-
-function fetchFramesFromSheet(playerName, sheetName) {
-  return new Promise((resolve, reject) => {
-    gapi.client.sheets.spreadsheets.values
-      .get({
-        spreadsheetId: SHEET_ID,
-        range: `${sheetName}!A:AL`, // Adjust the range as needed
-      })
-      .then(
-        (response) => {
-          const values = response.result.values;
-          const framesData = values.filter((row) =>
-            [row[5], row[33]].includes(playerName)
-          ); // Assuming player names are in columns F and AH
-          resolve(framesData);
-        },
-        (response) => {
-          console.error(
-            `Error fetching frames data from sheet ${sheetName}:`,
-            response.result.error.message
-          );
-          resolve([]); // Resolve with empty array if an error occurs
-        }
-      );
-  });
-}
-
 
 function fetchRankInfo(playerName) {
   gapi.client.sheets.spreadsheets.values

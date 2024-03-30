@@ -1,6 +1,6 @@
 // Your API Key and Sheet ID
-const API_KEY = 'AIzaSyCfxg14LyZ1hrs18WHUuGOnSaJ_IJEtDQc';
-const SHEET_ID = '1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss';
+const API_KEY = "AIzaSyC8Vuysinrwm5ww5WPM5W-GxBnGm1pOUr8";
+const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
 const SHEET_NAME = 'Rank';
 
 // Load the Google Sheets API
@@ -135,7 +135,7 @@ function createPlayerCard(player) {
         progressBar.remove();
     }
     playerName.addEventListener('click', function () {
-        window.location.href = `https://leaderboard.snookerplus.in/playerinfo?player=${encodeURIComponent(name)}`;
+        window.location.href = `https://ankitbele21.github.io/SplusMultiverse/playerinfo?player=${encodeURIComponent(name)}`;
     });
 
     return playerCard;

@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
-                const playerRow = data.values.find(row => row[2] === name && row[4] === pin);
+                const playerRow = data.values.find(row => row[7] === name && row[4] === pin);
                 if (playerRow) {
                     window.location.href = `player_details.html?player=${encodeURIComponent(name)}`;
                 } else {

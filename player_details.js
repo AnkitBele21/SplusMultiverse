@@ -3,7 +3,6 @@
 const API_KEY = "AIzaSyC8Vuysinrwm5ww5WPM5W-GxBnGm1pOUr8";
 const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
 const PLAYER_SHEET_NAME = "snookerplus";
-const FRAMES_SHEET_NAME = "Studio 111";
 const RANK_SHEET_NAME = "Rank";
 
 const SHEET_PLAYER_CELLS_CONSTANTS = {
@@ -28,7 +27,7 @@ function initClient() {
 
       if (playerName) {
         fetchPlayerInfo(playerName);
-        fetchFramesInfo(playerName);
+        fetchStudiosSheet(playerName);
         fetchRankInfo(playerName);
         setupPayNowButton(playerName);
       } else {
@@ -62,11 +61,38 @@ function fetchPlayerInfo(playerName) {
     );
 }
 
-function fetchFramesInfo(playerName) {
+function fetchStudiosSheet(playerName) {
   gapi.client.sheets.spreadsheets.values
     .get({
       spreadsheetId: SHEET_ID,
-      range: `${FRAMES_SHEET_NAME}`,
+      range: "Studios!G:G", // Assuming sheet names are in column G of Studios sheet
+    })
+    .then(
+      (response) => {
+        const sheetNames = response.result.values;
+        if (sheetNames && sheetNames.length > 0) {
+          sheetNames.forEach((sheetName) => {
+            const framesSheetName = sheetName[0];
+            fetchFramesInfo(playerName, framesSheetName);
+          });
+        } else {
+          console.log("No sheet names found in the Studios sheet.");
+        }
+      },
+      (response) => {
+        console.error(
+          "Error fetching sheet names:",
+          response.result.error.message
+        );
+      }
+    );
+}
+
+function fetchFramesInfo(playerName, framesSheetName) {
+  gapi.client.sheets.spreadsheets.values
+    .get({
+      spreadsheetId: SHEET_ID,
+      range: `${framesSheetName}`,
     })
     .then(
       (response) => {
@@ -77,12 +103,12 @@ function fetchFramesInfo(playerName) {
         if (framesData.length > 0) {
           displayFramesInfo(framesData, playerName);
         } else {
-          console.log("No frames found for player.");
+          console.log(`No frames found for player in ${framesSheetName}.`);
         }
       },
       (response) => {
         console.error(
-          "Error fetching frames data:",
+          `Error fetching frames data from ${framesSheetName}:`,
           response.result.error.message
         );
       }

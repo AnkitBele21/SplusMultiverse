@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-  // Add event listener to the Back button
+    // Add event listener to the Back button
     const backButton = document.getElementById("backButton");
     if (backButton) {
         backButton.addEventListener("click", function () {
@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 
 function fetchPlayerData(studio) {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PLAYER_SHEET_NAME}?key=${API_KEY}`;

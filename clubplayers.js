@@ -95,7 +95,7 @@ function fetchPlayerNameByMobile(playerMobile) {
             const rows = data.values;
             for (let i = 7; i < rows.length; i++) {
                 if (rows[i][8] === playerMobile) { // Assuming mobile number is in column I (index 8)
-                    return rows[i][2]; // Return the corresponding name from column 9 (index 2)
+                    return rows[i][7]; // Return the corresponding name from column 9 (index 2)
                 }
             }
             return null; // Return null if no matching mobile number is found

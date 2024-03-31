@@ -56,18 +56,55 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const playerName = document.getElementById("playerName").value;
             const playerMobile = document.getElementById("playerMobile").value;
+            
             // You can implement the logic to add the new player here, for now, let's just log the details
             console.log("New Player Name:", playerName);
             console.log("New Player Mobile:", playerMobile);
+            
             // After adding the player, hide the modal
             const modal = document.getElementById("addPlayerModal");
             modal.style.display = "none";
+            
             // Clear the input fields
             document.getElementById("playerName").value = "";
             document.getElementById("playerMobile").value = "";
         });
     }
+    
+    // Add event listener to the player mobile input box to check for matching mobile numbers
+    const playerMobileInput = document.getElementById("playerMobile");
+    if (playerMobileInput) {
+        playerMobileInput.addEventListener("input", function () {
+            const playerMobile = playerMobileInput.value;
+            // Fetch corresponding player name if the mobile number exists in the sheet
+            fetchPlayerNameByMobile(playerMobile).then(playerName => {
+                if (playerName) {
+                    document.getElementById("playerName").value = playerName;
+                }
+            });
+        });
+    }
 });
+
+// Function to fetch player name by mobile number
+function fetchPlayerNameByMobile(playerMobile) {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PLAYER_SHEET_NAME}?key=${API_KEY}`;
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const rows = data.values;
+            for (let i = 3; i < rows.length; i++) {
+                if (rows[i][8] === playerMobile) { // Assuming mobile number is in column I (index 8)
+                    return rows[i][2]; // Return the corresponding name from column 9 (index 2)
+                }
+            }
+            return null; // Return null if no matching mobile number is found
+        })
+        .catch(error => {
+            console.error('Error fetching player data:', error);
+            return null;
+        });
+}
 
 
 function fetchPlayerData(studio) {

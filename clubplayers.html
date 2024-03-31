@@ -32,24 +32,33 @@
         </table>
     </div>
 
-    <!-- Modal for adding a new player -->
-    <div id="addPlayerModal" class="modal">
+    <!-- Add Player Modal -->
+<div id="addPlayerModal" class="modal">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Player</h2>
-            <form id="addPlayerForm">
-                <div class="form-group">
-                    <label for="playerName">Player Name:</label>
-                    <input type="text" id="playerName" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="playerMobile">Mobile Number:</label>
-                    <input type="tel" id="playerMobile" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <div class="modal-header">
+                <h5 class="modal-title">Add Player</h5>
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addPlayerForm">
+                    <div class="form-group">
+                        <label for="playerName">Player Name:</label>
+                        <input type="text" class="form-control" id="playerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="playerMobile">Player Mobile:</label>
+                        <input type="text" class="form-control" id="playerMobile" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
         </div>
     </div>
+</div>
+
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script src="loader.js" defer></script>

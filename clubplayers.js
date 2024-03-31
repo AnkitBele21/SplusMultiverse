@@ -93,7 +93,7 @@ function fetchPlayerNameByMobile(playerMobile) {
         .then(response => response.json())
         .then(data => {
             const rows = data.values;
-            for (let i = 3; i < rows.length; i++) {
+            for (let i = 7; i < rows.length; i++) {
                 if (rows[i][8] === playerMobile) { // Assuming mobile number is in column I (index 8)
                     return rows[i][2]; // Return the corresponding name from column 9 (index 2)
                 }

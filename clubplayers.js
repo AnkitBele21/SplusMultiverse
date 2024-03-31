@@ -23,11 +23,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add event listener to the Back button
+  // Add event listener to the Back button
     const backButton = document.getElementById("backButton");
     if (backButton) {
         backButton.addEventListener("click", function () {
             window.location.href = "https://ankitbele21.github.io/SplusMultiverse/clubframes";
+        });
+    }
+
+    // Add event listener to the Add Player button to show the modal
+    const addPlayerButton = document.getElementById("addPlayerButton");
+    if (addPlayerButton) {
+        addPlayerButton.addEventListener("click", function () {
+            const modal = document.getElementById("addPlayerModal");
+            modal.style.display = "block";
+        });
+    }
+
+    // Add event listener to the close button of the modal to hide the modal
+    const closeModalButton = document.querySelector("#addPlayerModal .close");
+    if (closeModalButton) {
+        closeModalButton.addEventListener("click", function () {
+            const modal = document.getElementById("addPlayerModal");
+            modal.style.display = "none";
+        });
+    }
+
+    // Add event listener to the form submit event to handle adding a new player
+    const addPlayerForm = document.getElementById("addPlayerForm");
+    if (addPlayerForm) {
+        addPlayerForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const playerName = document.getElementById("playerName").value;
+            const playerMobile = document.getElementById("playerMobile").value;
+            // You can implement the logic to add the new player here, for now, let's just log the details
+            console.log("New Player Name:", playerName);
+            console.log("New Player Mobile:", playerMobile);
+            // After adding the player, hide the modal
+            const modal = document.getElementById("addPlayerModal");
+            modal.style.display = "none";
+            // Clear the input fields
+            document.getElementById("playerName").value = "";
+            document.getElementById("playerMobile").value = "";
         });
     }
 });

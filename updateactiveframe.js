@@ -12,7 +12,52 @@ document.addEventListener("DOMContentLoaded", function () {
     if (frameId) {
         fetchFrameData(frameId);
     }
+
+    populateTableNumbers();
 });
+
+// Function to populate table numbers from the Google Sheets document
+async function populateTableNumbers() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const studio = urlParams.get('studio');
+        if (!studio) {
+            console.error("Studio not found in the URL");
+            return;
+        }
+
+        const tableNumbers = await fetchTableNumbers(studio);
+        if (!tableNumbers || tableNumbers.length === 0) {
+            console.error("No table numbers found for the specified studio");
+            return;
+        }
+
+        const tableNoSelect = document.getElementById("tableNo");
+        tableNoSelect.innerHTML = ""; // Clear existing options
+        tableNumbers.forEach(tableNo => {
+            const option = document.createElement("option");
+            option.value = tableNo;
+            option.textContent = tableNo;
+            tableNoSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error populating table numbers:", error);
+    }
+}
+
+// Function to fetch table numbers from the Google Sheets document based on the studio
+async function fetchTableNumbers(studio) {
+    try {
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${studio}!BY2:BY?key=${API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.values ? data.values.flat().filter(Boolean) : [];
+    } catch (error) {
+        console.error("Error fetching table numbers:", error);
+        return [];
+    }
+}
+
 
 function getFrameIdFromURL() {
     const urlParams = new URLSearchParams(window.location.search);

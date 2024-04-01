@@ -326,3 +326,4 @@ window.onload = function () {
     displayFrameEntries(frameEntries);
   });
 };
+

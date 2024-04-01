@@ -45,8 +45,6 @@ function prefillForm(rowData, frameId) {
     if (!startTime) {
         // Update startTime with the current timestamp
         startTime = getCurrentTimestamp();
-        // Also update the corresponding cell in the Google Sheets document
-        updateStartTimeInSheet(frameId, startTime);
     }
 
     const players = rowData.slice(12, 18).filter(Boolean).join(", ");

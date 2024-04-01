@@ -39,7 +39,16 @@ async function fetchFrameData(frameId) {
 
 function prefillForm(rowData, frameId) {
     const tableNo = rowData[7];
-    const startTime = rowData[10];
+    let startTime = rowData[10]; // Get the startTime
+
+    // Check if startTime is empty
+    if (!startTime) {
+        // Update startTime with the current timestamp
+        startTime = getCurrentTimestamp();
+        // Also update the corresponding cell in the Google Sheets document
+        updateStartTimeInSheet(frameId, startTime);
+    }
+
     const players = rowData.slice(12, 18).filter(Boolean).join(", ");
 
     document.getElementById("frameNo").textContent = frameId;
@@ -59,12 +68,45 @@ function prefillForm(rowData, frameId) {
     populatePlayerNames();
 }
 
-document
-    .getElementById("updateFrameForm")
-    .addEventListener("submit", async function (event) {
-        event.preventDefault();
-        await updateFrameData();
-    });
+// Function to get the current timestamp in the required format
+function getCurrentTimestamp() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+// Function to update the startTime in the Google Sheets document
+async function updateStartTimeInSheet(frameId, startTime) {
+    try {
+        const rowNumber = frameId.replace("SPS", "");
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!K${rowNumber}?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                values: [[startTime]]
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update startTime in the Google Sheets document');
+        }
+
+        console.log('startTime updated successfully');
+    } catch (error) {
+        console.error('Error updating startTime in the Google Sheets document:', error);
+    }
+}
+
 
 async function updateFrameData() {
     try {

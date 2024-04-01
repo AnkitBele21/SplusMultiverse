@@ -1,6 +1,6 @@
 export const snookerPlusSheetName = "snookerplus";
 
-export const snookerPlusSheetFrames = "Frames";
+//export const snookerPlusSheetFrames = "Frames";
 
 
 export const usernameColIndex = 4; // Assuming column D

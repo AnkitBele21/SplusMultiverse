@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import {
   endTimeColumnName,
-  snookerPlusSheetFrames,
+  sheetname,
   startTimeColName,
   tableNumberColName,
   tableTurnOffColName,
@@ -19,17 +19,18 @@ export const updateFrameData = async (req: Request, res: Response) => {
     const tableNo = payload.tableNo;
     const startTime = payload.startTime;
     const players = payload.players.map((player: string) => player.trim());
+    const sheetname = payload.SHEET_NAME;
 
     // Calculate the row number from the frameId
     // Assuming frameId format is "SPS<number>"
     const rowNumber = parseInt(frameId.replace("SPS", ""));
     const resp = await googleSheet.update(
-      `${snookerPlusSheetFrames}!${startTimeColName}${rowNumber}`,
+      `${sheetname}!${startTimeColName}${rowNumber}`,
       [[startTime]]
     );
 
     const resp1 = await googleSheet.update(
-      `${snookerPlusSheetFrames}!${tableNumberColName}${rowNumber}`,
+      `${sheetname}!${tableNumberColName}${rowNumber}`,
       [[tableNo]]
     );
 
@@ -37,7 +38,7 @@ export const updateFrameData = async (req: Request, res: Response) => {
 
     colsMapping.map( async(val, i) => {
       const resp_01 = await googleSheet.update(
-        `${snookerPlusSheetFrames}!${val}${rowNumber}`,
+        `${sheetname}!${val}${rowNumber}`,
         [[players?.[i] || ""]]
       );
     })
@@ -66,12 +67,12 @@ export const turnOffFrame = async (req: Request, res: Response) => {
     const rowNumber = parseInt(frameId.replace("SPS", ""));
 
     const turnOffResp = await googleSheet.update(
-      `${snookerPlusSheetFrames}!${tableTurnOffColName}${rowNumber}`,
+      `${sheetname}!${tableTurnOffColName}${rowNumber}`,
       [["Off"]]
     );
 
     const endTimeResp = await googleSheet.update(
-      `${snookerPlusSheetFrames}!${endTimeColumnName}${rowNumber}`,
+      `${sheetname}!${endTimeColumnName}${rowNumber}`,
       [[timeString]]
     );
 
@@ -96,7 +97,7 @@ export const turnOffFrame = async (req: Request, res: Response) => {
         }
       }
       const resp_01 = await googleSheet.update(
-        `${snookerPlusSheetFrames}!${colsMapping[i]}${rowNumber}`,
+        `${sheetname}!${colsMapping[i]}${rowNumber}`,
         [[players[i]]]
       );
     }
@@ -126,17 +127,17 @@ export const turnOnFrame = async (req: Request, res: Response) => {
     const rowNumber = parseInt(frameId.replace("SPS", ""));
 
     const turnOffResp = await googleSheet.update(
-      `${snookerPlusSheetFrames}!${tableTurnOnColName}${rowNumber}`,
+      `${sheetname}!${tableTurnOnColName}${rowNumber}`,
       [["On"]]
     );
 
     const resp1 = await googleSheet.update(
-      `${snookerPlusSheetFrames}!${startTimeColName}${rowNumber}`,
+      `${sheetname}!${startTimeColName}${rowNumber}`,
       [[timeString]]
     );
 
     const resp2 = await googleSheet.update(
-      `${snookerPlusSheetFrames}!${tableNumberColName}${rowNumber}`,
+      `${sheetname}!${tableNumberColName}${rowNumber}`,
       [[tableNo]]
     );
 
@@ -149,7 +150,7 @@ export const turnOnFrame = async (req: Request, res: Response) => {
         }
       }
       const resp_01 = await googleSheet.update(
-        `${snookerPlusSheetFrames}!${colsMapping[i]}${rowNumber}`,
+        `${sheetname}!${colsMapping[i]}${rowNumber}`,
         [[players[i]]]
       );
     }

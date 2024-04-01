@@ -71,6 +71,7 @@ async function updateFrameData() {
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const markOn = urlParams.get("markOn");
+        const SHEET_NAME = urlParams.get('studio');
 
         let url = "https://payment.snookerplus.in/update/frame/";
         if (markOn) {
@@ -91,6 +92,7 @@ async function updateFrameData() {
             frameId: frameId,
             tableNo: tableNo,
             startTime: startTime,
+            sheetname: SHEET_NAME,
             players: players.split(",").map((player) => player.trim()), // Ensure players are trimmed
         };
 

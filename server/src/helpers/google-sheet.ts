@@ -5,7 +5,7 @@ const { google } = require("googleapis");
 
 // SNooker Plus Sheet
 const SHEET_ID =
-  process.env.SHEET_ID ?? "1Bcl1EVN-7mXUP7M1FL9TBB5v4O4AFxGTVB6PwqOn9ss";
+  process.env.SHEET_ID ?? "1Bcl1EVN-18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
 
 const credentials = JSON.parse(
   fs.readFileSync("google-credentials.json", "utf-8")

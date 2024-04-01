@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
-import { loginRoute } from "./api/Login/login";
+//import { loginRoute } from "./api/Login/login";
 import {
   getPaymentOptions,
   recordAppPurchase,
@@ -30,13 +30,13 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Simple Server");
 });
 
-app.post("/login", (req: Request, res: Response) => {
-  loginRoute(req, res);
-});
+// app.post("/login", (req: Request, res: Response) => {
+//   loginRoute(req, res);
+// });
 
-app.post("/record_payment/", (req: Request, res: Response) => {
-  recordPayment(req, res);
-});
+// app.post("/record_payment/", (req: Request, res: Response) => {
+//   recordPayment(req, res);
+// });
 
 app.post("/record_top_up/", (req: Request, res: Response) => {
   recordTopUpBalance(req, res);
@@ -63,7 +63,7 @@ app.post("/update/frame/on/", (req: Request, res: Response) => {
   turnOnFrame(req, res);
 });
 
-const port = process.env.PORT ?? 3000;
+const port = process.env.PORT ?? 3001;
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

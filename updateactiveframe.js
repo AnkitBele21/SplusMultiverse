@@ -1,4 +1,9 @@
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbwyGbYNChgiK57oC4glD3RZyHUEI2DbmBH7UE9mHNHblvCQkbxBd_0ZbRJMvBGyoAk5/exec";
+const API_KEY = "AIzaSyC8Vuysinrwm5ww5WPM5W-GxBnGm1pOUr8";
+const SHEET_ID = "18Op0z2LfDIHV_o2vUNZxI1jMjZRvKQaiymMRNLzVrG4";
+
+// Extracting SHEET_NAME from the URL
+const urlParams = new URLSearchParams(window.location.search);
+const SHEET_NAME = urlParams.get('studio');
 
 const loaderInstance = new FullScreenLoader();
 
@@ -43,10 +48,10 @@ async function populateTableNumbers() {
 // Function to fetch table numbers from the Google Sheets document based on the studio
 async function fetchTableNumbers(studio) {
     try {
-        const url = `${SHEET_URL}?action=fetchTableNumbers&studio=${studio}`;
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${studio}!BY2:BY?key=${API_KEY}`;
         const response = await fetch(url);
         const data = await response.json();
-        return data.tableNumbers || [];
+        return data.values ? data.values.flat().filter(Boolean) : [];
     } catch (error) {
         console.error("Error fetching table numbers:", error);
         return [];
@@ -61,13 +66,14 @@ function getFrameIdFromURL() {
 
 async function fetchFrameData(frameId) {
     const rowNumber = frameId.replace("SPS", "");
-    const url = `${SHEET_URL}?action=fetchFrameData&frameId=${frameId}`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A${rowNumber}:Z${rowNumber}?key=${API_KEY}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
-        if (data.rowData) {
-            prefillForm(data.rowData, frameId);
+        if (data.values && data.values.length > 0) {
+            const rowData = data.values[0];
+            prefillForm(rowData, frameId);
         } else {
             console.error("No data found for the given frame ID.");
         }
@@ -116,13 +122,26 @@ function getCurrentTimestamp() {
 }
 
 
+// Function to update the startTime in the Google Sheets document
 async function updateStartTimeInSheet(frameId, startTime) {
     try {
-        const url = `${SHEET_URL}?action=updateStartTime&frameId=${frameId}&startTime=${startTime}`;
-        const response = await fetch(url);
+        const rowNumber = frameId.replace("SPS", "");
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!K${rowNumber}?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                values: [[startTime]]
+            }),
+        });
+
         if (!response.ok) {
             throw new Error('Failed to update startTime in the Google Sheets document');
         }
+
         console.log('startTime updated successfully');
     } catch (error) {
         console.error('Error updating startTime in the Google Sheets document:', error);
@@ -131,6 +150,21 @@ async function updateStartTimeInSheet(frameId, startTime) {
 
 // Rest of the code remains the same...
 
+
+
+async function updateFrameData(frameId, tableNo, startTime, players) {
+    try {
+        const url = `https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?action=updateFrameData&frameId=${frameId}&tableNo=${tableNo}&startTime=${startTime}&players=${encodeURIComponent(players)}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to update frame data');
+        }
+        console.log('Frame data updated successfully');
+    } catch (error) {
+        console.error('Error updating frame data:', error);
+        throw error; // Propagate error for handling at caller
+    }
+}
 
 async function fetchData(sheetName) {
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}?key=${API_KEY}`;

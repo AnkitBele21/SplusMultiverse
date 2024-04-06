@@ -34,32 +34,64 @@
         </table>
     </div>
 
-    <!-- Add Player Modal -->
-    <div id="addPlayerModal" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Player</h5>
-                    <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addPlayerForm">
-                        <div class="form-group">
-                            <label for="playerName">Player Name:</label>
-                            <input type="text" class="form-control" id="playerName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="playerMobile">Player Mobile:</label>
-                            <input type="text" class="form-control" id="playerMobile" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </form>
-                </div>
+   <!-- Add Player Modal -->
+<div id="addPlayerModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Player</h5>
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addPlayerForm">
+                    <div class="form-group">
+                        <label for="playerName">Player Name:</label>
+                        <input type="text" class="form-control" id="playerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="playerMobile">Player Mobile:</label>
+                        <input type="text" class="form-control" id="playerMobile" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Adjustment Modal -->
+<div id="adjustmentModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adjustment</h5>
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="adjustmentForm">
+                    <div class="form-group">
+                        <label for="winnerName">Winner Name:</label>
+                        <input type="text" class="form-control" id="winnerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loserName">Loser Name:</label>
+                        <input type="text" class="form-control" id="loserName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="number" class="form-control" id="amount" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script src="loader.js" defer></script>

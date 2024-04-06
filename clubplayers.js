@@ -23,6 +23,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Add event listener to the Adjustment button to show the modal
+    const adjustmentButton = document.getElementById("adjustmentButton");
+    if (adjustmentButton) {
+        adjustmentButton.addEventListener("click", function () {
+            const modal = document.getElementById("adjustmentModal");
+            modal.style.display = "block";
+        });
+    }
+
+    // Add event listener to the close button of the modal to hide the modal
+    const closeAdjustmentModalButton = document.querySelector("#adjustmentModal .close");
+    if (closeAdjustmentModalButton) {
+        closeAdjustmentModalButton.addEventListener("click", function () {
+            const modal = document.getElementById("adjustmentModal");
+            modal.style.display = "none";
+        });
+    }
+
+    // Add event listener to the form submit event to handle adjusting balance
+    const adjustmentForm = document.getElementById("adjustmentForm");
+    if (adjustmentForm) {
+        adjustmentForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const winnerName = document.getElementById("winnerName").value;
+            const loserName = document.getElementById("loserName").value;
+            const amount = document.getElementById("amount").value;
+
+            // Call the function to record the adjustment
+            recordAdjustment(winnerName, loserName, amount);
+            
+            // Hide the modal after submission
+            const modal = document.getElementById("adjustmentModal");
+            modal.style.display = "none";
+            
+            // Clear the input fields
+            document.getElementById("winnerName").value = "";
+            document.getElementById("loserName").value = "";
+            document.getElementById("amount").value = "";
+        });
+    }
+
     // Add event listener to the Back button
     const backButton = document.getElementById("backButton");
     if (backButton) {
@@ -209,7 +250,13 @@ function makePurchase(playerName) {
     }
 }
 
-// Rest of the functions remain unchanged
+// Function to record adjustment
+function recordAdjustment(winnerName, loserName, amount) {
+    console.log("Adjustment Recorded:");
+    console.log("Winner Name:", winnerName);
+    console.log("Loser Name:", loserName);
+    console.log("Amount:", amount);
+}
 
 function applyFilter() {
     const filterValue = document.getElementById('playerFilter').value.toLowerCase();
@@ -225,81 +272,3 @@ function applyFilter() {
         }
     }
 }
-
-function addPlayer() {
-    console.log('Add Player button clicked');
-    // Implement the functionality to add a new player
-    // This could involve displaying a modal to enter the new player's details or redirecting to a new page/form
-}
-
-// Removed the redundant window.onload function as it was causing issues with loading the player data correctly.
-
-
-function recordTopUp(playerName, amount,) {
-    try {
-      loaderInstance.showLoader();
-  
-      fetch("https://payment.snookerplus.in/record_top_up/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: playerName,
-          amount_paid: amount,
-        }),
-      })
-        .then((resp) => {
-          loaderInstance.hideLoader();
-          if (!resp.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return resp.json();
-        })
-        .then((_body) => {
-          // Just reload to get latest info
-          window.location.reload();
-        });
-    } catch (error) {
-      loaderInstance.hideLoader();
-      console.error("Fetch error:", error);
-      alert(
-        "Something went wrong while handling payment success. Contact support."
-      );
-    }
-  }
-
-
-  function recordAppPurchase(playerName, amount,) {
-    try {
-      loaderInstance.showLoader();
-  
-      fetch("https://payment.snookerplus.in/record_app_purchase/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: playerName,
-          amount_paid: amount,
-        }),
-      })
-        .then((resp) => {
-          loaderInstance.hideLoader();
-          if (!resp.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return resp.json();
-        })
-        .then((_body) => {
-          // Just reload to get latest info
-          window.location.reload();
-        });
-    } catch (error) {
-      loaderInstance.hideLoader();
-      console.error("Fetch error:", error);
-      alert(
-        "Something went wrong while handling payment success. Contact support."
-      );
-    }
-  }

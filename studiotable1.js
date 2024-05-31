@@ -72,3 +72,4 @@ function displayNotActive() {
     const matchesContainer = document.getElementById('matches-container');
     matchesContainer.innerHTML = '<p>No active matches at the moment.</p>';
 }
+
